@@ -18,11 +18,8 @@ def explodemovelist(movelist):
     explodedmovelist = []
     for move in movelist:
         if int(move[3]) > 1:
-#            test = []
             for i in range(0, int(move[3])):
                 explodedmovelist.append(move[:3] + "1")
-#                test.append(move[:3] + "1")
-#            print(move + " : " + test.__str__())
         else:
             explodedmovelist.append(move)
     return explodedmovelist
@@ -33,8 +30,6 @@ def collapsemovelist(movelist):
     prevmove = "0000"
     for move in movelist:
         if move[:1] == prevmove[:1] and move[1:3] != prevmove[1:3]:
-#            print((i-1).__str__() + ": " + prevmove + " and " + (i).__str__() + ": " + move)
-            # dont add the move and remove the last
             collapsedlist.pop(collapsedlist.__len__()-1)
             prevmove = collapsedlist[collapsedlist.__len__()-1]
             collapsedcount +=1
