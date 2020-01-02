@@ -14,3 +14,5 @@ The project is closely based on the original [BricKuber](https://www.dexterindus
 - [rubiks-color-tracker](https://github.com/dwalton76/rubiks-color-resolver) - Python library used to convert an image of a cube into RGB values for each square.
 - [rubiks-color-resolver](https://github.com/dwalton76/rubiks-color-resolver) - Python library to convert RGB values to 6 cube colors.
 - JBRIK - Source code from this project used written to solve the cube.
+
+Alogorithm being used to solve cube: https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/
