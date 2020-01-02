@@ -4,15 +4,9 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-
-import copy
-
-
-#   cubeStateStr = "bggwwworygybwobywgboyyyogorobbgrrorwrbwggyryrwowgbroby"
 cubeStateStr = "bggwwworygybwobywgboyyyogorobbgrrorwrbwggyryrwowgbroby"
 
 # TODO move this to tracker/solver
-#
 def solvecross(cube):
     log_utils.log("Starting cross solve")
 
@@ -48,8 +42,6 @@ def solvecross(cube):
 
     # solve frst order cross cell, i.e rotate fce
 #    cube = jbrik_solver_phase1.solve_cross_o1(cube, ccolor, facetosolve)
-
-
     # for each remaining unsolved
 #    cube = jbrik_solver_phase1.solve_cross_o2(cube, ccolor, facetosolve)
 
@@ -59,11 +51,8 @@ def solvecross(cube):
     return cube
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
-
 #raw_input("\nPress Enter to continue...\n")
 
 solvedCube = solvecross(Cube)
 #print
 #solvedCube.print_cube("", True)
-
-#log_utils.log("Moves to solve: " + solvedCube.get_solve_move_list().__str__())
