@@ -3,6 +3,50 @@ import log_utils
 import move_lib
 import jbrik_cube
 
+
+def solvecross(cube):
+    log_utils.log("Starting cross solve")
+
+    ccolor = cube.get_cell_val_by_rowcell("2.2")
+    facetosolve = 1
+    log_utils.log("Center color for face 1: "  + ccolor + "\n")
+
+    faced = False
+    while not faced:
+        # face first order cross cells
+        startSolveLen = -1
+        while cube.get_solve_move_list().__len__() != startSolveLen:
+            startSolveLen = cube.get_solve_move_list().__len__()
+            cube = facecross_o1(cube, ccolor, facetosolve)
+            log_utils.log("Start solve length: " + startSolveLen.__str__() + " solvelist length: "
+                          + cube.get_current_solve_move_list().__len__().__str__() + "\n")
+            cube.print_cube("", True)
+
+        # face second order cross cells
+        cube = facecross_o2(cube, ccolor, facetosolve)
+
+        # face third order cross cells
+        cube = facecross_o3(cube, ccolor, facetosolve)
+
+        for crosscell in cube.get_cross_rowcell_for_face(1):
+            if cube.get_cell_val_by_rowcell(crosscell) != ccolor:
+                faced = False
+                break
+            else:
+                faced = True
+
+    log_utils.log("Cross is faced")
+
+    # solve frst order cross cell, i.e rotate fce
+    cube = solve_cross_o1(cube, ccolor, facetosolve)
+
+    # for each remaining unsolved
+    cube = solve_cross_o2(cube, ccolor, facetosolve)
+
+    cube.finalize_solve_phase()
+    log_utils.log("Cross is solved")
+    return cube
+
 def facecross_o1(cube, ccolor, facetosolve):
     log_utils.log("Checking for 1st order face transitions for face: " + facetosolve.__str__())
 
@@ -38,6 +82,7 @@ def facecross_o2(cube, ccolor, facetosolve):
                 log_utils.log("Checking state of " + facecell)
                 if cube.get_cell_val_by_rowcell(facecell) != ccolor:
                     log_utils.log(facecell + " is not faced, move " + rowcell + " here.\n")
+# DELETE THIS NOTE??
 # DO MOVE
 # need to move rowcell into first order pos
 
@@ -176,7 +221,7 @@ def facecross_o3(cube, ccolor, facetosolve):
             if rotcount > 0:
                 movestr = opptosolveface.__str__() + "CW" + rotcount.__str__()
                 log_utils.log("Perform transition: " + movestr)
-                cube.get_solve_move_list().append(movestr)
+                cube.get_current_solve_move_list().append(movestr)
 
             # unwind movetounwind
             unwindlist.reverse()
@@ -253,34 +298,61 @@ def solve_cross_o1(cube, ccolor, facetosolve):
     return cube
 
 def solve_cross_o2(cube, ccolor, facetosolve):
-    print("Solving second order cross")
+    log_utils.log("Solving second order cross.")
     for rowcell in cube.get_cross_rowcell_for_face(facetosolve):
-        targetcell = move_lib.get_ninetydswap_targetcell(rowcell, facetosolve, "CW", cube)
+        targetcellcw = move_lib.get_ninetydswap_targetcell(rowcell, "CW", cube)
+        targetcellcc = move_lib.get_ninetydswap_targetcell(rowcell, "CC", cube)
+        targetcell180 = move_lib.get_oneeightydswap_targetcell(rowcell, cube)
 
         if not is_cross_rowcell_solved(rowcell, cube, ccolor, facetosolve):
             log_utils.log(rowcell + " is not solved.")
-            log_utils.log("Trying a 90 degree CW swap: " + rowcell)
-            startmovelen = cube.get_solve_move_list()
-            cube = move_lib.ninetydswap(rowcell, "CW", cube)
-            if not is_cross_rowcell_solved(targetcell, cube, ccolor, facetosolve):
-                log_utils.log("90 degree CW swap did not solve: " + rowcell)
-                cube = move_lib.ninetydswap(targetcell, "CC", cube)
-                remove_moves_from_solvelist(startmovelen.__len__()-1, cube)
 
+            log_utils.log("Does a 90deg CW swap targetcell: " + targetcellcw + " need to be solved?")
+            if not is_cross_rowcell_solved(targetcellcw, cube, ccolor, facetosolve):
+                log_utils.log("90deg CW swap targetcell: " + targetcellcw + " needs to be solved.")
+#                log_utils.log("Will a 90deg CW swap with: " + rowcell + " solve it?")
+                log_utils.log("Trying a 90 degree CW swap: " + rowcell)
+                startmovelen = cube.get_solve_move_list()
+                cube = move_lib.ninetydswap(rowcell, "CW", cube)
+                if not is_cross_rowcell_solved(targetcellcw, cube, ccolor, facetosolve):
+                    log_utils.log("90 degree CW swap did not solve: " + rowcell)
+                    cube = move_lib.ninetydswap(targetcellcw, "CC", cube)
+                    remove_moves_from_solvelist(startmovelen.__len__() - 1, cube)
+                else:
+                    log_utils.log("90 degree CW swap solved: " + targetcellcw)
+                    continue
+
+            log_utils.log("Does a 90deg CC swap targetcell: " + targetcellcc + " need to be solved?")
+            if not is_cross_rowcell_solved(targetcellcc, cube, ccolor, facetosolve):
+                log_utils.log("90deg CC swap targetcell: " + targetcellcc + " needs to be solved.")
                 log_utils.log("Trying a 90 degree CC swap: " + rowcell)
-                targetcell = move_lib.get_ninetydswap_targetcell(rowcell, facetosolve, "CC", cube)
+                startmovelen = cube.get_solve_move_list()
                 cube = move_lib.ninetydswap(rowcell, "CC", cube)
-                if not is_cross_rowcell_solved(targetcell, cube, ccolor, facetosolve):
-                    startmovelen = cube.get_solve_move_list()
+                if not is_cross_rowcell_solved(targetcellcc, cube, ccolor, facetosolve):
                     log_utils.log("90 degree CC swap did not solve: " + rowcell)
-                    cube = move_lib.ninetydswap(targetcell, "CW", cube)
-                    remove_moves_from_solvelist(startmovelen - 1, cube)
+                    cube = move_lib.ninetydswap(targetcellcc, "CW", cube)
+                    remove_moves_from_solvelist(startmovelen.__len__() - 1, cube)
+                else:
+                    log_utils.log("90 degree CC swap solved: " + targetcellcc)
+                    continue
 
-                    log_utils.log("Trying a 180 degree swap: " + rowcell)
-                    cube = move_lib.oneeightydswap(rowcell, cube)
+            log_utils.log("Does a 180deg swap targetcell: " + targetcell180 + " need to be solved?")
+            if not is_cross_rowcell_solved(targetcell180, cube, ccolor, facetosolve):
+                log_utils.log("180deg swap targetcell: " + targetcell180 + " needs to be solved.")
+                log_utils.log("Trying a 180 degree swap: " + rowcell)
+                startmovelen = cube.get_solve_move_list()
+                cube = move_lib.oneeightydswap(rowcell, cube)
+                if not is_cross_rowcell_solved(targetcell180, cube, ccolor, facetosolve):
+                    print("This is a problem because wwe've already checked the other possible solutions EJECT!")
+#                    log_utils.log("180 degree C swap did not solve: " + rowcell)
+#                    cube = move_lib.ninetydswap(targetcellcc, "CW", cube)
+#                    remove_moves_from_solvelist(startmovelen.__len__() - 1, cube)
+                else:
+                    log_utils.log("180 degree swap solved: " + targetcell180)
+                    continue
 
-            else:
-                log_utils.log(rowcell + " is solved.")
+        else:
+            log_utils.log(rowcell + " is solved.")
 
     return cube
 
@@ -292,16 +364,15 @@ def is_cross_rowcell_solved(rowcell, cube, ccolor, facetosolve):
                   + " and has face color: " + adjfacecolor)
 
     if adjrowcellcolor == adjfacecolor:
-        log_utils.log(rowcell + " is solved.")
         return True
 
     return False
 
 def remove_moves_from_solvelist(startmovepos, cube):
-    removecount = cube.get_solve_move_list().__len__() - startmovepos + 1
+    removecount = cube.get_current_solve_move_list().__len__() - startmovepos + 1
     log_utils.log("Removing last " + removecount.__str__() + " moves from solvelist.")
-    for i in range(startmovepos, cube.get_solve_move_list().__len__()):
-        del cube.get_solve_move_list()[i]
+    for i in range(startmovepos, cube.get_current_solve_move_list().__len__()):
+        del cube.get_current_solve_move_list()[i]
 
 
 

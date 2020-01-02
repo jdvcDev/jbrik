@@ -51,7 +51,7 @@ oppositefaces = {
 }
 
 class JbrikCube(object):
-    def __init__(self, cubestatestr, cubeholder=[], solvelist=[], solvedcells=[]):
+    def __init__(self, cubestatestr, cubeholder=[], currentsolvelist=[], solvedcells=[], solvemap={}):
         log_utils.log("Initializing JBrikCube")
         self.cubeStateStr = cubestatestr
 
@@ -61,7 +61,9 @@ class JbrikCube(object):
             log_utils.log("Loading state string: " + cubestatestr)
             self.load_cubestatestr()
 
-        self.solveList = solvelist
+        self.currentSolveList = currentsolvelist
+
+        self.solveMap = solvemap
 
         self.solvedCells = solvedcells
 
@@ -136,7 +138,15 @@ class JbrikCube(object):
             linestr += frontspace + row.__str__() + ": " + self.get_line_str(self.cubeHolder[row-1]) + "\n"
 
         if printmovelist:
-            linestr += "\nSolve list[" + self.solveList.__len__().__str__() + "]: " + self.solveList.__str__() + "\n"
+            linestr += "\nSolve list[" + self.currentSolveList.__len__().__str__() + "]: " + self.currentSolveList.__str__() + "\n"
+
+        log_utils.log(linestr + "\n")
+
+    def print_solvemap(self):
+        linestr = "\n\nPhase Solutions\n---------------\n"
+        for phase in self.solveMap:
+            linestr += "Phase " + phase.__str__() + ": " + self.solveMap[phase].__str__() + "\n"
+            #linestr += "Phase: " + phase.__str__() + "\n"
 
         log_utils.log(linestr + "\n")
 
@@ -176,24 +186,13 @@ class JbrikCube(object):
         return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
 
     def get_solve_move_list(self):
-        return self.solveList
+        return self.currentSolveList
 
     def get_adj_face_for_rowcell(self, rowcell):
         for adjface in centeradjacencies:
             if centeradjacencies[adjface].__contains__(rowcell):
                 return adjface
     
-    #def get_facedcell_list(ccolor, facenum, cube):
-    #    facedcells = []
-    #    for cell in get_cross_rowcell_for_face(facenum):
-    #        if cube.get_cell_val_by_rowcell(cell) == ccolor:
-    #            facedcells.append(cell)
-    
-    #    return facedcells
-    
-    # for face??
-
-
     def get_adjcell_color_for_center_rowcell(self, rowcell):
         face = self.get_face_for_row(int(rowcell.split(".")[0]))
         faceadj = celladjacencies[face]
@@ -279,3 +278,11 @@ class JbrikCube(object):
         for trans in translist:
             if trans.split(" ")[0] == currentpos:
                 return trans.split(" ")[1]
+
+    # Solution methods
+    def get_current_solve_move_list(self):
+        return self.currentSolveList
+
+    def finalize_solve_phase(self, simplifylist=True):
+        currentphase = self.solveMap.__len__() + 1
+        self.solveMap[currentphase] = self.currentSolveList

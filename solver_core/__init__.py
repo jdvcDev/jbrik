@@ -4,55 +4,93 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "bggwwworygybwobywgboyyyogorobbgrrorwrbwggyryrwowgbroby"
+cubeStateStr = "gwboworygggybororbwwwyyoorybybrrgoooywrggbrbrwgybbygww"
 
-# TODO move this to tracker/solver
-def solvecross(cube):
-    log_utils.log("Starting cross solve")
 
-    ccolor = cube.get_cell_val_by_rowcell("2.2")
-    facetosolve = 1
-    log_utils.log("Center color for face 1: "  + ccolor + "\n")
 
-    faced = False
-    while not faced:
-        # face first order cross cells
-        startSolveLen = -1
-        while cube.get_solve_move_list().__len__() != startSolveLen:
-            startSolveLen = cube.get_solve_move_list().__len__()
-            cube = jbrik_solver_phase1.facecross_o1(cube, ccolor, facetosolve)
-            log_utils.log("Start solve length: " + startSolveLen.__str__() + " solvelist length: "
-                  + cube.get_solve_move_list().__len__().__str__() + "\n")
-            cube.print_cube("", True)
 
-        # face second order cross cells
-        cube = jbrik_solver_phase1.facecross_o2(cube, ccolor, facetosolve)
 
-        # face third order cross cells
-        cube = jbrik_solver_phase1.facecross_o3(cube, ccolor, facetosolve)
 
-        for crosscell in cube.get_cross_rowcell_for_face(1):
-            if cube.get_cell_val_by_rowcell(crosscell) != ccolor:
-                faced = False
-                break
-            else:
-                faced = True
 
-    log_utils.log("Cross is faced")
 
-    # solve frst order cross cell, i.e rotate fce
-#    cube = jbrik_solver_phase1.solve_cross_o1(cube, ccolor, facetosolve)
-    # for each remaining unsolved
-#    cube = jbrik_solver_phase1.solve_cross_o2(cube, ccolor, facetosolve)
 
-#    cube = move_lib.ninetydswap("2.3", "CW", cube)
-#    cube = move_lib.ninetydswap("2.3", "CC", cube)
-#    cube = move_lib.oneeightydswap("2.3", cube)
-    return cube
+def explodemovelist(movelist):
+    explodedmovelist = []
+    for move in movelist:
+        if int(move[3]) > 1:
+#            test = []
+            for i in range(0, int(move[3])):
+                explodedmovelist.append(move[:3] + "1")
+#                test.append(move[:3] + "1")
+#            print(move + " : " + test.__str__())
+        else:
+            explodedmovelist.append(move)
+    return explodedmovelist
 
-Cube = jbrik_cube.JbrikCube(cubeStateStr)
+def collapsemovelist(movelist):
+    collapsedcount = 0
+    collapsedlist = []
+    prevmove = "0000"
+    for move in movelist:
+        if move[:1] == prevmove[:1] and move[1:3] != prevmove[1:3]:
+#            print((i-1).__str__() + ": " + prevmove + " and " + (i).__str__() + ": " + move)
+            # dont add the move and remove the last
+            collapsedlist.pop(collapsedlist.__len__()-1)
+            prevmove = collapsedlist[collapsedlist.__len__()-1]
+            collapsedcount +=1
+        else:
+            collapsedlist.append(move)
+            prevmove = move
+
+    if collapsedcount > 0:
+        collapsedlist = collapsemovelist(collapsedlist)
+
+    return collapsedlist
+
+def dedupemovelist(movelist):
+    dupedcount = 0
+    dedupedlist = []
+    prevmove = movelist[0]
+    iter = 0
+    for move in movelist:
+        if move == prevmove:
+            dupedcount +=1
+            prevmove = move
+        else:
+            dedupedlist.append(prevmove[:3] + dupedcount.__str__())
+            prevmove = move
+            if iter != movelist.__len__():
+                dupedcount = 1
+        iter +=1
+
+        if iter == movelist.__len__():
+            dedupedlist.append(prevmove[:3] + dupedcount.__str__())
+
+    #    if dupecount > 0:
+#        collapsedlist = collapsemovelist(collapsedlist)
+
+    return dedupedlist
+
+
+solvelist = ['2CW1', '4CC1', '3CW2', '4CW1', '2CC1', '3CW3', '2CW1', '4CW1', '3CW2', '4CW2', '5CW2', '2CW1', '3CW3', '2CC1', '2CW1', '2CC1', '2CC1', '3CW1', '2CW1', '2CC1', '3CW3', '2CW1', '6CW2', '1CW1', '4CW2', '3CC2', '2CW2', '3CC2', '4CW2']
+explodedlist = explodemovelist(solvelist)
+
+print("orig: " + solvelist.__len__().__str__() + " " + solvelist.__str__())
+print("expl: " + explodedlist.__len__().__str__() + " " + explodedlist.__str__())
+
+collaplsedlist = collapsemovelist(explodedlist)
+print("coll: " + collaplsedlist.__len__().__str__() + " " + collaplsedlist.__str__())
+
+dedupelist = dedupemovelist(collaplsedlist)
+print("dedu: " + dedupelist.__len__().__str__() + " " + dedupelist.__str__())
+
+#simplyfy list
+
+#Cube = jbrik_cube.JbrikCube(cubeStateStr)
 #raw_input("\nPress Enter to continue...\n")
 
-solvedCube = solvecross(Cube)
+#solvedCube = jbrik_solver_phase1.solvecross(Cube)
 #print
 #solvedCube.print_cube("", True)
+#solvedCube.print_solvemap()
+
