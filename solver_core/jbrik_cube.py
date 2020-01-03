@@ -180,18 +180,8 @@ class JbrikCube(object):
     def set_cell_val(self, row, cell, val):
         self.cubeHolder[int(row) - 1][int(cell) - 1] = val
 
-    def get_center_color_for_rowcell(self, rowcell):
-        rownum = rowcell.split(".")[0]
-        facenum = self.get_face_for_row(int(rownum))
-        return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
-
-    def get_adj_face_for_rowcell(self, rowcell):
-        for adjface in centeradjacencies:
-            if centeradjacencies[adjface].__contains__(rowcell):
-                return adjface
-    
     def get_adjcell_color_for_center_rowcell(self, rowcell):
-        face = self.get_face_for_row(int(rowcell.split(".")[0]))
+        face = get_face_for_row(int(rowcell.split(".")[0]))
         faceadj = celladjacencies[face]
         adjcellcolor = ""
         for cell in faceadj:
@@ -200,86 +190,7 @@ class JbrikCube(object):
                 adjcellcolor = self.get_cell_val_by_rowcell(adjcell)
                 print("Adjacent cell: " + adjcell + " has color: " + adjcellcolor)
                 return adjcellcolor
-    
-    # for face??
-    def get_adjcell_for_rowcell(self, rowcell):
-        faceadj = celladjacencies[1]
-        adjcellcolor = ""
-        for cell in faceadj:
-            if cell.split(" ")[0] == rowcell:
-                adjcell = cell.split(" ")[1]
-                return adjcell
-    
-    def get_face_for_row(self, row):
-        if row % 3 == 0:
-            #        print("row: " + row.__str__() + " is on face: " + (row/3).__str__())
-            return row / 3
-        else:
-            #        print("row: " + row.__str__() + " is on face: " + (row/3 + 1).__str__())
-            return row / 3 + 1
 
-    def get_face_for_rowcell(self, rowcell):
-        return self.get_face_for_row(int(rowcell.split(".")[0]))
-    
-    def get_transitions_for_face(self, facenum, dir):
-        if dir == "CW":
-            return transitions[facenum]
-        else:
-            retlist = []
-            revlist = transitions[facenum][::-1]
-            for elm in revlist:
-                first = elm.split(" ")[0]
-                sec = elm.split(" ")[1]
-                retlist.append(sec + " " + first)
-            return retlist
-    
-    def get_transitions_for_frontface(self, facenum, dir):
-        ftranslist = []
-    
-        frowend = facenum * 3  # 3
-        frowstart = frowend - 3  # 0
-    
-        for i in range(1, 4):
-            rownum = frowstart + i
-            ftransraw = facetransitions[i]
-            for trans in ftransraw:
-                sourcepos = rownum.__str__() + "." + trans.split(".")[0]
-                targetrow = frowstart + int(trans.split(".")[0])
-                targetpos = targetrow.__str__() + "." + trans.split(".")[1]
-    
-                ftranslist.append(sourcepos + " " + targetpos)
-    
-        if dir == "CW":
-            return ftranslist
-        else:
-            retlist = []
-            revlist = ftranslist[::-1]
-            for elm in revlist:
-                first = elm.split(" ")[0]
-                sec = elm.split(" ")[1]
-                retlist.append(sec + " " + first)
-    
-            return retlist
-    
-    def get_cross_rowcell_for_face(self, facenum):
-        crosscells = ["2", "1", "3", "2"]
-    
-        startrow = (facenum * 3) - 2
-        crossrowcell = []
-        crossrowcell.append(startrow.__str__() + "." + crosscells[0])
-        crossrowcell.append((startrow + 1).__str__() + "." + crosscells[1])
-        crossrowcell.append((startrow + 1).__str__() + "." + crosscells[2])
-        crossrowcell.append((startrow + 2).__str__() + "." + crosscells[3])
-    
-        return crossrowcell
-
-    def get_next_pos_for_face_rotation(self, facenum, currentpos):
-        translist = transitions[facenum]
-        for trans in translist:
-            if trans.split(" ")[0] == currentpos:
-                return trans.split(" ")[1]
-
-    # Solution methods
     def get_current_solve_move_list(self):
         return self.currentSolveList
 
@@ -289,6 +200,97 @@ class JbrikCube(object):
             self.solveMap[currentphase] = reducemovelist(self.currentSolveList)
         else:
             self.solveMap[currentphase] = self.currentSolveList
+
+    def get_center_color_for_rowcell(self, rowcell):
+        rownum = rowcell.split(".")[0]
+        facenum = get_face_for_row(int(rownum))
+        return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
+
+# Static methods
+def get_adj_face_for_rowcell(rowcell):
+    for adjface in centeradjacencies:
+        if centeradjacencies[adjface].__contains__(rowcell):
+            return adjface
+
+def get_adjcell_for_rowcell(rowcell):
+    faceadj = celladjacencies[1]
+    adjcellcolor = ""
+    for cell in faceadj:
+        if cell.split(" ")[0] == rowcell:
+            adjcell = cell.split(" ")[1]
+            return adjcell
+
+def get_face_for_row(row):
+    if row % 3 == 0:
+        #        print("row: " + row.__str__() + " is on face: " + (row/3).__str__())
+        return row / 3
+    else:
+        #        print("row: " + row.__str__() + " is on face: " + (row/3 + 1).__str__())
+        return row / 3 + 1
+
+def get_face_for_rowcell(rowcell):
+    return get_face_for_row(int(rowcell.split(".")[0]))
+
+def get_transitions_for_face(facenum, dir):
+    if dir == "CW":
+        return transitions[facenum]
+    else:
+        retlist = []
+        revlist = transitions[facenum][::-1]
+        for elm in revlist:
+            first = elm.split(" ")[0]
+            sec = elm.split(" ")[1]
+            retlist.append(sec + " " + first)
+        return retlist
+
+def get_transitions_for_frontface( facenum, dir):
+    ftranslist = []
+
+    frowend = facenum * 3  # 3
+    frowstart = frowend - 3  # 0
+
+    for i in range(1, 4):
+        rownum = frowstart + i
+        ftransraw = facetransitions[i]
+        for trans in ftransraw:
+            sourcepos = rownum.__str__() + "." + trans.split(".")[0]
+            targetrow = frowstart + int(trans.split(".")[0])
+            targetpos = targetrow.__str__() + "." + trans.split(".")[1]
+
+            ftranslist.append(sourcepos + " " + targetpos)
+
+    if dir == "CW":
+        return ftranslist
+    else:
+        retlist = []
+        revlist = ftranslist[::-1]
+        for elm in revlist:
+            first = elm.split(" ")[0]
+            sec = elm.split(" ")[1]
+            retlist.append(sec + " " + first)
+
+        return retlist
+
+def get_cross_rowcell_for_face(facenum):
+    crosscells = ["2", "1", "3", "2"]
+
+    startrow = (facenum * 3) - 2
+    crossrowcell = []
+    crossrowcell.append(startrow.__str__() + "." + crosscells[0])
+    crossrowcell.append((startrow + 1).__str__() + "." + crosscells[1])
+    crossrowcell.append((startrow + 1).__str__() + "." + crosscells[2])
+    crossrowcell.append((startrow + 2).__str__() + "." + crosscells[3])
+
+    return crossrowcell
+
+def get_next_pos_for_face_rotation(facenum, currentpos):
+    translist = transitions[facenum]
+    for trans in translist:
+        if trans.split(" ")[0] == currentpos:
+            return trans.split(" ")[1]
+
+
+
 
 def explodemovelist(movelist):
     explodedmovelist = []

@@ -3,8 +3,8 @@ import log_utils
 import jbrik_cube
 
 def get_ninetydswap_targetcell(startrowcell, dir, cube):
-    solvingface = cube.get_face_for_row(int(startrowcell.split(".")[0]))
-    crossrowcells = cube.get_cross_rowcell_for_face(solvingface)
+    solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
+    crossrowcells = jbrik_cube.get_cross_rowcell_for_face(solvingface)
     #crossrowcells = cube.get_cross_rowcell_for_face(solvingface)
 
     if dir == "CW":
@@ -29,21 +29,20 @@ def get_ninetydswap_targetcell(startrowcell, dir, cube):
     return targetcell
 
 def get_oneeightydswap_targetcell(startrowcell, cube):
-    solvingface = cube.get_face_for_row(int(startrowcell.split(".")[0]))
+    solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
     ninetydest = get_ninetydswap_targetcell(startrowcell, "CW", cube)
     oneeightydes = get_ninetydswap_targetcell(ninetydest, "CW", cube)
 
     return oneeightydes
 
 def ninetydswap(startrowcell, dir, cube):
-    solvingface = cube.get_face_for_row(int(startrowcell.split(".")[0]))
-    rotationface = cube.get_adj_face_for_rowcell(startrowcell)
+    solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
+    rotationface = jbrik_cube.get_adj_face_for_rowcell(startrowcell)
     oppositeface = jbrik_cube.oppositefaces[solvingface]
 
-    #targetcell = get_ninetydswap_targetcell(startrowcell, solvingface, dir, cube)
     targetcell = get_ninetydswap_targetcell(startrowcell, dir, cube)
 
-    destface = cube.get_adj_face_for_rowcell(targetcell)
+    destface = jbrik_cube.get_adj_face_for_rowcell(targetcell)
 
     log_utils.log("Performing 90 degree " + dir + " swap with rowcell: " + startrowcell)
 
@@ -70,8 +69,8 @@ def ninetydswap(startrowcell, dir, cube):
     return cube
 
 def oneeightydswap(startrowcell, cube):
-    solvingface = cube.get_face_for_row(int(startrowcell.split(".")[0]))
-    rotationface = cube.get_adj_face_for_rowcell(startrowcell)
+    solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
+    rotationface = jbrik_cube.get_adj_face_for_rowcell(startrowcell)
     oppositeface = jbrik_cube.oppositefaces[solvingface]
     destface = jbrik_cube.oppositefaces[rotationface]
 
@@ -129,12 +128,12 @@ def perform_rotation(facenum, dir, oldcube):
     newcube = copy.deepcopy(oldcube)
 
     # front transitions
-    ftranslist = oldcube.get_transitions_for_frontface(facenum, dir)
+    ftranslist = jbrik_cube.get_transitions_for_frontface(facenum, dir)
     #log_utils.log("front rotations: " + ftranslist.__str__())
     perform_transitions(oldcube, newcube, ftranslist)
 
     # side transitions
-    translist = oldcube.get_transitions_for_face(facenum, dir)
+    translist = jbrik_cube.get_transitions_for_face(facenum, dir)
     #log_utils.log("side rotations: " + translist.__str__())
     perform_transitions(oldcube, newcube, translist)
     #newcube.print_cube("", True)

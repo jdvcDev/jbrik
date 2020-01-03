@@ -45,7 +45,7 @@ def solvecrosscorner_o2(cube, solverowcell, oppface):
     log_utils.log("Performing 2nd order crosscorner solve for: " + solverowcell)
 
     adjrowcell = get_non_oppface_adj_rowcell_for_corner(cube, solverowcell, oppface)
-    rotface = cube.get_face_for_rowcell(adjrowcell)
+    rotface = jbrik_cube.get_face_for_rowcell(adjrowcell)
     log_utils.log("Rotate face: " + rotface.__str__())
     # if in pos .3 rotate CC
     # else rotate CW
@@ -88,7 +88,7 @@ def move_rowcell_to_o2_solve_pos(cube, rowcell, oppface):
     '''
     adj = get_non_oppface_adj_rowcell_for_corner(cube, rowcell, oppface)
     adjcolor = cube.get_cell_val_by_rowcell(adj)
-    adjface = cube.get_face_for_rowcell(adj)
+    adjface = jbrik_cube.get_face_for_rowcell(adj)
     log_utils.log(adj + " is the adjacent rowcell that shares the opposite to solve face is on"
                         " face: " + adjface.__str__() + " and has color: " + adjcolor)
     # rotate while adj color does not match its current location center color
@@ -106,7 +106,7 @@ def move_rowcell_to_o2_solve_pos(cube, rowcell, oppface):
     return destrowcell
 
 def get_non_oppface_adj_rowcell_for_corner(cube, rowcell, oppface):
-    rowcellface = cube.get_face_for_rowcell(rowcell)
+    rowcellface = jbrik_cube.get_face_for_rowcell(rowcell)
 
     log_utils.log(rowcell + " is on face: " + rowcellface.__str__())
     rowcelladjs = jbrik_cube.celladjacencies[rowcellface]
@@ -114,7 +114,7 @@ def get_non_oppface_adj_rowcell_for_corner(cube, rowcell, oppface):
         if rowcelladj.startswith(rowcell):
             log_utils.log(rowcell + " is on the corner: " + rowcelladj)
             for adj in rowcelladj.split(" "):
-                if adj != rowcell and cube.get_face_for_rowcell(adj) != oppface:
+                if adj != rowcell and jbrik_cube.get_face_for_rowcell(adj) != oppface:
                     return adj
 
 
