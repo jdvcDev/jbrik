@@ -14,8 +14,8 @@ def solvecross(cube):
     while not faced:
         # face first order cross cells
         startSolveLen = -1
-        while cube.get_solve_move_list().__len__() != startSolveLen:
-            startSolveLen = cube.get_solve_move_list().__len__()
+        while cube.get_current_solve_move_list().__len__() != startSolveLen:
+            startSolveLen = cube.get_current_solve_move_list().__len__()
             cube = facecross_o1(cube, ccolor, facetosolve)
             log_utils.log("Start solve length: " + startSolveLen.__str__() + " solvelist length: "
                           + cube.get_current_solve_move_list().__len__().__str__() + "\n")
@@ -59,7 +59,7 @@ def facecross_o1(cube, ccolor, facetosolve):
         solvestr = get_facestr_for_cross_rowcell(rowcell, ccolor, cube)
         if solvestr != "" and solvestr is not None:
             log_utils.log(rowcell + " is solved by: " + solvestr)
-            log_utils.log("Solve move list: " + cube.get_solve_move_list().__str__())
+            log_utils.log("Solve move list: " + cube.get_current_solve_move_list().__str__())
             cube = move_lib.perform_rotation_str(solvestr, cube)
         else:
             log_utils.log("No first order solution for " + rowcell + "\n")
@@ -98,7 +98,7 @@ def facecross_o2(cube, ccolor, facetosolve):
                     if rotcount > 0:
                         movestr = opptosolveface.__str__() + "CW" + rotcount.__str__()
                         log_utils.log("Perform transition: " + movestr)
-                        cube.get_solve_move_list().append(movestr)
+                        cube.get_current_solve_move_list().append(movestr)
                         cube.print_cube()
                         o2inposition = True
                         break
@@ -326,7 +326,7 @@ def solve_cross_o2(cube, ccolor, facetosolve):
             if not is_cross_rowcell_solved(targetcellcc, cube, ccolor, facetosolve):
                 log_utils.log("90deg CC swap targetcell: " + targetcellcc + " needs to be solved.")
                 log_utils.log("Trying a 90 degree CC swap: " + rowcell)
-                startmovelen = cube.get_solve_move_list()
+                startmovelen = cube.get_current_solve_move_list()
                 cube = move_lib.ninetydswap(rowcell, "CC", cube)
                 if not is_cross_rowcell_solved(targetcellcc, cube, ccolor, facetosolve):
                     log_utils.log("90 degree CC swap did not solve: " + rowcell)
@@ -340,7 +340,7 @@ def solve_cross_o2(cube, ccolor, facetosolve):
             if not is_cross_rowcell_solved(targetcell180, cube, ccolor, facetosolve):
                 log_utils.log("180deg swap targetcell: " + targetcell180 + " needs to be solved.")
                 log_utils.log("Trying a 180 degree swap: " + rowcell)
-                startmovelen = cube.get_solve_move_list()
+                startmovelen = cube.get_current_solve_move_list()
                 cube = move_lib.oneeightydswap(rowcell, cube)
                 if not is_cross_rowcell_solved(targetcell180, cube, ccolor, facetosolve):
                     print("This is a problem because we've already checked the other possible solutions EJECT!")

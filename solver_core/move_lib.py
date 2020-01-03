@@ -151,7 +151,7 @@ def perform_rotation_str(rotstr, oldcube, writemove=True):
         oldcube = perform_rotation(int(facenum), dir, oldcube)
 
     if writemove:
-        oldcube.get_solve_move_list().append(rotstr)
+        oldcube.get_current_solve_move_list().append(rotstr)
     oldcube.print_cube("", True)
     #raw_input("\nPress Enter to continue...\n")
     return oldcube

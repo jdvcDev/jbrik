@@ -185,9 +185,6 @@ class JbrikCube(object):
         facenum = self.get_face_for_row(int(rownum))
         return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
 
-    def get_solve_move_list(self):
-        return self.currentSolveList
-
     def get_adj_face_for_rowcell(self, rowcell):
         for adjface in centeradjacencies:
             if centeradjacencies[adjface].__contains__(rowcell):
@@ -220,6 +217,9 @@ class JbrikCube(object):
         else:
             #        print("row: " + row.__str__() + " is on face: " + (row/3 + 1).__str__())
             return row / 3 + 1
+
+    def get_face_for_rowcell(self, rowcell):
+        return self.get_face_for_row(int(rowcell.split(".")[0]))
     
     def get_transitions_for_face(self, facenum, dir):
         if dir == "CW":
@@ -289,7 +289,6 @@ class JbrikCube(object):
             self.solveMap[currentphase] = reducemovelist(self.currentSolveList)
         else:
             self.solveMap[currentphase] = self.currentSolveList
-
 
 def explodemovelist(movelist):
     explodedmovelist = []

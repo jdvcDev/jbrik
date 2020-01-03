@@ -4,7 +4,7 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "wborwygoywboooyyyroggrygwoyogbyrgrwwgwrbgrboybrbwbbgwr"
+cubeStateStr = "owobwwyoyggbrogyywbrgbygwowbwbbrygbgyooggyrrrrywobrowr"
 
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
@@ -16,7 +16,7 @@ solvedCube.print_cube("", True)
 solvedCube.print_solvemap()
 
 
-solvedCube = jbrik_solver_phase2.solvecroscorners(solvedCube)
+solvedCube = jbrik_solver_phase2.solvecrosscorners(solvedCube)
 print
 solvedCube.print_cube("", True)
 solvedCube.print_solvemap()
