@@ -1,4 +1,3 @@
-import copy
 import log_utils
 import move_lib
 import jbrik_cube
@@ -157,6 +156,7 @@ def facecross_o3(cube, ccolor, facetosolve):
                 break
                 # once identified need to stop search
 
+            sourcerowcell = ""
         if o2faced:
             break
 
