@@ -190,10 +190,15 @@ class JbrikCube(object):
                 adjcellcolor = self.get_cell_val_by_rowcell(adjcell)
                 print("Adjacent cell: " + adjcell + " has color: " + adjcellcolor)
                 return adjcellcolor
+
     def get_center_color_for_rowcell(self, rowcell):
         rownum = rowcell.split(".")[0]
         facenum = get_face_for_row(int(rownum))
         return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
+
+    def get_center_color_for_facenum(self, facenum):
+        maxrow = facenum * 3
+        return self.get_center_color_for_rowcell(maxrow.__str__() + ".1")
 
     def get_current_solve_move_list(self):
         return self.currentSolveList

@@ -312,7 +312,7 @@ def solve_cross_o2(cube, ccolor, facetosolve):
                 log_utils.log("90deg CW swap targetcell: " + targetcellcw + " needs to be solved.")
 #                log_utils.log("Will a 90deg CW swap with: " + rowcell + " solve it?")
                 log_utils.log("Trying a 90 degree CW swap: " + rowcell)
-                startmovelen = cube.get_solve_move_list()
+                startmovelen = cube.get_current_solve_move_list()
                 cube = move_lib.ninetydswap(rowcell, "CW", cube)
                 if not is_cross_rowcell_solved(targetcellcw, cube, ccolor, facetosolve):
                     log_utils.log("90 degree CW swap did not solve: " + rowcell)
