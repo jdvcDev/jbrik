@@ -190,6 +190,10 @@ class JbrikCube(object):
                 adjcellcolor = self.get_cell_val_by_rowcell(adjcell)
                 print("Adjacent cell: " + adjcell + " has color: " + adjcellcolor)
                 return adjcellcolor
+    def get_center_color_for_rowcell(self, rowcell):
+        rownum = rowcell.split(".")[0]
+        facenum = get_face_for_row(int(rownum))
+        return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
 
     def get_current_solve_move_list(self):
         return self.currentSolveList
@@ -201,10 +205,7 @@ class JbrikCube(object):
         else:
             self.solveMap[currentphase] = self.currentSolveList
 
-    def get_center_color_for_rowcell(self, rowcell):
-        rownum = rowcell.split(".")[0]
-        facenum = get_face_for_row(int(rownum))
-        return self.get_cell_val_by_rowcell(((facenum * 3) - 1).__str__() + ".2")
+        self.currentSolveList = []
 
 # Static methods
 def get_adj_face_for_rowcell(rowcell):
@@ -212,6 +213,7 @@ def get_adj_face_for_rowcell(rowcell):
         if centeradjacencies[adjface].__contains__(rowcell):
             return adjface
 
+# ?? why is this only for 1
 def get_adjcell_for_rowcell(rowcell):
     faceadj = celladjacencies[1]
     adjcellcolor = ""
@@ -273,24 +275,36 @@ def get_transitions_for_frontface( facenum, dir):
 
 def get_cross_rowcell_for_face(facenum):
     crosscells = ["2", "1", "3", "2"]
-
     startrow = (facenum * 3) - 2
-    crossrowcell = []
-    crossrowcell.append(startrow.__str__() + "." + crosscells[0])
-    crossrowcell.append((startrow + 1).__str__() + "." + crosscells[1])
-    crossrowcell.append((startrow + 1).__str__() + "." + crosscells[2])
-    crossrowcell.append((startrow + 2).__str__() + "." + crosscells[3])
 
-    return crossrowcell
+    rowcells = []
+    rowcells.append(startrow.__str__() + "." + crosscells[0])
+    rowcells.append((startrow + 1).__str__() + "." + crosscells[1])
+    rowcells.append((startrow + 1).__str__() + "." + crosscells[2])
+    rowcells.append((startrow + 2).__str__() + "." + crosscells[3])
 
-def get_next_pos_for_face_rotation(facenum, currentpos):
+    return rowcells
+
+def get_cornercell_rowcells_for_face(facenum):
+    cornercells = ["1", "3"]
+    startrow = (facenum * 3) - 2
+
+    rowcells = []
+    rowcells.append(startrow.__str__() + "." + cornercells[0])
+    rowcells.append(startrow.__str__() + "." + cornercells[1])
+    rowcells.append((startrow + 2).__str__() + "." + cornercells[0])
+    rowcells.append((startrow + 2).__str__() + "." + cornercells[1])
+
+    return rowcells
+
+def get_next_pos_for_face_rotation(facenum, currentpos, dir="CW"):
     translist = transitions[facenum]
+
+    if dir != "CW":
+        translist.reverse()
     for trans in translist:
         if trans.split(" ")[0] == currentpos:
             return trans.split(" ")[1]
-
-
-
 
 def explodemovelist(movelist):
     explodedmovelist = []
