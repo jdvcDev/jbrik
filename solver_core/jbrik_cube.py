@@ -286,3 +286,84 @@ class JbrikCube(object):
     def finalize_solve_phase(self, simplifylist=True):
         currentphase = self.solveMap.__len__() + 1
         self.solveMap[currentphase] = self.currentSolveList
+
+def explodemovelist(movelist):
+    explodedmovelist = []
+    for move in movelist:
+        if int(move[3]) > 1:
+            for i in range(0, int(move[3])):
+                explodedmovelist.append(move[:3] + "1")
+        else:
+            explodedmovelist.append(move)
+    return explodedmovelist
+
+def collapsemovelist(movelist):
+    collapsedcount = 0
+    collapsedlist = []
+    prevmove = "0000"
+    for move in movelist:
+        if move[:1] == prevmove[:1] and move[1:3] != prevmove[1:3]:
+            collapsedlist.pop(collapsedlist.__len__()-1)
+            prevmove = collapsedlist[collapsedlist.__len__()-1]
+            collapsedcount +=1
+        else:
+            collapsedlist.append(move)
+            prevmove = move
+
+    if collapsedcount > 0:
+        collapsedlist = collapsemovelist(collapsedlist)
+
+    return collapsedlist
+
+def dedupemovelist(movelist):
+    dupedcount = 0
+    dedupedlist = []
+    prevmove = movelist[0]
+    iter = 0
+    for move in movelist:
+        if move == prevmove:
+            dupedcount +=1
+            prevmove = move
+        else:
+            dedupedlist.append(prevmove[:3] + dupedcount.__str__())
+            prevmove = move
+            if iter != movelist.__len__():
+                dupedcount = 1
+        iter +=1
+
+        if iter == movelist.__len__():
+            dedupedlist.append(prevmove[:3] + dupedcount.__str__())
+
+    return dedupedlist
+
+def simplifymovelist(movelist):
+    simplifiedlist = []
+    for move in movelist:
+        dir = "W"
+        if move[3] == "3":
+            if move[2] == "W":
+                dir = "C"
+            simplifiedlist.append(move[:2] + dir + "1")
+        elif int(move[3])%4 == 0:
+            continue
+        elif int(move[3]) > 4 and int(move[3])%4 != 0:
+            simplifiedlist.append(move[:2] + move[2] + (int(move[3])%4).__str__())
+        else:
+            simplifiedlist.append(move)
+
+    return simplifiedlist
+
+# static
+def reducemovelist(movelist):
+    explodedlist = explodemovelist(movelist)
+
+    collaplsedlist = collapsemovelist(explodedlist)
+
+    dedupelist = dedupemovelist(collaplsedlist)
+
+    simpllist = simplifymovelist(dedupelist)
+
+    if simpllist.__len__() < movelist.__len__():
+        simpllist = reducemovelist(simpllist)
+
+    return simpllist
