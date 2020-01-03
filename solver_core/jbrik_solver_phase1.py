@@ -343,7 +343,7 @@ def solve_cross_o2(cube, ccolor, facetosolve):
                 startmovelen = cube.get_solve_move_list()
                 cube = move_lib.oneeightydswap(rowcell, cube)
                 if not is_cross_rowcell_solved(targetcell180, cube, ccolor, facetosolve):
-                    print("This is a problem because wwe've already checked the other possible solutions EJECT!")
+                    print("This is a problem because we've already checked the other possible solutions EJECT!")
 #                    log_utils.log("180 degree C swap did not solve: " + rowcell)
 #                    cube = move_lib.ninetydswap(targetcellcc, "CW", cube)
 #                    remove_moves_from_solvelist(startmovelen.__len__() - 1, cube)

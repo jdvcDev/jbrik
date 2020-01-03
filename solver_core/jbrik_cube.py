@@ -73,7 +73,7 @@ class JbrikCube(object):
     def load_cubestatestr(self):
         if self.cubeStateStr.__len__() != 54:
             #explode
-            print("###cube string error###")
+            print("###cube string error - length ###")
             exit(1)
 
         colorcount = {
@@ -97,7 +97,7 @@ class JbrikCube(object):
         for color in colorcount:
             if colorcount[color] != 9:
                 # explode
-                print("###cube string error###")
+                print("###cube string error - count [" + color + "]###")
                 exit(1)
 
     def print_cube(self, cubename = "", printmovelist = False):
@@ -145,7 +145,7 @@ class JbrikCube(object):
     def print_solvemap(self):
         linestr = "\n\nPhase Solutions\n---------------\n"
         for phase in self.solveMap:
-            linestr += "Phase " + phase.__str__() + ": " + self.solveMap[phase].__str__() + "\n"
+            linestr += "Phase " + phase.__str__() + " [" + self.solveMap[phase].__len__().__str__() +  "]: " + self.solveMap[phase].__str__() + "\n"
             #linestr += "Phase: " + phase.__str__() + "\n"
 
         log_utils.log(linestr + "\n")
@@ -285,7 +285,11 @@ class JbrikCube(object):
 
     def finalize_solve_phase(self, simplifylist=True):
         currentphase = self.solveMap.__len__() + 1
-        self.solveMap[currentphase] = self.currentSolveList
+        if simplifylist:
+            self.solveMap[currentphase] = reducemovelist(self.currentSolveList)
+        else:
+            self.solveMap[currentphase] = self.currentSolveList
+
 
 def explodemovelist(movelist):
     explodedmovelist = []

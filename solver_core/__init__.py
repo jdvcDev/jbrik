@@ -3,15 +3,7 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "gwboworygggybororbwwwyyoorybybrrgoooywrggbrbrwgybbygww"
-
-
-
-
-
-
-
-
+cubeStateStr = "yybowyrwggrywoborrwgbbygobrbyywrbgooywbrgyrowwoorbgggw"
 
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
