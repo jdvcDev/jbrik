@@ -311,6 +311,45 @@ def get_next_pos_for_face_rotation(facenum, currentpos, dir="CW"):
         if trans.split(" ")[0] == currentpos:
             return trans.split(" ")[1]
 
+def get_dest_pos_for_face_rotation(startpos, rotstr):
+    rotcount = int(rotstr[3])
+    rotdir = rotstr[1:3]
+    rotface = int(rotstr[0])
+    destpos = startpos
+    for i in range(0, rotcount):
+        destpos = get_next_pos_for_face_rotation(rotface, destpos, rotdir)
+
+    return destpos
+
+# returns the adjacent rowcell(s) for a given rowcell
+def get_adjrowccell_for_rowcell(rowcell):
+    returnlist = []
+
+    facenum = get_face_for_rowcell(rowcell)
+    adjrowcellsforface = celladjacencies[facenum]
+
+    for adjrowcells in adjrowcellsforface:
+        if adjrowcells.startswith(rowcell):
+            checkrowcells = adjrowcells.split(" ")
+            for checkcell in checkrowcells:
+                if checkcell == rowcell:
+                    continue
+                returnlist.append(checkcell)
+
+    return returnlist
+
+def get_non_oppface_adj_rowcell_for_corner(rowcell, oppface):
+    rowcellface = get_face_for_rowcell(rowcell)
+
+    log_utils.log(rowcell + " is on face: " + rowcellface.__str__())
+    rowcelladjs = celladjacencies[rowcellface]
+    for rowcelladj in rowcelladjs:
+        if rowcelladj.startswith(rowcell):
+            log_utils.log(rowcell + " is on the corner: " + rowcelladj)
+            for adj in rowcelladj.split(" "):
+                if adj != rowcell and get_face_for_rowcell(adj) != oppface:
+                    return adj
+
 def explodemovelist(movelist):
     explodedmovelist = []
     for move in movelist:

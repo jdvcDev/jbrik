@@ -15,14 +15,13 @@ print
 solvedCube.print_cube("", True)
 solvedCube.print_solvemap()
 
+deststr = jbrik_cube.get_dest_pos_for_face_rotation("18.1", "3CW3")
+
+
 solvedCube = jbrik_solver_phase2.solvecrosscorners(solvedCube)
 print
 solvedCube.print_cube("", True)
 solvedCube.print_solvemap()
 
-
-#simpllist = jbrik_cube.reducemovelist(solvelist)
-#print("orig: " + solvelist.__len__().__str__() + " " + solvelist.__str__())
-#print("simp: " + simpllist.__len__().__str__() + " " + simpllist.__str__())
 
 
