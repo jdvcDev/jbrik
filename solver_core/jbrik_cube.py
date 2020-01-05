@@ -1,6 +1,4 @@
 import log_utils
-import jbrik_solver_phase1
-import copy
 
 # for reverse transition read transition chain backwards
 facetransitions = {
@@ -24,7 +22,7 @@ celladjacencies = {
     5: ["13.1 1.2 12.3", "13.2 11.1", "13.3 9.3 10.3", "14.1 2.3", "14.2 X", "14.3 8.3", "15.1 3.3 4.3", "15.2 5.3", "15.3 6.3 7.3"],
     6: ["16.1 9.1 10.1", "16.2 11.1", "16.3 1.1 12.1", "17.1 8.1", "17.2 X", "17.3 2.1", "18.1 7.1 6.1", "18.2 5.1", "18.3 3.1 4.1"]
 }
-faceadjacencies = {
+faceorbits = {
     1: ["4.1", "4.2", "4.3", "12.1", "12.2", "12.3", "13.1", "14.1", "15.1", "16.3", "17.3", "18.3"],
     2: ["3.1", "3.2", "3.3", "7.1", "7.2", "7.3", "15.1", "15.2", "15.3", "18.1", "18.2", "18.3"],
     3: ["6.1", "6.2", "6.3", "10.1", "10.2", "10.3", "13.3", "14.3", "15.3", "16.1", "17.1", "18.1"],
@@ -101,8 +99,13 @@ class JbrikCube(object):
                 exit(1)
 
     def print_cube(self, cubename = "", printmovelist = False):
+        linestr = "\n\ncubeStateStr = \""
+        for i in range(0, 18):
+            for j in range(0,3):
+                linestr += self.cubeHolder[i][j]
+
         # faces 6 - 1 - 5
-        linestr = "\n\n" + cubename + "\n    -- 6 --     -- 1 --      -- 5 -- \n"
+        linestr += "\"\n\n" + cubename + "\n    -- 6 --     -- 1 --      -- 5 -- \n"
         linestr += (16).__str__() + ": " + self.get_line_str(self.cubeHolder[15])
         linestr += "  " + (1).__str__() + ": " + self.get_line_str(self.cubeHolder[0])
         linestr += "  " + (13).__str__() + ": " + self.get_line_str(self.cubeHolder[12])
@@ -302,7 +305,11 @@ def get_cornercell_rowcells_for_face(facenum):
 
     return rowcells
 
+# is this corner specific?
 def get_next_pos_for_face_rotation(facenum, currentpos, dir="CW"):
+    if facenum == get_face_for_rowcell(currentpos):
+        return get_next_cornerpos_on_same_face_rotation(facenum, currentpos)
+
     translist = transitions[facenum]
 
     if dir != "CW":
@@ -310,6 +317,22 @@ def get_next_pos_for_face_rotation(facenum, currentpos, dir="CW"):
     for trans in translist:
         if trans.split(" ")[0] == currentpos:
             return trans.split(" ")[1]
+
+def get_next_cornerpos_on_same_face_rotation(facenum, currentpos, dir="CW"):
+    if currentpos.split(".")[1] == "1" and (facenum*3).__str__() == currentpos.split(".")[0]:
+        # 3.1
+        return ((facenum*3)-2).__str__() + ".1"
+    if currentpos.split(".")[1] == "3" and (facenum*3).__str__() == currentpos.split(".")[0]:
+        # 3.3
+        return (facenum*3).__str__() + ".1"
+    if currentpos.split(".")[1] == "1" and ((facenum*3)-2).__str__() == currentpos.split(".")[0]:
+        # 1.1
+        return (facenum*3-2).__str__() + ".3"
+    if currentpos.split(".")[1] == "3" and ((facenum*3)-2).__str__() == currentpos.split(".")[0]:
+        # 1.3
+        return (facenum*3).__str__() + ".3"
+
+
 
 def get_dest_pos_for_face_rotation(startpos, rotstr):
     rotcount = int(rotstr[3])
@@ -349,6 +372,78 @@ def get_non_oppface_adj_rowcell_for_corner(rowcell, oppface):
             for adj in rowcelladj.split(" "):
                 if adj != rowcell and get_face_for_rowcell(adj) != oppface:
                     return adj
+
+def get_ninetydswap_targetcell(startrowcell, dir):
+    solvingface = get_face_for_row(int(startrowcell.split(".")[0]))
+    crossrowcells = get_cross_rowcell_for_face(solvingface)
+
+    if dir == "CW":
+        if crossrowcells.index(startrowcell) == 0:
+            targetcell = crossrowcells[2]
+        elif crossrowcells.index(startrowcell) == 1:
+            targetcell = crossrowcells[0]
+        elif crossrowcells.index(startrowcell) == 2:
+            targetcell = crossrowcells[3]
+        elif crossrowcells.index(startrowcell) == 3:
+            targetcell = crossrowcells[1]
+    else:
+        if crossrowcells.index(startrowcell) == 0:
+            targetcell = crossrowcells[1]
+        elif crossrowcells.index(startrowcell) == 1:
+            targetcell = crossrowcells[3]
+        elif crossrowcells.index(startrowcell) == 2:
+            targetcell = crossrowcells[0]
+        elif crossrowcells.index(startrowcell) == 3:
+            targetcell = crossrowcells[2]
+
+    return targetcell
+
+def get_oneeightydswap_targetcell(startrowcell):
+    #solvingface = get_face_for_row(int(startrowcell.split(".")[0]))
+    ninetydest = get_ninetydswap_targetcell(startrowcell, "CW")
+    oneeightydes = get_ninetydswap_targetcell(ninetydest, "CW")
+
+    return oneeightydes
+
+def get_oppfaceorbit_o2_trans(rowcell):
+    if rowcell == "18.1":
+        rotdir = "2CC"
+    elif rowcell == "16.1":
+        rotdir = "4CW"
+    elif rowcell == "6.1":
+        rotdir = "6CW"
+    elif rowcell == "6.3":
+        rotdir = "5CC"
+    elif rowcell == "13.3":
+        rotdir = "4CC"
+    elif rowcell == "15.3":
+        rotdir = "2CW"
+    elif rowcell == "10.1":
+        rotdir = "6CC"
+    elif rowcell == "10.3":
+        rotdir = "5CW"
+
+    return rotdir
+
+def get_solvefacefaceorbit_o2_trans(rowcell):
+    if rowcell == "4.1":
+        rotdir = "6CW"
+    elif rowcell == "4.3":
+        rotdir = "5CC"
+    elif rowcell == "12.1":
+        rotdir = "6CC"
+    elif rowcell == "12.3":
+        rotdir = "5CW"
+    elif rowcell == "13.1":
+        rotdir = "4CC"
+    elif rowcell == "15.1":
+        rotdir = "2CW"
+    elif rowcell == "16.3":
+        rotdir = "4CW"
+    elif rowcell == "18.3":
+        rotdir = "2CC"
+
+    return rotdir
 
 def explodemovelist(movelist):
     explodedmovelist = []
@@ -418,6 +513,9 @@ def simplifymovelist(movelist):
 
 # static
 def reducemovelist(movelist):
+    if movelist.__len__() == 0:
+        return ""
+
     explodedlist = explodemovelist(movelist)
 
     collaplsedlist = collapsemovelist(explodedlist)

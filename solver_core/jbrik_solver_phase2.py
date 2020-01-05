@@ -2,6 +2,8 @@ import log_utils
 import move_lib
 import jbrik_cube
 
+# TODO: rename all the adjacent rings to orbit
+
 
 def solvecrosscorners(cube):
     log_utils.log("Solving cross corners")
@@ -9,10 +11,12 @@ def solvecrosscorners(cube):
     facetosolve = 1
     oppface = jbrik_cube.oppositefaces[facetosolve]
 
-    cube = move_oppfaceadjring_rowcells_into_o2_and_solve(cube, oppface, ccolor)
+    # move solveface orbit rowcells onto opface orbit
+
+    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
     log_utils.log("No more rowcells on opp face adjacent ring with color " + ccolor)
 
-    cube = move_oppface_corner_into_oppfaceadjring(cube, oppface, ccolor)
+    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
 
     while not are_all_crosscorners_solved(cube, facetosolve):
         cube = solvecrosscorners(cube)
@@ -23,15 +27,33 @@ def solvecrosscorners(cube):
 
     return cube
 
-def move_oppfaceadjring_rowcells_into_o2_and_solve(cube, oppface, ccolor):
-    oppfaceadjring = jbrik_cube.faceadjacencies[oppface]
+def move_solveface_orbitcells_to_oppface_orbit(cube, solveface, ccolor):
+    solvefaceorbits = jbrik_cube.faceorbits[solveface]
+    for orbitrowcell in solvefaceorbits:
+        if cube.get_cell_val_by_rowcell(orbitrowcell) == ccolor:
+            rotfacedir = jbrik_cube.get_solvefacefaceorbit_o2_trans(orbitrowcell)
+            rotface = rotfacedir[0]
+            rotdir = rotfacedir[1:3]
+            log_utils.log("Rotate: ")
+
+    #get_solvefacefaceorbit_o2_trans(rowcell)
+
+    print
+
+
+def move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor):
+    oppfaceorbit = jbrik_cube.faceorbits[oppface]
 
     # identify first, if any rowcells that are centercolor on opp face ring
     log_utils.log("Looking for " + ccolor + " rowcell on opp face adjacent ring")
-    for rowcell in oppfaceadjring:
+    for rowcell in oppfaceorbit:
         if cube.get_cell_val_by_rowcell(rowcell) == ccolor:
-            log_utils.log(rowcell + " is on opp face adjacent ring and is " + ccolor)
+            log_utils.log(rowcell + " is on opp face orbit and is " + ccolor)
             rotstr = move_rowcell_to_o2_solve_pos(cube, rowcell, oppface)
+
+            if rotstr == "":
+                return cube
+
             destrowcell = jbrik_cube.get_dest_pos_for_face_rotation(rowcell, rotstr)
             destradjowcell = jbrik_cube.get_non_oppface_adj_rowcell_for_corner(destrowcell, oppface)
             cube = move_lib.perform_rotation_str(rotstr, cube)
@@ -41,11 +63,11 @@ def move_oppfaceadjring_rowcells_into_o2_and_solve(cube, oppface, ccolor):
 
     return cube
 
-def move_oppface_corner_into_oppfaceadjring(cube, oppface, ccolor):
+def move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor):
     # we know solveface is one because we're solving the cross, could dynamically figure out though using oppface
     solveface = 1
 
-    oppfaceadjring = jbrik_cube.faceadjacencies[oppface]
+    oppfaceorbit = jbrik_cube.faceorbits[oppface]
     oppfacecornerrowcells = jbrik_cube.get_cornercell_rowcells_for_face(oppface)
     solvefacecornerrowcells = jbrik_cube.get_cornercell_rowcells_for_face(solveface)
 
@@ -68,7 +90,7 @@ def move_oppface_corner_into_oppfaceadjring(cube, oppface, ccolor):
     # get first cccolor cell on oppface
     for rowcell in oppfacecornerrowcells:
         if cube.get_cell_val_by_rowcell(rowcell) == ccolor:
-            log_utils.log("Move : " + rowcell + " to opposite face adjacent ring.")
+            log_utils.log("Move : " + rowcell + " to opposite face orbit.")
             adjcell = jbrik_cube.get_non_oppface_adj_rowcell_for_corner(rowcell, oppface)
 
             # before determining rotface move rowcell to under unsolved corner
@@ -97,11 +119,11 @@ def move_oppface_corner_into_oppfaceadjring(cube, oppface, ccolor):
             # pick a face to rotate, doesn't matter which because oppfacecornerrowcell is under an unsolved rowcell
             rotface = unsolvedadjfaces[0]
 
-            # rotface need to be the face that puts the unsolved corner onto the oppfaceadjring
+            # rotface need to be the face that puts the unsolved corner onto the orbit
             rotdir = "CW"
             # try CW rotation
             destrowcell = jbrik_cube.get_next_pos_for_face_rotation(rotface, oppfacecornerrowcell)
-            if not oppfaceadjring.__contains__(destrowcell):
+            if not oppfaceorbit.__contains__(destrowcell):
                 rotdir = "CC"
 
             rotstr = rotface.__str__() + rotdir + "1"
@@ -126,26 +148,12 @@ def move_oppface_corner_into_oppfaceadjring(cube, oppface, ccolor):
 def solvecrosscorner_o2(cube, solverowcell, oppface):
     log_utils.log("Performing 2nd order crosscorner solve for: " + solverowcell)
 
-    # this is hacky, move to jbik_cube if it must be this way and might as well include rotface
-    if solverowcell == "18.1":
-        rotdir = "CC"
-    elif solverowcell == "16.1":
-        rotdir = "CW"
-    elif solverowcell == "6.1":
-        rotdir = "CW"
-    elif solverowcell == "6.3":
-        rotdir = "CC"
-    elif solverowcell == "13.3":
-        rotdir = "CC"
-    elif solverowcell == "15.3":
-        rotdir = "CW"
-    elif solverowcell == "10.1":
-        rotdir = "CC"
-    elif solverowcell == "10.3":
-        rotdir = "CW"
+    rotfacedir = jbrik_cube.get_oppfaceorbit_o2_trans(solverowcell)
+    rotface = rotfacedir[0]
+    rotdir = rotfacedir[1:3]
 
     adjrowcell = jbrik_cube.get_non_oppface_adj_rowcell_for_corner(solverowcell, oppface)
-    rotface = jbrik_cube.get_face_for_rowcell(adjrowcell)
+    #rotface = jbrik_cube.get_face_for_rowcell(adjrowcell)
     #if solverowcell.split(".")[1] == "3":
     #if rotface == 2 and solverowcell.split(".")[1] == "1":
     #    rotdir = "CC"
@@ -181,6 +189,9 @@ def move_rowcell_to_o2_solve_pos(cube, rowcell, oppface):
         # rotate here and update adj rowcell
         destrowcell = jbrik_cube.get_next_pos_for_face_rotation(oppface, destrowcell)
 
+    if rotcount == 0:
+        return ""
+
     log_utils.log("Rotate opposite to solve face: " + oppface.__str__() + " CW " +
                   rotcount.__str__() + " times to make center color: " +
                   cube.get_center_color_for_rowcell(adj) + " match at " + destrowcell)
@@ -198,7 +209,7 @@ def are_all_crosscorners_solved(cube, facenum):
 
 def is_crosscorner_solved((cube, rowcell)):
     facenum = jbrik_cube.get_face_for_rowcell(rowcell)
-    adjrowcellsforface = jbrik_cube.celladjacencies[facenum]
+    #adjrowcellsforface = jbrik_cube.celladjacencies[facenum]
 
     ccolor = cube.get_center_color_for_facenum(facenum)
     if cube.get_cell_val_by_rowcell(rowcell) != ccolor:

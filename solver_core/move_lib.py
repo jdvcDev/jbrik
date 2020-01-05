@@ -1,11 +1,10 @@
 import copy
 import log_utils
 import jbrik_cube
-
-def get_ninetydswap_targetcell(startrowcell, dir, cube):
+'''
+def get_ninetydswap_targetcell(startrowcell, dir):
     solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
     crossrowcells = jbrik_cube.get_cross_rowcell_for_face(solvingface)
-    #crossrowcells = cube.get_cross_rowcell_for_face(solvingface)
 
     if dir == "CW":
         if crossrowcells.index(startrowcell) == 0:
@@ -28,19 +27,19 @@ def get_ninetydswap_targetcell(startrowcell, dir, cube):
 
     return targetcell
 
-def get_oneeightydswap_targetcell(startrowcell, cube):
-    solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
-    ninetydest = get_ninetydswap_targetcell(startrowcell, "CW", cube)
-    oneeightydes = get_ninetydswap_targetcell(ninetydest, "CW", cube)
+def get_oneeightydswap_targetcell(startrowcell):
+    #solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
+    ninetydest = jbrik_cube.get_ninetydswap_targetcell(startrowcell, "CW")
+    oneeightydes = jbrik_cube.get_ninetydswap_targetcell(ninetydest, "CW")
 
     return oneeightydes
-
+'''
 def ninetydswap(startrowcell, dir, cube):
     solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
     rotationface = jbrik_cube.get_adj_face_for_rowcell(startrowcell)
     oppositeface = jbrik_cube.oppositefaces[solvingface]
 
-    targetcell = get_ninetydswap_targetcell(startrowcell, dir, cube)
+    targetcell = jbrik_cube.get_ninetydswap_targetcell(startrowcell, dir)
 
     destface = jbrik_cube.get_adj_face_for_rowcell(targetcell)
 

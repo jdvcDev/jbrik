@@ -300,9 +300,9 @@ def solve_cross_o1(cube, ccolor, facetosolve):
 def solve_cross_o2(cube, ccolor, facetosolve):
     log_utils.log("Solving second order cross.")
     for rowcell in jbrik_cube.get_cross_rowcell_for_face(facetosolve):
-        targetcellcw = move_lib.get_ninetydswap_targetcell(rowcell, "CW", cube)
-        targetcellcc = move_lib.get_ninetydswap_targetcell(rowcell, "CC", cube)
-        targetcell180 = move_lib.get_oneeightydswap_targetcell(rowcell, cube)
+        targetcellcw = jbrik_cube.get_ninetydswap_targetcell(rowcell, "CW")
+        targetcellcc = jbrik_cube.get_ninetydswap_targetcell(rowcell, "CC")
+        targetcell180 = jbrik_cube.get_oneeightydswap_targetcell(rowcell)
 
         if not is_cross_rowcell_solved(rowcell, cube, ccolor, facetosolve):
             log_utils.log(rowcell + " is not solved.")
