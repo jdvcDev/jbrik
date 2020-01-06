@@ -115,7 +115,7 @@ def move_center_rowcell_to_new_pos_onface(startpos, endpos,  rotationface, cube)
         endposcolor = cube.get_cell_val_by_rowcell(endpos)
         endposadjcolor = cube.get_adjcell_color_for_center_rowcell(endpos)
     if rotcount > 0:
-        cube.get_solve_move_list().append(rotationface.__str__() + "CW" + rotcount.__str__())
+        cube.get_current_solve_move_list().append(rotationface.__str__() + "CW" + rotcount.__str__())
         cube.print_cube("", True)
 
     return cube
