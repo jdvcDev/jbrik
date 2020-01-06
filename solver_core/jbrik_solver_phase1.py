@@ -3,6 +3,7 @@ import move_lib
 import jbrik_cube
 
 
+# put an is solved around this and repeat/recurse
 def solvecross(cube):
     log_utils.log("Starting cross solve")
 
@@ -41,6 +42,10 @@ def solvecross(cube):
 
     # for each remaining unsolved
     cube = solve_cross_o2(cube, ccolor, facetosolve)
+
+
+    while not are_all_cross_rowcells_solved(cube, ccolor, facetosolve):
+        cube = solvecross(cube)
 
     cube.finalize_solve_phase()
     log_utils.log("Cross is solved")
@@ -374,7 +379,9 @@ def remove_moves_from_solvelist(startmovepos, cube):
     for i in range(startmovepos, cube.get_current_solve_move_list().__len__()):
         del cube.get_current_solve_move_list()[i]
 
+def are_all_cross_rowcells_solved(cube, ccolor, facetosolve):
+    for rowcell in jbrik_cube.get_cross_rowcell_for_face(facetosolve):
+        if not is_cross_rowcell_solved(rowcell, cube, ccolor, facetosolve):
+            return False
 
-
-
-
+    return True

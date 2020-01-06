@@ -1,0 +1,6 @@
+cubeStateStr = "brogwgbogoyogowrbryoyrybwogrgwwrywbbwrorgyyobgbrwbygwy"
+Phase Solutions
+---------------
+Phase 1 [14]: ['6CW1', '5CW1', '4CC1', '6CW1', '4CW1', '3CW2', '4CC1', '6CC1', '2CW2', '5CW2', '3CC1', '2CW2', '3CW1', '5CW2']
+Phase 2 [65]: ['2CW1', '3CW2', '2CC1', '3CW2', '4CW1', '3CW2', '4CC1', '3CW2', '6CW1', '3CW1', '6CC1', '4CW1', '3CW2', '4CC1', '3CC1', '6CC1', '3CC1', '6CW1', '3CC1', '4CW1', '3CW2', '4CC1', '3CC1', '4CW1', '3CW1', '4CC1', '5CW1', '3CW1', '5CC1', '3CW1', '4CW1', '3CW2', '4CC1', '3CC1', '5CC1', '3CC1', '5CW1', '3CW1', '6CC1', '3CC1', '6CW1', '2CC1', '3CC1', '2CW1', '3CC1', '4CC1', '3CC1', '4CW1', '3CW1', '4CW1', '3CW2', '4CC1', '5CW1', '3CW1', '5CC1', '3CW1', '4CW1', '3CW2', '4CC1', '5CC1', '3CC1', '5CW1', '4CW1', '3CW1', '4CC1']
+

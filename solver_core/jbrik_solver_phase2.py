@@ -12,11 +12,14 @@ def solvecrosscorners(cube):
     oppface = jbrik_cube.oppositefaces[facetosolve]
 
     # move solveface orbit rowcells onto opface orbit
+    cube = move_solveface_orbitcells_to_oppface_orbit(cube, facetosolve, ccolor)
+    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
 
+    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
     cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
     log_utils.log("No more rowcells on opp face adjacent ring with color " + ccolor)
 
-    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
+#    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
 
     while not are_all_crosscorners_solved(cube, facetosolve):
         cube = solvecrosscorners(cube)
@@ -30,35 +33,54 @@ def solvecrosscorners(cube):
 def move_solveface_orbitcells_to_oppface_orbit(cube, solveface, ccolor):
     solvefaceorbits = jbrik_cube.faceorbits[solveface]
     for orbitrowcell in solvefaceorbits:
+        log_utils.log("Checking solveface orbit rowcell: " + orbitrowcell + " for needed transitions.")
         if cube.get_cell_val_by_rowcell(orbitrowcell) == ccolor:
             rotfacedir = jbrik_cube.get_solvefacefaceorbit_o2_trans(orbitrowcell)
             rotface = rotfacedir[0]
             rotdir = rotfacedir[1:3]
-            log_utils.log("Rotate: ")
+            rotstr = rotfacedir + "1"
+            unwindmove = move_lib.reversetransition(rotstr)
+
+            log_utils.log("Rotate face: " + rotface.__str__() + " " + rotdir + " to move it to opposite solve face.")
+            cube = move_lib.perform_rotation_str(rotstr, cube)
+
+            oppface = jbrik_cube.oppositefaces[solveface]
+            rotstr = oppface.__str__() + "CW1"
+            log_utils.log("Rotate oppface: " + rotstr + " to move target cell<???> out of the way of unwind")
+            cube = move_lib.perform_rotation_str(rotstr, cube)
+
+            log_utils.log("Performing unwind: " + unwindmove)
+            cube = move_lib.perform_rotation_str(unwindmove, cube)
+            break
+
 
     #get_solvefacefaceorbit_o2_trans(rowcell)
 
-    print
+    return cube
 
 
 def move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor):
     oppfaceorbit = jbrik_cube.faceorbits[oppface]
 
     # identify first, if any rowcells that are centercolor on opp face ring
-    log_utils.log("Looking for " + ccolor + " rowcell on opp face adjacent ring")
+    log_utils.log("Looking for " + ccolor + " rowcell on opp face orbit")
     for rowcell in oppfaceorbit:
         if cube.get_cell_val_by_rowcell(rowcell) == ccolor:
             log_utils.log(rowcell + " is on opp face orbit and is " + ccolor)
             rotstr = move_rowcell_to_o2_solve_pos(cube, rowcell, oppface)
 
-            if rotstr == "":
-                return cube
-
-            destrowcell = jbrik_cube.get_dest_pos_for_face_rotation(rowcell, rotstr)
+            destrowcell = rowcell
             destradjowcell = jbrik_cube.get_non_oppface_adj_rowcell_for_corner(destrowcell, oppface)
-            cube = move_lib.perform_rotation_str(rotstr, cube)
-            log_utils.log(destradjowcell + " is in 2nd order solve position.")
 
+            if rotstr != "":
+                #return cube
+                destrowcell = jbrik_cube.get_dest_pos_for_face_rotation(rowcell, rotstr)
+                cube = move_lib.perform_rotation_str(rotstr, cube)
+
+#            destradjowcell = jbrik_cube.get_non_oppface_adj_rowcell_for_corner(destrowcell, oppface)
+#            cube = move_lib.perform_rotation_str(rotstr, cube)
+
+            log_utils.log(destradjowcell + " is in 2nd order solve position.")
             cube = solvecrosscorner_o2(cube, destradjowcell, oppface)
 
     return cube
@@ -107,14 +129,16 @@ def move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor):
 
             log_utils.log("Rotate face: " + oppface.__str__() + " until " + oppfacecornerrowcell + " is color: " + ccolor)
             rotcount = 0
-            destrowcell = oppfacecornerrowcell
-            while cube.get_cell_val_by_rowcell(destrowcell) != ccolor:
+            #destrowcell = oppfacecornerrowcell
+            destrowcell = rowcell
+            while destrowcell != oppfacecornerrowcell:
+            #while cube.get_cell_val_by_rowcell(destrowcell) != ccolor:
                 destrowcell = jbrik_cube.get_next_pos_for_face_rotation(oppface, destrowcell)
                 rotcount +=1
 
             rotstr = oppface.__str__() + "CW" + rotcount.__str__()
             if rotcount > 0:
-                move_lib.perform_rotation_str(rotstr, cube)
+                cube = move_lib.perform_rotation_str(rotstr, cube)
 
             # pick a face to rotate, doesn't matter which because oppfacecornerrowcell is under an unsolved rowcell
             rotface = unsolvedadjfaces[0]
