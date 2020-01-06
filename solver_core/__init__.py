@@ -4,8 +4,8 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "yogrwyyyroobwobogbbryyygobgwoygrrbwwrbrrgowyogwrgbwwbg"
-#cubeStateStr = "gwywwwwwbbooboyyyyroobyggrgogrgrbyrogywggywrbworobbbrr"
+cubeStateStr = "rwbwwwgwroobyorwgyrrooyoyrboyrbrygrwogyggbwbbgyygbbgow"
+
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
 #raw_input("\nPress Enter to continue...\n")

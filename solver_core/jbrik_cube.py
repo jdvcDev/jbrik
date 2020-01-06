@@ -406,22 +406,22 @@ def get_oneeightydswap_targetcell(startrowcell):
     return oneeightydes
 
 def get_oppfaceorbit_o2_trans(rowcell):
-    if rowcell == "18.1":
-        rotdir = "2CC"
-    elif rowcell == "16.1":
-        rotdir = "4CW"
+    if rowcell == "16.1":
+        rotdir = "3CW1 4CW1"
+    elif rowcell == "18.1":
+        rotdir = "3CC1 2CC1"
     elif rowcell == "6.1":
-        rotdir = "6CW"
+        rotdir = "3CW1 6CW1"
     elif rowcell == "6.3":
-        rotdir = "5CC"
+        rotdir = "3CC1 5CC1"
     elif rowcell == "13.3":
-        rotdir = "4CC"
+        rotdir = "3CC1 5CC1"
     elif rowcell == "15.3":
-        rotdir = "2CW"
+        rotdir = "3CW1 2CW1"
     elif rowcell == "10.1":
-        rotdir = "6CC"
+        rotdir = "3CC1 6CC1"
     elif rowcell == "10.3":
-        rotdir = "5CW"
+        rotdir = "3CW1 5CW1"
 
     return rotdir
 
