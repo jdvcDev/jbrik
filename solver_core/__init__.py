@@ -4,22 +4,22 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo"
-
+cubeStateStr = "oybrwgbgyoorooowyyrbboyygwborwwrgyrwowrrgggbrwbgybbgwy"
+#cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo"
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
-#raw_input("\nPress Enter to continue...\n")
 
 solvedCube = jbrik_solver_phase1.solvecross(Cube)
 print
 solvedCube.print_cube("", True)
 solvedCube.print_solvemap()
+#raw_input("\nPress Enter to continue...\n")
 
 solvedCube = jbrik_solver_phase2.solvecrosscorners(solvedCube)
 print
 solvedCube.print_cube("", True)
 solvedCube.print_solvemap()
-print
+#raw_input("\nPress Enter to continue...\n")
 
 
 #bug in collapsing this:

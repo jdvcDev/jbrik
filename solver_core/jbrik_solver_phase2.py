@@ -25,8 +25,8 @@ def solvecrosscorners(cube):
         cube = solvecrosscorners(cube)
 
     log_utils.log("All cross corners solved.")
-#    if cube.get_current_solve_move_list().__len__() > 0:
-#        cube.finalize_solve_phase()
+    if cube.get_current_solve_move_list().__len__() > 0:
+        cube.finalize_solve_phase()
 
     return cube
 
