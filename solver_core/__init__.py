@@ -4,7 +4,7 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "rwbwwwgwroobyorwgyrrooyoyrboyrbrygrwogyggbwbbgyygbbgow"
+cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo"
 
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
@@ -22,3 +22,5 @@ solvedCube.print_solvemap()
 print
 
 
+#bug in collapsing this:
+#Solve list[26]: ['3CW1', '3CC1', '6CC1', '3CW1', '6CW1', '3CW1', '3CC1', '5CC1', '3CW1', '5CW1', '3CW3', '4CC1', '3CC2', '4CW1', '3CW1', '3CW1', '5CW1', '3CC1', '5CC1', '5CC1', '3CW1', '5CW1', '3CC1', '5CC1', '3CW1', '5CW1']
