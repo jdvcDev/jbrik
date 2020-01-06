@@ -252,7 +252,7 @@ def get_facestr_for_cross_rowcell(rowcell, ccolor, cube):
         if color == ccolor:
             #log_utils.log(cell + " contains the correct color")
             rotstr = adjface.__str__() + "CW" + rotationcount.__str__()
-#            log_utils.log(rotstr + " to solve position: " + rowcell)
+            #log_utils.log(rotstr + " to solve position: " + rowcell)
             if rotationcount > 0:
                 return rotstr
             else:
