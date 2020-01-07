@@ -227,7 +227,6 @@ def get_adj_face_for_rowcell(rowcell):
 # ?? why is this only for 1
 def get_adjcell_for_rowcell(rowcell):
     faceadj = celladjacencies[1]
-    adjcellcolor = ""
     for cell in faceadj:
         if cell.split(" ")[0] == rowcell:
             adjcell = cell.split(" ")[1]
@@ -380,7 +379,7 @@ def get_dest_pos_for_face_rotation(startpos, rotstr):
     rotdir = rotstr[1:3]
     rotface = int(rotstr[0])
     destpos = startpos
-    for i in range(0, rotcount+1):
+    for i in range(0, rotcount):
         destpos = get_next_pos_for_face_rotation(rotface, destpos, rotdir)
 
     return destpos
@@ -458,7 +457,7 @@ def get_oppfaceorbit_o2_trans(rowcell):
     elif rowcell == "6.3":
         rotdir = "3CC1 5CC1"
     elif rowcell == "13.3":
-        rotdir = "3CC1 5CC1"
+        rotdir = "3CC1 4CC1"
     elif rowcell == "15.3":
         rotdir = "3CW1 2CW1"
     elif rowcell == "10.1":
@@ -530,7 +529,6 @@ def collapsemovelist(movelist):
                 prevmove = "0000"
             else:
                 prevmove = collapsedlist[collapsedlist.__len__()-1]
-#            prevmove = collapsedlist[collapsedlist.__len__() - 1]
             collapsedcount +=1
         else:
             collapsedlist.append(move)
