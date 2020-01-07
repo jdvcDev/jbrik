@@ -127,7 +127,7 @@ def facecross_o3(cube, ccolor, facetosolve):
             break
 
     if resultpos == "":
-        log_utils.log("No more cross positions to face on face: " + facetosolve)
+        log_utils.log("No more cross positions to face on face: " + facetosolve.__str__())
         return cube
 
     # identify the first rowcell we can move into resultpos
@@ -174,13 +174,14 @@ def facecross_o3(cube, ccolor, facetosolve):
 
         # Were in the middle row at this point, use a static move set to find face and move
         log_utils.log("Get move from static set")
-        movestr = jbrik_cube.get_crosscenter_oppface_trans(nextpos)
+        #movestr = jbrik_cube.get_crosscenter_oppface_trans(nextpos)
+        opmovestr = jbrik_cube.get_crosscenter_oppface_trans(nextpos)
 
         # move rowcelltomove to oppositeface
         log_utils.log("Moving: " + movestr + " to move " + nextpos + " onto oppface.")
-        movestr = rotface.__str__() + rotdir + "1"
-        cube = move_lib.perform_rotation_str(movestr, cube)
-        unwindmove = move_lib.reversetransition(movestr)
+#        movestr = rotface.__str__() + rotdir + "1"
+        cube = move_lib.perform_rotation_str(opmovestr, cube)
+        unwindmove = move_lib.reversetransition(opmovestr)
         unwindlist.append(unwindmove)
 
         crosscellforoppface = jbrik_cube.get_cross_rowcell_for_face(opptosolveface)
@@ -244,7 +245,7 @@ def get_facestr_for_cross_rowcell(rowcell, ccolor, cube):
             if rotationcount > 0:
                 return rotstr
             else:
-                return
+                return ""
         rotationcount = rotationcount + 1
 
     for j in range(cellidx, 4):
@@ -258,10 +259,10 @@ def get_facestr_for_cross_rowcell(rowcell, ccolor, cube):
             if rotationcount > 0:
                 return rotstr
             else:
-                return
+                return ""
         rotationcount = rotationcount + 1
 
-    return
+    return ""
 
 def solve_cross_o1(cube, ccolor, facetosolve):
     print("Solving first order cross")
@@ -358,11 +359,15 @@ def is_cross_rowcell_solved(rowcell, cube, ccolor):
 
     return False
 
+#this blow up
 def remove_moves_from_solvelist(startmovepos, cube):
     removecount = cube.get_current_solve_move_list().__len__() - startmovepos + 1
     log_utils.log("Removing last " + removecount.__str__() + " moves from solvelist.")
-    for i in range(startmovepos, cube.get_current_solve_move_list().__len__()):
-        del cube.get_current_solve_move_list()[i]
+
+    newlist = []
+    for i in range(0, startmovepos+1):
+        newlist.append(cube.get_current_solve_move_list()[i])
+    cube.currentSolveList = newlist
 
 def are_all_cross_rowcells_solved(cube, ccolor, facetosolve):
     for rowcell in jbrik_cube.get_cross_rowcell_for_face(facetosolve):
