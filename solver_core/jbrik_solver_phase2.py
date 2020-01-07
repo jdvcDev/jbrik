@@ -13,12 +13,12 @@ def solvecrosscorners(cube):
 
     cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
 
-    # move solveface orbit rowcells onto opface orbit
-    cube = move_solveface_orbitcells_to_oppface_orbit(cube, facetosolve, ccolor)
-    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
-
+    cube = move_solveface_orbitcells_to_oppface(cube, facetosolve, ccolor)
     cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
     cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
+
+#    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
+#    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
     log_utils.log("No more rowcells on opp face adjacent ring with color " + ccolor)
 
     while not are_all_crosscorners_solved(cube, facetosolve):
@@ -30,7 +30,7 @@ def solvecrosscorners(cube):
 
     return cube
 
-def move_solveface_orbitcells_to_oppface_orbit(cube, solveface, ccolor):
+def move_solveface_orbitcells_to_oppface(cube, solveface, ccolor):
     solvefaceorbits = jbrik_cube.faceorbits[solveface]
     for orbitrowcell in solvefaceorbits:
         log_utils.log("Checking solveface orbit rowcell: " + orbitrowcell + " for needed transitions.")

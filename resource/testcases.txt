@@ -1,9 +1,5 @@
-Initial State:
-cubeStateStr = "grrowgwywgbbrorogygoobyggwyrbborwrwwborygwogbyywrbbyyo"
-Final State:
-cubeStateStr = "wwwwwwwwwoooboybryogrgyyroobbygrrrrrgbgggogrgyobybbyyb"
-
-Initial State:
-cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo"
-Final State:
-cubeStateStr = "wwwwwwwwwoooboogrbyyrryyoyyyorgryrrrgbgggggbybobgbborb"
+#cubeStateStr = "owowwwywbgoryorobowowgyybrwryggrgyrybrrggoybbwygobbgbr" # solved in 29
+#cubeStateStr = "rgrowgrgwyworoobwoybbryygboyoworywywbrbrgbgyyowgbbgrwg" # loops at pahse 2
+#cubeStateStr = "bbwywgyrwowgooowgrgrgwybyowrgrrroywobwbygyryybbogbrobg" # loops at phase 1
+#cubeStateStr = "grrowgwywgbbrorogygoobyggwyrbborwrwwborygwogbyywrbbyyo" # loops at phase 1
+#cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo" # loops at phase 1
