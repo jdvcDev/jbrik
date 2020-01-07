@@ -505,8 +505,18 @@ def get_crosscenter_oppface_trans(rowcell):
         rotdir = "4CW1"
     elif rowcell == "18.2":
         rotdir = "2CC1"
+    else:
+        log_utils.log("Tried to get transition to oppface for a rowcell the isn't in a middle row: " + rowcell)
+        exit(1)
 
     return rotdir
+
+def get_crosscenter_solvface_trans(rowcell):
+    movetooppface = get_crosscenter_oppface_trans(rowcell)
+    movestr = movetooppface[0:3] + "3"
+
+    return movestr
+
 
 def explodemovelist(movelist):
     explodedmovelist = []

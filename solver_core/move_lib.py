@@ -1,39 +1,7 @@
 import copy
 import log_utils
 import jbrik_cube
-'''
-def get_ninetydswap_targetcell(startrowcell, dir):
-    solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
-    crossrowcells = jbrik_cube.get_cross_rowcell_for_face(solvingface)
 
-    if dir == "CW":
-        if crossrowcells.index(startrowcell) == 0:
-            targetcell = crossrowcells[2]
-        elif crossrowcells.index(startrowcell) == 1:
-            targetcell = crossrowcells[0]
-        elif crossrowcells.index(startrowcell) == 2:
-            targetcell = crossrowcells[3]
-        elif crossrowcells.index(startrowcell) == 3:
-            targetcell = crossrowcells[1]
-    else:
-        if crossrowcells.index(startrowcell) == 0:
-            targetcell = crossrowcells[1]
-        elif crossrowcells.index(startrowcell) == 1:
-            targetcell = crossrowcells[3]
-        elif crossrowcells.index(startrowcell) == 2:
-            targetcell = crossrowcells[0]
-        elif crossrowcells.index(startrowcell) == 3:
-            targetcell = crossrowcells[2]
-
-    return targetcell
-
-def get_oneeightydswap_targetcell(startrowcell):
-    #solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
-    ninetydest = jbrik_cube.get_ninetydswap_targetcell(startrowcell, "CW")
-    oneeightydes = jbrik_cube.get_ninetydswap_targetcell(ninetydest, "CW")
-
-    return oneeightydes
-'''
 def ninetydswap(startrowcell, dir, cube):
     solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
     rotationface = jbrik_cube.get_adj_face_for_rowcell(startrowcell)
@@ -156,7 +124,6 @@ def perform_rotation_str(rotstr, oldcube, writemove=True):
 
 # update cube values for a string of moves
 def perform_transitions(oldcube, newcube, translist):
-    #    iter = 0;
     for trans in translist:
         startpos = trans.split(" ")[0]
         endpos = trans.split(" ")[1]
@@ -167,3 +134,11 @@ def perform_transitions(oldcube, newcube, translist):
 
         #log_utils.log("transitioning: " + val + " in " + startpos + " to " + endpos)
         newcube.set_cell_val(row, cell, val)
+
+def perform_unwind_list(unwindlist, cube):
+    unwindlist.reverse()
+    for move in unwindlist:
+        log_utils.log("Performing unwinding tansition: " + move)
+        cube = perform_rotation_str(move, cube)
+
+    return cube
