@@ -4,7 +4,7 @@ import jbrik_cube
 import log_utils
 import move_lib
 
-cubeStateStr = "" #
+cubeStateStr = ""
 #cubeStateStr = "owowwwywbgoryorobowowgyybrwryggrgyrybrrggoybbwygobbgbr" # solved in 29
 #cubeStateStr = "rgrowgrgwyworoobwoybbryygboyoworywywbrbrgbgyyowgbbgrwg" # loops at pahse 2
 #cubeStateStr = "bbwywgyrwowgooowgrgrgwybyowrgrrroywobwbygyryybbogbrobg" # loops at phase 1
