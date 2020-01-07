@@ -163,6 +163,10 @@ def facecross_o3(cube, ccolor, facetosolve):
         rowcelladjtonextpos = jbrik_cube.get_adjrowccell_for_rowcell(nextpos)
         if jbrik_cube.get_face_for_rowcell(rowcelladjtonextpos) != opptosolveface and \
                 jbrik_cube.get_face_for_rowcell(rowcelladjtonextpos) != facetosolve:
+
+#        if jbrik_cube.get_face_for_rowcell(rowcelladjtonextpos) == opptosolveface or \
+#                jbrik_cube.get_face_for_rowcell(rowcelladjtonextpos) == facetosolve:
+
             rotface = jbrik_cube.get_face_for_rowcell(rowcelltomove)
             log_utils.log("Rotating face: " + rotface.__str__() + " " + "CW1 to move: " + rowcelltomove
                           + " into position: " + nextpos + " for next rotation to opposite face.")
@@ -178,7 +182,7 @@ def facecross_o3(cube, ccolor, facetosolve):
         opmovestr = jbrik_cube.get_crosscenter_oppface_trans(nextpos)
 
         # move rowcelltomove to oppositeface
-        log_utils.log("Moving: " + movestr + " to move " + nextpos + " onto oppface.")
+        log_utils.log("Moving: " + opmovestr + " to move " + nextpos + " onto oppface.")
 #        movestr = rotface.__str__() + rotdir + "1"
         cube = move_lib.perform_rotation_str(opmovestr, cube)
         unwindmove = move_lib.reversetransition(opmovestr)
