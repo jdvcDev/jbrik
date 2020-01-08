@@ -47,6 +47,8 @@ oppositefaces = {
     5: 6,
     6: 5
 }
+foursixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
+
 
 class JbrikCube(object):
     def __init__(self, cubestatestr, cubeholder=[], currentsolvelist=[], solvedcells=[], solvemap={}):
@@ -307,17 +309,18 @@ def get_cornercell_rowcells_for_face(facenum):
 
     return rowcells
 
-# is this corner specific?
 def get_next_pos_for_face_rotation(facenum, currentpos, dir="CW"):
     if facenum == get_face_for_rowcell(currentpos):
         return get_next_cornerpos_on_same_face_rotation(facenum, currentpos)
 
     translist = transitions[facenum]
 
-    if dir != "CW":
-        translist.reverse()
     for trans in translist:
-        if trans.split(" ")[0] == currentpos:
+        if dir != "CW":
+            if trans.split(" ")[1] == currentpos:
+                return trans.split(" ")[0]
+
+        elif trans.split(" ")[0] == currentpos:
             return trans.split(" ")[1]
 
 def get_next_centerpos_for_face_rotation(facenum, currentpos, dir="CW"):
