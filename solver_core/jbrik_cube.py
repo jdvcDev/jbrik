@@ -511,6 +511,31 @@ def get_crosscenter_oppface_trans(rowcell):
 
     return rotdir
 
+# this tells what cell will rotate into a target position
+def get_facetrans_to_resultin_rowcell(destrowcell):
+    face1rowcell = convert_rowcell_to_face1_rowcell(destrowcell)
+    destrowcellface = get_face_for_rowcell(destrowcell)
+
+    for i in range(1, 3):
+#        row = facetransitions(i)
+        for j in range(0, 3):
+            cell = facetransitions[i][j]
+            if facetransitions[i][j] == face1rowcell:
+                rowcell = i.__str__() + "." + (j+1).__str__()
+                return convert_face1_rowcell_to_facenum_rowcell(rowcell, destrowcellface)
+
+def convert_rowcell_to_face1_rowcell(rowcell):
+    face1row = int(rowcell.split(".")[0]) + 3 - (get_face_for_rowcell(rowcell) * 3)
+    retrowcell = face1row.__str__() + "." + rowcell.split(".")[1]
+
+    return retrowcell
+
+def convert_face1_rowcell_to_facenum_rowcell(face1rowcell, targetfacenum):
+    face1rownum = int(face1rowcell.split(".")[0])
+    rownum = ((targetfacenum * 3) - (3 - face1rownum)).__str__() + "." + face1rowcell.split(".")[1]
+
+    return rownum
+
 def get_crosscenter_solvface_trans(rowcell):
     movetooppface = get_crosscenter_oppface_trans(rowcell)
     movestr = movetooppface[0:3] + "3"

@@ -162,7 +162,6 @@ def facecross_o3(cube, ccolor, facetosolve):
 
 
         # Were in the middle row at this point, either use an o1 transition or use a static move set to find face and move
-        #resultposadjface = jbrik_cube.get_adj_face_for_rowcell(resultpos)
         if nextposadjface == resultposadjface:
             log_utils.log("Rowcell: " + nextpos + " is in first order solve position for: " + resultpos)
             o1move = jbrik_cube.get_crosscenter_solvface_trans(nextpos)
@@ -174,10 +173,61 @@ def facecross_o3(cube, ccolor, facetosolve):
                 cube = move_lib.perform_unwind_list(unwindlist, cube)
             return cube
 
+        # we're in a middle row but a non o1 position rotate a non face position into the dest cell for nextpos
+        if nextposadjface != opptosolveface and nextposadjface != facetosolve:
+            # identify the destination of the next nextpos rotation
+            nextposmovestr = jbrik_cube.get_crosscenter_solvface_trans(nextpos)
+            resultpos = jbrik_cube.get_dest_pos_for_face_rotation(nextpos, nextposmovestr)
+
+            rotcount = 0
+            while cube.get_cell_val_by_rowcell(resultpos) == ccolor:
+                rotcount = rotcount + 1
+                cube = move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
+            if rotcount > 0:
+                movestr = facetosolve.__str__() + "CW" + rotcount.__str__()
+                log_utils.log("Perform transition: " + movestr)
+                cube.get_current_solve_move_list().append(movestr)
+
+            # resultpos is now ready to be faced
+            cube = move_lib.perform_rotation_str(nextposmovestr, cube)
+
+            return cube
+
+
+
+
+
+
+
+        # clean this up
+        if rowcelltomove == "16.2" or rowcelltomove == "18.2" or rowcelltomove == "13.2" or rowcelltomove == "15.2":
+            print("this is an o2 position but non mid row")
+            nextposmovestr = jbrik_cube.get_crosscenter_solvface_trans(rowcelltomove)
+            resultpos = jbrik_cube.get_dest_pos_for_face_rotation(rowcelltomove, nextposmovestr)
+
+            rotcount = 0
+            while cube.get_cell_val_by_rowcell(resultpos) == ccolor:
+                rotcount = rotcount + 1
+                cube = move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
+            if rotcount > 0:
+                movestr = facetosolve.__str__() + "CW" + rotcount.__str__()
+                log_utils.log("Perform transition: " + movestr)
+                cube.get_current_solve_move_list().append(movestr)
+
+            # resultpos is now ready to be faced
+            cube = move_lib.perform_rotation_str(nextposmovestr, cube)
+
+            return cube
+
+
+
+
+
+
+        print(" if we made it this far we're on oppface orbit??")
+        # solving for opface orbit will eliminate the next mess
 
         # wild west from here forward
-
-        # if we're here we moved to a non o1 position, try moving solve face to o1 position
         nextpos = rowcelltomove
         log_utils.log("Getting move crosscell solve/opp face adjacent to oppface transition for: " + nextpos)
         opmovestr = jbrik_cube.get_crosscenter_oppface_trans(nextpos)
@@ -213,9 +263,9 @@ def facecross_o3(cube, ccolor, facetosolve):
 
         # unwind movements
         cube = move_lib.perform_unwind_list(unwindlist, cube)
-
-    cube = facecross_o2(cube, ccolor, facetosolve)
+    #cube = facecross_o2(cube, ccolor, facetosolve)
     return cube
+
 
 def get_centerrowcell_of_color_from_face(cube, facenum, ccolor):
     for rowcell in jbrik_cube.get_cross_rowcell_for_face(facenum):
@@ -225,7 +275,7 @@ def get_centerrowcell_of_color_from_face(cube, facenum, ccolor):
 
     return ""
 
-# TODO rename this
+# TODO this whole method can be replaces by worflow using jbrik_cube.get_crosscenter_solvface_trans(rowcell)
 def get_facestr_for_cross_rowcell(rowcell, ccolor, cube):
     log_utils.log("Looking for 1st order facing solution for: " + rowcell)
     adjface = jbrik_cube.get_adj_face_for_rowcell(rowcell)
