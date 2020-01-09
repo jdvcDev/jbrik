@@ -508,11 +508,22 @@ def get_crosscenter_oppface_trans(rowcell):
         rotdir = "4CW1"
     elif rowcell == "18.2":
         rotdir = "2CC1"
-    else:
-        log_utils.log("Tried to get transition to oppface for a rowcell the isn't in a middle row: " + rowcell)
-        exit(1)
 
     return rotdir
+
+# return the transition to move from solve face to oppface orbit, useful for faced but unsolved corners
+def get_solveface_corner_oppfaceorbit_trans(rowcell):
+    if rowcell == "1.1":
+        rotdir = "6CC1 3CC1"
+    elif rowcell == "1.3":
+        rotdir = "5CW1 3CW1"
+    elif rowcell == "3.1":
+        rotdir = "6CW1 3CW1"
+    elif rowcell == "3.3":
+        rotdir = "5CC1 3CC1"
+
+    return rotdir
+
 
 # this tells what cell will rotate into a target position
 def get_facetrans_to_resultin_rowcell(destrowcell):

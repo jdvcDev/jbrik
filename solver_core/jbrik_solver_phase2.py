@@ -17,15 +17,7 @@ def solvecrosscorners(cube):
     cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
     cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
 
-    #check if all corners are faced but not solved
-    # may need to 180 swap corners
-    # possibly 90 swap corners
-    # worst case we can transition the corner off the solve face to the oppface orbit then go back throu the proper facing plan
-
-
-#    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
-#    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
-    log_utils.log("No more rowcells on opp face adjacent ring with color " + ccolor)
+    cube = deface_unsolved_faced_corner(cube, facetosolve, ccolor)
 
     while not are_all_crosscorners_solved(cube, facetosolve):
         cube = solvecrosscorners(cube)
@@ -33,6 +25,29 @@ def solvecrosscorners(cube):
     log_utils.log("All cross corners solved.")
     if cube.get_current_solve_move_list().__len__() > 0:
         cube.finalize_solve_phase()
+
+    return cube
+
+def deface_unsolved_faced_corner(cube, facetosolve, ccolor):
+    cornerrowcells = jbrik_cube.get_cornercell_rowcells_for_face(facetosolve)
+    for cornerrowcell in cornerrowcells:
+        if cube.get_cell_val_by_rowcell(cornerrowcell) == ccolor and not is_crosscorner_solved((cube, cornerrowcell)):
+            log_utils.log(cornerrowcell + " is faced but not solved")
+            defacemovestrset = jbrik_cube.get_solveface_corner_oppfaceorbit_trans(cornerrowcell)
+            defacemove = defacemovestrset.split(" ")[0]
+            defaceunwindmove = move_lib.reversetransition(defacemove)
+            o2move = defacemovestrset.split(" ")[1]
+
+            log_utils.log("Moving: " + defacemove + " to move " + cornerrowcell + " off solve face.")
+            cube = move_lib.perform_rotation_str(defacemove, cube)
+
+            log_utils.log("Moving: " + o2move + " to move " + cornerrowcell + " out of unwind move")
+            cube = move_lib.perform_rotation_str(o2move, cube)
+
+            log_utils.log("Moving: " + defaceunwindmove)
+            cube = move_lib.perform_rotation_str(defaceunwindmove, cube)
+
+            break
 
     return cube
 
