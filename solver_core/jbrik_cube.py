@@ -524,6 +524,19 @@ def get_solveface_corner_oppfaceorbit_trans(rowcell):
 
     return rotdir
 
+# transitions to solve oppface to center row for phase 3, in format [left right] from the perspective of oppface up
+# we can generalize this to any face if needed
+def get_oppface_centerrowcell_lr_middle_destcells(rowcell):
+    if rowcell == "7.2":
+        destcells = "15.2 18.2"
+    elif rowcell == "8.1":
+        destcells = "5.1 11.1"
+    elif rowcell == "8.3":
+        destcells = "11.3 5.3"
+    elif rowcell == "9.2":
+        destcells = "16.2 13.2"
+
+    return destcells
 
 # this tells what cell will rotate into a target position
 def get_facetrans_to_resultin_rowcell(destrowcell):

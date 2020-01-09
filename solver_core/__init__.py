@@ -1,11 +1,13 @@
 import jbrik_solver_phase1
 import jbrik_solver_phase2
+import jbrik_solver_phase3
 import jbrik_cube
 import log_utils
 import move_lib
 
 
-cubeStateStr = "wwowwwoyggbroowwyoogbryyyrbgyrgrbrgwgrybgowryrobgbobby" # solved in 12/18
+cubeStateStr = "rrwbwbyybggoooyyrgowwbybyworgborrwybrgyogwwoobggybrgwr" # solved in 12/21
+#cubeStateStr = "wwowwwoyggbroowwyoogbryyyrbgyrgrbrgwgrybgowryrobgbobby" # solved in 12/18
 #cubeStateStr = "obggwgowogrbboyygwrwobyobwwrogbrgwrryyrrgyyrgwybobobwy" # solved in 6/21
 #cubeStateStr = "gowowyygwgyrwoobogybowyyyrwbbbwrrrggogorgbbwyorwbbyrgr" # solved in 15/19
 #cubeStateStr = "owowwwywbgoryorobowowgyybrwryggrgyrybrrggoybbwygobbgbr" # solved in 0/17
@@ -32,3 +34,8 @@ Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
 
+Cube = jbrik_solver_phase3.solve_middle(Cube)
+print
+Cube.print_cube("", True)
+Cube.print_solvemap()
+#raw_input("\nPress Enter to continue...\n")
