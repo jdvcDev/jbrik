@@ -47,7 +47,9 @@ oppositefaces = {
     5: 6,
     6: 5
 }
-foursixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
+fivesixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
+fivesixmidrowcrossrowcells_l = ["13.2", "18.2"]
+fivesixmidrowcrossrowcells_r = ["15.2", "16.2"]
 
 
 class JbrikCube(object):

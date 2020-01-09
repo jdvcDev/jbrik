@@ -2,9 +2,6 @@ import log_utils
 import move_lib
 import jbrik_cube
 
-# TODO: rename all the adjacent rings to orbit
-
-
 def solvecrosscorners(cube):
     log_utils.log("Solving cross corners")
     ccolor = cube.get_cell_val_by_rowcell("2.2")

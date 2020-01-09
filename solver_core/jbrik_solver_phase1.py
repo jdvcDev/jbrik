@@ -184,7 +184,7 @@ def facecross_o3(cube, ccolor, facetosolve):
 
 
         # we're in o2 position (solveface rotation) but a non midrow because we're on a 4/6 face
-        if jbrik_cube.foursixmidrowcrossrowcells.__contains__(rowcelltomove):
+        if jbrik_cube.fivesixmidrowcrossrowcells.__contains__(rowcelltomove):
             log_utils.log(rowcelltomove + " is an o2 position but non mid row because it on a 4/6 face")
             nextposmovestr = jbrik_cube.get_crosscenter_solvface_trans(rowcelltomove)
             resultpos = jbrik_cube.get_dest_pos_for_face_rotation(rowcelltomove, nextposmovestr)
