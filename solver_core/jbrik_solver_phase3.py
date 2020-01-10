@@ -81,6 +81,10 @@ def align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube):
         if adjrowcellcolor == ccolor:
             continue
 
+        if crossrowcellcolor == ccolor and adjrowcellcolor == adjrowcellccolor:
+            log_utils.log("Middle rowcell: " + crossrowcell + " is solved, skipping.")
+            continue
+
         # if crossrowcellcolor is not facetosolve ccolor then it must be one of the adj ccolors
         testrowcell = adjrowcell
         testrowcellccolor = adjrowcellccolor
