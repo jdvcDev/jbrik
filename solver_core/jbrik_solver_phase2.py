@@ -1,5 +1,5 @@
-import log_utils
-import move_lib
+from utils import log_utils
+import jbrik_solver_move_lib
 import jbrik_cube
 
 def solvecrosscorners(cube):
@@ -32,17 +32,17 @@ def deface_unsolved_faced_corner(cube, facetosolve, ccolor):
             log_utils.log(cornerrowcell + " is faced but not solved")
             defacemovestrset = jbrik_cube.get_solveface_corner_oppfaceorbit_trans(cornerrowcell)
             defacemove = defacemovestrset.split(" ")[0]
-            defaceunwindmove = move_lib.reversetransition(defacemove)
+            defaceunwindmove = jbrik_solver_move_lib.reversetransition(defacemove)
             o2move = defacemovestrset.split(" ")[1]
 
             log_utils.log("Moving: " + defacemove + " to move " + cornerrowcell + " off solve face.")
-            cube = move_lib.perform_rotation_str(defacemove, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(defacemove, cube)
 
             log_utils.log("Moving: " + o2move + " to move " + cornerrowcell + " out of unwind move")
-            cube = move_lib.perform_rotation_str(o2move, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(o2move, cube)
 
             log_utils.log("Moving: " + defaceunwindmove)
-            cube = move_lib.perform_rotation_str(defaceunwindmove, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(defaceunwindmove, cube)
 
             break
 
@@ -57,18 +57,18 @@ def move_solveface_orbitcells_to_oppface(cube, solveface, ccolor):
             rotface = rotfacedir[0]
             rotdir = rotfacedir[1:3]
             rotstr = rotfacedir + "1"
-            unwindmove = move_lib.reversetransition(rotstr)
+            unwindmove = jbrik_solver_move_lib.reversetransition(rotstr)
 
             log_utils.log("Rotate face: " + rotface.__str__() + " " + rotdir + " to move it to opposite solve face.")
-            cube = move_lib.perform_rotation_str(rotstr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
             oppface = jbrik_cube.oppositefaces[solveface]
             rotstr = oppface.__str__() + "CW1"
             log_utils.log("Rotate oppface: " + rotstr + " to move target cell<???> out of the way of unwind")
-            cube = move_lib.perform_rotation_str(rotstr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
             log_utils.log("Performing unwind: " + unwindmove)
-            cube = move_lib.perform_rotation_str(unwindmove, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(unwindmove, cube)
             break
 
     return cube
@@ -91,7 +91,7 @@ def move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor):
                 destrowcell = jbrik_cube.get_dest_pos_for_face_rotation(destradjowcell, rotstr)
 
                 destradjowcell = jbrik_cube.get_non_oppface_adj_rowcell_for_corner(destrowcell, oppface)
-                cube = move_lib.perform_rotation_str(rotstr, cube)
+                cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
                 log_utils.log(destradjowcell + " is in 2nd order solve position.")
                 cube = solvecrosscorner_o2(cube, destradjowcell, oppface)
@@ -156,7 +156,7 @@ def move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor):
 
             rotstr = oppface.__str__() + "CW" + rotcount.__str__()
             if rotcount > 0:
-                cube = move_lib.perform_rotation_str(rotstr, cube)
+                cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
             # pick a face to rotate, doesn't matter which because oppfacecornerrowcell is under an unsolved rowcell
             rotface = unsolvedadjfaces[0]
@@ -169,17 +169,17 @@ def move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor):
                 rotdir = "CC"
 
             rotstr = rotface.__str__() + rotdir + "1"
-            unwindmove = move_lib.reversetransition(rotstr)
+            unwindmove = jbrik_solver_move_lib.reversetransition(rotstr)
             log_utils.log("Rotate face: " + rotstr + " to put target<??> into position for 2nd order solve.")
-            cube = move_lib.perform_rotation_str(rotstr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
             log_utils.log("Rotate face: " + oppface.__str__()
                           + " 180 to move target<??> out of the way of the unwind move: " + unwindmove)
             rotstr = oppface.__str__() + rotdir + "2"
-            cube = move_lib.perform_rotation_str(rotstr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
             log_utils.log("Performing unwind: " + unwindmove)
-            cube = move_lib.perform_rotation_str(unwindmove, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(unwindmove, cube)
 
     return cube
 
@@ -192,18 +192,18 @@ def solvecrosscorner_o2(cube, solverowcell, oppface):
     rotstr2 = rotmstrset.split(" ")[1]
 
     log_utils.log("Rotate face: " + rotstr1 + " to put " + solverowcell + " into position to align with solveface.")
-    cube = move_lib.perform_rotation_str(rotstr1, cube)
-    unwindmove1 = move_lib.reversetransition(rotstr1)
+    cube = jbrik_solver_move_lib.perform_rotation_str(rotstr1, cube)
+    unwindmove1 = jbrik_solver_move_lib.reversetransition(rotstr1)
 
     log_utils.log("Rotate face: " + rotstr2 + " to put " + solverowcell + " to align with solveface.")
-    cube = move_lib.perform_rotation_str(rotstr2, cube)
-    unwindmove2 = move_lib.reversetransition(rotstr2)
+    cube = jbrik_solver_move_lib.perform_rotation_str(rotstr2, cube)
+    unwindmove2 = jbrik_solver_move_lib.reversetransition(rotstr2)
 
     log_utils.log("Rotate face: " + unwindmove1 + " to unwind first transition")
-    cube = move_lib.perform_rotation_str(unwindmove1, cube)
+    cube = jbrik_solver_move_lib.perform_rotation_str(unwindmove1, cube)
 
     log_utils.log("Rotate face: " + unwindmove2 + " to unwind second transition")
-    cube = move_lib.perform_rotation_str(unwindmove2, cube)
+    cube = jbrik_solver_move_lib.perform_rotation_str(unwindmove2, cube)
 
     return cube
 

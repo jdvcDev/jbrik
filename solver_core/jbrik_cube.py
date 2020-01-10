@@ -1,4 +1,4 @@
-import log_utils
+from utils import log_utils
 
 # for reverse transition read transition chain backwards
 facetransitions = {

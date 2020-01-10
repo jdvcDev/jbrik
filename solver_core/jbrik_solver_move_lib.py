@@ -1,5 +1,5 @@
 import copy
-import log_utils
+from utils import log_utils
 import jbrik_cube
 
 def ninetydswap(startrowcell, dir, cube):

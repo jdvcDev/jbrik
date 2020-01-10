@@ -1,5 +1,5 @@
-import log_utils
-import move_lib
+from utils import log_utils
+import jbrik_solver_move_lib
 import jbrik_cube
 
 def solvecross(cube):
@@ -7,7 +7,7 @@ def solvecross(cube):
 
     ccolor = cube.get_cell_val_by_rowcell("2.2")
     facetosolve = 1
-    log_utils.log("Center color for face 1: "  + ccolor + "\n")
+    log_utils.log("Center color for face 1: " + ccolor + "\n")
 
     faced = False
     while not faced:
@@ -57,7 +57,7 @@ def facecross_o1(cube, ccolor, facetosolve, atomic=False):
             if solvestr != "" and solvestr is not None:
                 log_utils.log(rowcell + " is solved by: " + solvestr)
                 log_utils.log("Solve move list: " + cube.get_current_solve_move_list().__str__())
-                cube = move_lib.perform_rotation_str(solvestr, cube)
+                cube = jbrik_solver_move_lib.perform_rotation_str(solvestr, cube)
                 if atomic:
                     return cube
             else:
@@ -94,7 +94,7 @@ def facecross_o2(cube, ccolor, facetosolve):
                     rotcount = 0
                     while cube.get_cell_val_by_rowcell(crosscell) != ccolor:
                         rotcount = rotcount + 1
-                        cube = move_lib.perform_rotation_str(opptosolveface.__str__() + "CW1", cube, False)
+                        cube = jbrik_solver_move_lib.perform_rotation_str(opptosolveface.__str__() + "CW1", cube, False)
                     if rotcount > 0:
                         movestr = opptosolveface.__str__() + "CW" + rotcount.__str__()
                         log_utils.log("Perform transition: " + movestr)
@@ -131,7 +131,7 @@ def facecross_o3(cube, ccolor, facetosolve):
     opptosolveface = jbrik_cube.oppositefaces[facetosolve]
     rowcelltomove = ""
     for facenum in range(1, 7):
-        log_utils.log("Checking face: " + facenum.__str__() + " for cross cells that can face: "  + resultpos)
+        log_utils.log("Checking face: " + facenum.__str__() + " for cross cells that can face: " + resultpos)
         if facenum == facetosolve or facenum == opptosolveface:
             log_utils.log("Skipping solve/opp face: " + facenum.__str__())
             continue
@@ -156,7 +156,7 @@ def facecross_o3(cube, ccolor, facetosolve):
             rotcount = 0
             while cube.get_cell_val_by_rowcell(resultpos) == ccolor:
                 rotcount = rotcount + 1
-                cube = move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
+                cube = jbrik_solver_move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
             if rotcount > 0:
                 movestr = facetosolve.__str__() + "CW" + rotcount.__str__()
                 log_utils.log("Perform transition: " + movestr)
@@ -166,7 +166,7 @@ def facecross_o3(cube, ccolor, facetosolve):
             log_utils.log("Rotating face: " + rotface.__str__() + " " + "CW1 to move: " + rowcelltomove
                           + " into position: " + nextpos + " for next rotation to opposite face.")
             movestr = rotface.__str__() + "CW1"
-            cube = move_lib.perform_rotation_str(movestr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(movestr, cube)
             rowcelltomove = nextpos
 
 
@@ -174,7 +174,7 @@ def facecross_o3(cube, ccolor, facetosolve):
         if nextposadjface == resultposadjface:
             log_utils.log("Rowcell: " + nextpos + " is in first order solve position for: " + resultpos)
             o1move = jbrik_cube.get_crosscenter_solvface_trans(nextpos)
-            cube = move_lib.perform_rotation_str(o1move, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(o1move, cube)
 
             # unwind if we havent faced all the cross cells
 #            if not are_all_cross_rowcells_faced(cube, ccolor, facetosolve):
@@ -192,14 +192,14 @@ def facecross_o3(cube, ccolor, facetosolve):
             rotcount = 0
             while cube.get_cell_val_by_rowcell(resultpos) == ccolor:
                 rotcount = rotcount + 1
-                cube = move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
+                cube = jbrik_solver_move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
             if rotcount > 0:
                 movestr = facetosolve.__str__() + "CW" + rotcount.__str__()
                 log_utils.log("Performed transition: " + movestr)
                 cube.get_current_solve_move_list().append(movestr)
 
             # resultpos is now ready to be faced
-            cube = move_lib.perform_rotation_str(nextposmovestr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(nextposmovestr, cube)
 
             return cube
 
@@ -214,14 +214,14 @@ def facecross_o3(cube, ccolor, facetosolve):
             rotcount = 0
             while cube.get_cell_val_by_rowcell(resultpos) == ccolor:
                 rotcount = rotcount + 1
-                cube = move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
+                cube = jbrik_solver_move_lib.perform_rotation_str(facetosolve.__str__() + "CW1", cube, False)
             if rotcount > 0:
                 movestr = facetosolve.__str__() + "CW" + rotcount.__str__()
                 log_utils.log("Perform transition: " + movestr)
                 cube.get_current_solve_move_list().append(movestr)
 
             # resultpos is now ready to be faced
-            cube = move_lib.perform_rotation_str(nextposmovestr, cube)
+            cube = jbrik_solver_move_lib.perform_rotation_str(nextposmovestr, cube)
 
             return cube
 
@@ -293,7 +293,7 @@ def solve_cross_o1(cube, ccolor, facetosolve):
         adjrowcellcolor = cube.get_adjcell_color_for_center_rowcell(rowcell)
         adjfacecolor = cube.get_center_color_for_rowcell(adjrowcell)
         log_utils.log("Rowcell adjacent to: " + rowcell + " is " + adjrowcell + ", has color: " + adjrowcellcolor
-              + " and has face color: " + adjfacecolor)
+                      + " and has face color: " + adjfacecolor)
         colormap[adjfacecolor] = adjrowcell
 
         if adjrowcellcolor == adjfacecolor:
@@ -305,7 +305,7 @@ def solve_cross_o1(cube, ccolor, facetosolve):
     log_utils.log("Solving: " + solverowcell)
     targetrowcell = colormap[adjrowcellcolor]
     log_utils.log("Rotating face: " + facetosolve.__str__() + " until " + solverowcell + "is in position: " + targetrowcell)
-    cube = move_lib.move_center_rowcell_to_new_pos_onface(solverowcell, targetrowcell, facetosolve, cube)
+    cube = jbrik_solver_move_lib.move_center_rowcell_to_new_pos_onface(solverowcell, targetrowcell, facetosolve, cube)
 
     return cube
 
@@ -324,10 +324,10 @@ def solve_cross_o2(cube, ccolor, facetosolve):
                 log_utils.log("90deg CW swap targetcell: " + targetcellcw + " needs to be solved.")
                 log_utils.log("Trying a 90 degree CW swap: " + rowcell)
                 startmovelen = cube.get_current_solve_move_list()
-                cube = move_lib.ninetydswap(rowcell, "CW", cube)
+                cube = jbrik_solver_move_lib.ninetydswap(rowcell, "CW", cube)
                 if not is_cross_rowcell_solved(targetcellcw, cube, ccolor):
                     log_utils.log("90 degree CW swap did not solve: " + rowcell)
-                    cube = move_lib.ninetydswap(targetcellcw, "CC", cube)
+                    cube = jbrik_solver_move_lib.ninetydswap(targetcellcw, "CC", cube)
                     remove_moves_from_solvelist(startmovelen.__len__() - 1, cube)
                 else:
                     log_utils.log("90 degree CW swap solved: " + targetcellcw)
@@ -338,10 +338,10 @@ def solve_cross_o2(cube, ccolor, facetosolve):
                 log_utils.log("90deg CC swap targetcell: " + targetcellcc + " needs to be solved.")
                 log_utils.log("Trying a 90 degree CC swap: " + rowcell)
                 startmovelen = cube.get_current_solve_move_list()
-                cube = move_lib.ninetydswap(rowcell, "CC", cube)
+                cube = jbrik_solver_move_lib.ninetydswap(rowcell, "CC", cube)
                 if not is_cross_rowcell_solved(targetcellcc, cube, ccolor):
                     log_utils.log("90 degree CC swap did not solve: " + rowcell)
-                    cube = move_lib.ninetydswap(targetcellcc, "CW", cube)
+                    cube = jbrik_solver_move_lib.ninetydswap(targetcellcc, "CW", cube)
                     remove_moves_from_solvelist(startmovelen.__len__() - 1, cube)
                 else:
                     log_utils.log("90 degree CC swap solved: " + targetcellcc)
@@ -352,7 +352,7 @@ def solve_cross_o2(cube, ccolor, facetosolve):
                 log_utils.log("180deg swap targetcell: " + targetcell180 + " needs to be solved.")
                 log_utils.log("Trying a 180 degree swap: " + rowcell)
                 startmovelen = cube.get_current_solve_move_list()
-                cube = move_lib.oneeightydswap(rowcell, cube)
+                cube = jbrik_solver_move_lib.oneeightydswap(rowcell, cube)
                 if not is_cross_rowcell_solved(targetcell180, cube, ccolor):
                     print("This is a problem because we've already checked the other possible solutions EJECT!")
                     # TODO exception
