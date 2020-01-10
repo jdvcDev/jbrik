@@ -2,6 +2,7 @@ from utils import log_utils
 import jbrik_solver_move_lib
 import jbrik_cube
 
+# middlerow https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/step3-second-layer-f2l/
 def solve_middle(cube):
     log_utils.log("Starting middle row solve")
     facetosolve = 3

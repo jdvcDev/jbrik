@@ -47,6 +47,14 @@ oppositefaces = {
     5: 6,
     6: 5
 }
+# if 7.1 f=2, t=3, l=5, r=6
+oppface_cell_face_map = {
+    "7.1": [2, 3, 5, 6],
+    "7.3": [5, 3, 4, 2],
+    "9.1": [6, 3, 2, 4],
+    "9.3": [4, 3, 6, 5],
+}
+
 fivesixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
 fivesixmidrowcrossrowcells_l = ["13.2", "18.2"]
 fivesixmidrowcrossrowcells_r = ["15.2", "16.2"]

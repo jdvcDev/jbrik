@@ -2,6 +2,7 @@ from utils import log_utils
 import jbrik_solver_move_lib
 import jbrik_cube
 
+# solveface corners https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/step-2-first-layer-corners/
 def solvecrosscorners(cube):
     log_utils.log("Solving cross corners")
     ccolor = cube.get_cell_val_by_rowcell("2.2")

@@ -2,6 +2,7 @@ from utils import log_utils
 import jbrik_solver_move_lib
 import jbrik_cube
 
+# solveface cross https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/step-1-first-layer-edges/
 def solvecross(cube):
     log_utils.log("Starting cross solve")
 
