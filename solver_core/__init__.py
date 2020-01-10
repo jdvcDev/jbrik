@@ -2,11 +2,13 @@ import jbrik_solver_phase1
 import jbrik_solver_phase2
 import jbrik_solver_phase3
 import jbrik_solver_phase4
+import jbrik_solver_phase5
 import jbrik_solver_phase6
+import jbrik_solver_phase7
 import jbrik_cube
 import jbrik_solver_move_lib
 
-cubeStateStr = "wwwwwwwwwoooooooyyyrryygyyrogyrryrrrgbbggrggggbbobbbbb"  # solved in 0/0/9/0/0/16
+cubeStateStr = "wwwwwwwwwoooooooyyyrryygyyrogyrryrrrgbbggrggggbbobbbbb"  # solved in 0/0/9/0/0/16/27 Complete!!
 #cubeStateStr = "wwwwwwwwwooogobyoygbbyyggybyoygrbrrrgroggrgyroybrbbrob" # solved in 0/0/47
 #cubeStateStr = "wwowwwgwwyorgorrygboyrybyrwbbgorybrwgbrggobyrogogbbyyo" # solved in 0/23/47
 #cubeStateStr = "yrygwroygyoyrobwowrbbyyggwrobbwrwgwrbgwygrryowoogbogbb" # solved in 17/26/31
@@ -66,10 +68,9 @@ Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
 
-'''
-Cube = jbrik_solver_phase7.face_oppface_cross(Cube)
+
+Cube = jbrik_solver_phase7.solve_oppface_corners(Cube)
 print
 Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
-'''
