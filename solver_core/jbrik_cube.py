@@ -55,6 +55,23 @@ oppface_cell_face_map = {
     "9.1": [6, 3, 2, 4],
     "9.3": [4, 3, 6, 5],
 }
+oppfacecell_rface_align_map = {
+    # 2 side by side
+    "7.1 7.3": 6,
+    "7.1 9.1": 4,
+    "7.3 9.3": 2,
+    "9.1 9.3": 5,
+
+    # 2 across
+    "7.1 9.3": 4,
+    "7.3 9.1": 6, # not sure 6 works but 5 doesn't
+
+    # 3
+    "7.1 7.3 9.1": 6,
+    "7.1 7.3 9.3": 2,
+    "7.1 9.1 9.3": 4,
+    "7.3 9.1 9.3": 5,
+}
 
 fivesixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
 fivesixmidrowcrossrowcells_l = ["13.2", "18.2"]
