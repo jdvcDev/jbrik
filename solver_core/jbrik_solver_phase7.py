@@ -3,7 +3,6 @@ import jbrik_cube
 import jbrik_solver_move_lib
 
 # oppface corners solved https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/orient-yellow-corners-how-to-solve-last-layer-corner/
-
 def solve_oppface_corners(cube):
     log_utils.log("Solving opposite face corners.")
     facetosolve = 3
@@ -25,8 +24,8 @@ def solve_oppface_corners(cube):
         # find right hand face for solved rowcell combo
         tface = facetosolve.__str__()
         bface = "1"
-        rface = jbrik_cube.oppfacecell_rface_align_map[unsolvedcorners].split(" ")[0].__str__()
-        cornertosolve = jbrik_cube.oppfacecell_rface_align_map[unsolvedcorners].split(" ")[1]
+        rface = jbrik_cube.oppfacecell_rface_corner_align_map[unsolvedcorners].split(" ")[0].__str__()
+        cornertosolve = jbrik_cube.oppfacecell_rface_corner_align_map[unsolvedcorners].split(" ")[1]
 
         # special case where solved rows are opposites
         if unsolvedcorners == "7.1 9.3" or unsolvedcorners == "7.3 9.1":

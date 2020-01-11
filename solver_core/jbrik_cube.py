@@ -47,6 +47,17 @@ oppositefaces = {
     5: 6,
     6: 5
 }
+oppfacecell_rface_center_align_map = {
+    # V
+    "7.2 8.1": "V 4 5",
+    "7.2 8.3": "V 6 4",
+    "8.1 9.3": "V 5 2",
+    "8.3 9.2": "V 2 6",
+
+    # line
+    "7.2 9.2": "L 5 2",
+    "8.2 8.3": "L 4 5"
+}
 # if 7.1 f=2, t=3, l=5, r=6
 oppface_cell_face_map = {
     "0.0": ["f", "t", "l", "r"],
@@ -55,7 +66,7 @@ oppface_cell_face_map = {
     "9.1": [6, 3, 2, 4],
     "9.3": [4, 3, 6, 5],
 }
-oppfacecell_rface_align_map = {
+oppfacecell_rface_corner_align_map = {
     # 2 side by side
     "7.1 7.3": "6 7.1",
     "7.1 9.1": "4 9.1",
