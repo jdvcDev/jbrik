@@ -15,10 +15,14 @@ def solve_oppface_corners(cube):
 
     if unsolvedcornerlist.__len__() != 0:
         unsolvedcornerlist.sort()
-        if unsolvedcornerlist.__len__() == 3:
+        if unsolvedcornerlist.__len__() == 4:
+            unsolvedcorners = unsolvedcornerlist[0] + " " + unsolvedcornerlist[1] + " " + unsolvedcornerlist[2] + " " + unsolvedcornerlist[3]
+        elif unsolvedcornerlist.__len__() == 3:
             unsolvedcorners = unsolvedcornerlist[0] + " " + unsolvedcornerlist[1] + " " + unsolvedcornerlist[2]
         elif unsolvedcornerlist.__len__() == 2:
             unsolvedcorners = unsolvedcornerlist[0] + " " + unsolvedcornerlist[1]
+        elif unsolvedcornerlist.__len__() == 1:
+            print("investigate this case")
 
         # orient so that (top) oppface front right corner is unsolved (as well as the front left corner) if you can get both
         # find right hand face for solved rowcell combo
