@@ -1,21 +1,31 @@
-#cubeStateStr = "wwwwwwwwwoooooooyyyrryygyyrogyrryrrrgbbggrggggbbobbbbb"  # solved in 0/0/9/0/0/16/27 Complete!!
-#cubeStateStr = "wwwwwwwwwooogobyoygbbyyggybyoygrbrrrgroggrgyroybrbbrob" # solved in 0/0/47
-#cubeStateStr = "wwowwwgwwyorgorrygboyrybyrwbbgorybrwgbrggobyrogogbbyyo" # solved in 0/23/47
-#cubeStateStr = "yrygwroygyoyrobwowrbbyyggwrobbwrwgwrbgwygrryowoogbogbb" # solved in 17/26/31
-#cubeStateStr = "wwowwwoyggbroowwyoogbryyyrbgyrgrbrgwgrybgowryrobgbobby" # solved in 12/18 loops on 3
-#cubeStateStr = "rgrowgrgwyworoobwoybbryygboyoworywywbrbrgbgyyowgbbgrwg" # solved in 9/27 loops on 3
-#cubeStateStr = "orowwbwgbooroobwogbbogyyrryggrwrbgwybwgygryrywowybgryb" # solved in 15/15/32
-#cubeStateStr = "gyrgwogowygbboogbyorogywwrybwrrrorrbybgygbowbrgwybwwyo" # solved in 17/28/32
-#cubeStateStr = "rrwbwbyybggoooyyrgowwbybyworgborrwybrgyogwwoobggybrgwr" # solved in 12/21/39
-#cubeStateStr = "bbwywgyrwowgooowgrgrgwybyowrgrrroywobwbygyryybbogbrobg" # solved in 12/13/41
-#cubeStateStr = "obggwgowogrbboyygwrwobyobwwrogbrgwrryyrrgyyrgwybobobwy" # solved in 6/21/32
-#cubeStateStr = "gowowyygwgyrwoobogybowyyyrwbbbwrrrggogorgbbwyorwbbyrgr" # solved in 15/19/31
-#cubeStateStr = "owowwwywbgoryorobowowgyybrwryggrgyrybrrggoybbwygobbgbr" # solved in 0/17/31
-#cubeStateStr = "grrowgwywgbbrorogygoobyggwyrbborwrwwborygwogbyywrbbyyo" # solved in 13/16/25
-#cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo" # solved in 16/26/40
-#cubeStateStr = "rwgrwbbbbyoogoyogwyrgrybrgwyyoorwbgyobgygrworgwwwbybor" # solved in 11/26/24
-#cubeStateStr = "bwrwwwyworoggobygborogyyrrgwyybrbyrgworggowywbroobbgyb" # solved in 0/26/24
-#cubeStateStr = "bbrgwgrogbwwwobgyowobyyboygbrobrrwoyggyogworywyrgbwrry" # solved in 6/19/32
+cubeStateStr = "rwwwwwgwyroggorwbgoyrryyobbyororrbggoyyrggobwbywgbbboy" # 5/16/48/6
+#cubeStateStr = "yrygwroygyoyrobwowrbbyyggwrobbwrwgwrbgwygrryowoogbogbb" # 17/26/32/6
+#cubeStateStr = "orowwbwgbooroobwogbbogyyrryggrwrbgwybwgygryrywowybgryb" # 15/15/32/6
+#cubeStateStr = "gyrgwogowygbboogbyorogywwrybwrrrorrbybgygbowbrgwybwwyo" # 17/28/32/6
+#cubeStateStr = "rrwbwbyybggoooyyrgowwbybyworgborrwybrgyogwwoobggybrgwr" # 12/21/39/0
+#cubeStateStr = "wwwwwwwwwoooyogyrrgyybyyygoorbbryrrrgoyggggobgobrbbrbb" # 0/0/41/6
+#cubeStateStr = "wwwwwwwwwoooyogyrrgyybyyygoorbbryrrrgoyggggobgobrbbrbb" # 0/0/39/6
+#cubeStateStr = "gorbwryywbgooooybbgorrybwryoygwrrrywbwoggwggybgwbbyrwo" # 12/26/32/6
+#cubeStateStr = "bbwywgyrwowgooowgrgrgwybyowrgrrroywobwbygyryybbogbrobg" # 12/13/41/6
+#cubeStateStr = "obggwgowogrbboyygwrwobyobwwrogbrgwrryyrrgyyrgwybobobwy" # 6/21/32/6
+#cubeStateStr = "wwwwwwwwwooogobyoygbbyyggybyoygrbrrrgroggrgyroybrbbrob" # 0/0/47/6
+#cubeStateStr = "wwowwwgwwyorgorrygboyrybyrwbbgorybrwgbrggobyrogogbbyyo" # 0/23/47/6
+#cubeStateStr = "obggwgowogrbboyygwrwobyobwwrogbrgwrryyrrgyyrgwybobobwy" # 6/21/32/6
+#cubeStateStr = "wwwwwwwwwoooooooyyyrryygyyrogyrryrrrgbbggrggggbbobbbbb" # 0/0/9/0/0/16/27 Complete!!
+#cubeStateStr = "wwwwwwwwwooorobyrroyyyyoyyrbogbrrrrrggyggggyboobgbbgbb" # 0/0 loops in 3
+#cubeStateStr = "rwwwwwgwyroggorbbgyoryyyoybbgyorrbggogorgrobwwywbbbroy" # 0/9/16 loops in 3
+#cubeStateStr = "oybowrygworrwobwwwgggbyyrbyyobwrrbgwoyrbgobwrgoyybgorg" # 10/22 loops in 3
+#cubeStateStr = "wwowwwoyggbroowwyoogbryyyrbgyrgrbrgwgrybgowryrobgbobby" # 12/18 loops on 3
+#cubeStateStr = "rgrowgrgwyworoobwoybbryygboyoworywywbrbrgbgyyowgbbgrwg" # 9/27 loops on 3
+#cubeStateStr = "orobwrgyrrgwgoybgywwgwyrwrrbwyorygbybobygggborbwobwooy" # 8/14/32 loops in 3
+#cubeStateStr = "gowowyygwgyrwoobogybowyyyrwbbbwrrrggogorgbbwyorwbbyrgr" # 15/19/30 loops in 3
+#cubeStateStr = "owowwwywbgoryorobowowgyybrwryggrgyrybrrggoybbwygobbgbr" # 0/17/30 loops in 3
+#cubeStateStr = "grrowgwywgbbrorogygoobyggwyrbborwrwwborygwogbyywrbbyyo" # 13/16/24 loops in 3
+#cubeStateStr = "gorowbbyowoywobbgbryrrygowowrbgrrywgwyywgogyygrrbbbwgo" # 16/26/40 loops in 3
+#cubeStateStr = "rwgrwbbbbyoogoyogwyrgrybrgwyyoorwbgyobgygrworgwwwbybor" # 11/26/23 loops in 3
+#cubeStateStr = "bwrwwwyworoggobygborogyyrrgwyybrbyrgworggowywbroobbgyb" # 0/26/24 loops in 3
+#cubeStateStr = "bbrgwgrogbwwwobgyowobyyboygbrobrrwoyggyogworywyrgbwrry" # 6/19/32 loops in 3
+
 
 https://www.grubiks.com/solvers/rubiks-cube-3x3x3/
 https://github.com/DexterInd/BrickPi/tree/master/Software/BrickPi_Python

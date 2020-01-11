@@ -43,9 +43,8 @@ def face_oppface_cross(cube):
             log_utils.log("Performing line movelist.")
             # F R U R' U' F'
             movelist = [fface + "CW1", rface + "CW1", tface + "CW1", rface + "CC1", tface + "CC1", fface + "CC1"]
-            movelist = []
-            for rmove in movelist:
-                cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
+#            for rmove in movelist:
+#                cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
 
         else:
             # align v to left/top for frontface
