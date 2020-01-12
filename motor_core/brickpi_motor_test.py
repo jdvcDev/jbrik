@@ -25,7 +25,7 @@
 # mind your parentheses!
 
 # requires
-# brickp_ython
+# brick_python
 # pyserial
 
 
