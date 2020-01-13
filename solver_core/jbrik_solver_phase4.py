@@ -27,7 +27,7 @@ def face_oppface_cross(cube):
         fface = "6"
         rface = "4"
 
-        if solvedcelllist.__len__() != 0:
+        if solvedcelllist.__len__() > 1:
             solvedcelllist.sort()
             log_utils.log("Solved cells: " + solvedcelllist.__str__())
             solvedcells = solvedcelllist[0] + " " + solvedcelllist[1]
