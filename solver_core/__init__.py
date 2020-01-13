@@ -9,11 +9,6 @@ import jbrik_cube
 import jbrik_solver_move_lib
 
 cubeStateStr = "grrowgwywgbbrorogygoobyggwyrbborwrwwborygwogbyywrbbyyo" # 13/16/24/6
-cubeStateStr = "rboywrgrorbbwowwwwggggygoybgororbbobwwyygryrrygwybbooy" # 7/11/24/6
-#cubeStateStr = "rwwwwwgwyroggorwbgoyrryyobbyororrbggoyyrggobwbywgbbboy" # 5/16/48/6
-#cubeStateStr = "rwgrwbbbbyoogoyogwyrgrybrgwyyoorwbgyobgygrworgwwwbybor" # 11/26/31/0
-#cubeStateStr = "bwrwwwyworoggobygborogyyrrgwyybrbyrgworggowywbroobbgyb" # 0/26/31/6
-#cubeStateStr = "bbrgwgrogbwwwobgyowobyyboygbrobrrwoyggyogworywyrgbwrry" # 6/19/32/6
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
 
