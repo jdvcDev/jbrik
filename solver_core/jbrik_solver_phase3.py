@@ -9,7 +9,6 @@ def solve_middle(cube):
 
     solved = are_all_middle_rowcells_solved(cube)
     while not solved:
-
         cube = swap_backwards_oriented_mid_rowcells(facetosolve, "swap", cube)
 
         cube = swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
@@ -19,41 +18,6 @@ def solve_middle(cube):
         cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
 
         solved = are_all_middle_rowcells_solved(cube)
-
-        '''
-        # identify a non matched center row that isn't matched to the front or LR face nor top color,
-        # saw back to the top and next step
-        #cube =swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
-
-
-        # check and solve
-        cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
-        solved = are_all_middle_rowcells_solved(cube)
-
-        # move any middle row oppface middle cell back to oppface
-        cube = swap_backwards_oriented_mid_rowcells(facetosolve, "back", cube)
-        cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
-        solved = are_all_middle_rowcells_solved(cube)
-
-        # for each oppface crossrowcell
-        # rotate until rowcell adjacent to crossrowcell is alignined with center color
-#        cube = align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube)
-
-#        solved = are_all_middle_rowcells_solved(cube)
-        cube = swap_backwards_oriented_mid_rowcells(facetosolve, "swap", cube)
-        cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
-        solved = are_all_middle_rowcells_solved(cube)
-
-        # identify a non matched center row that isn't matched to the front or LR face nor top color,
-        # saw back to the top and next step
-        swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
-
-        cube = align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube)
-        cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
-        solved = are_all_middle_rowcells_solved(cube)
-        '''
-
-
 
     cube.finalize_solve_phase(3,)
     log_utils.log("Middle row is solved")
