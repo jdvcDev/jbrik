@@ -9,17 +9,17 @@ def face_oppface_cross(cube):
     facetosolve = 3
     ccolor = cube.get_center_color_for_facenum(facetosolve)
 
-    solved = False
-    while not solved:
+    faced = False
+    while not faced:
         #determine count of faced crosscells
-        solvedcelllist = []
+        facedcelllist = []
         crosscells = jbrik_cube.get_cross_rowcell_for_face(facetosolve)
         for crosscell in crosscells:
             if cube.get_cell_val_by_rowcell(crosscell) == ccolor:
-                solvedcelllist.append(crosscell)
+                facedcelllist.append(crosscell)
 
-        if solvedcelllist.__len__() == 4:
-            solved = True
+        if facedcelllist.__len__() == 4:
+            faced = True
             break
 
         alignmenttype = "0"
@@ -27,10 +27,10 @@ def face_oppface_cross(cube):
         fface = "6"
         rface = "4"
 
-        if solvedcelllist.__len__() > 1:
-            solvedcelllist.sort()
-            log_utils.log("Solved cells: " + solvedcelllist.__str__())
-            solvedcells = solvedcelllist[0] + " " + solvedcelllist[1]
+        if facedcelllist.__len__() > 1:
+            facedcelllist.sort()
+            log_utils.log("Solved cells: " + facedcelllist.__str__())
+            solvedcells = facedcelllist[0] + " " + facedcelllist[1]
 
             facemap = jbrik_cube.oppfacecell_rface_center_align_map[solvedcells]
             alignmenttype = facemap.split(" ")[0]
@@ -43,12 +43,9 @@ def face_oppface_cross(cube):
             log_utils.log("Performing line movelist.")
             # F R U R' U' F'
             movelist = [fface + "CW1", rface + "CW1", tface + "CW1", rface + "CC1", tface + "CC1", fface + "CC1"]
-#            for rmove in movelist:
-#                cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
 
         else:
             # align v to left/top for frontface
-            #if alignmenttype == "V":
             log_utils.log("Performing shortcut V movelist.")
             # F U R U' R' F'
             movelist = [fface + "CW1", tface + "CW1", rface + "CW1", tface + "CC1", rface + "CC1", fface + "CC1"]
@@ -56,7 +53,7 @@ def face_oppface_cross(cube):
         for rmove in movelist:
             cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
 
-    cube.finalize_solve_phase()
+    cube.finalize_solve_phase(4,)
     log_utils.log("Opposite face cross positioned")
     return cube
 

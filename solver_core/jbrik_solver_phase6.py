@@ -52,7 +52,7 @@ def position_oppface_corners(cube):
             if is_corner_positioned(cornerrowcell, cube):
                 poscount += 1
 
-    cube.finalize_solve_phase()
+    cube.finalize_solve_phase(6,)
     log_utils.log("Opposite face corners positioned")
     return cube
 

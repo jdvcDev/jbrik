@@ -21,9 +21,10 @@ def solvecrosscorners(cube):
         cube = solvecrosscorners(cube)
 
     log_utils.log("All cross corners solved.")
-    if cube.get_current_solve_move_list().__len__() > 0:
-        cube.finalize_solve_phase()
+#    if cube.get_current_solve_move_list().__len__() > 0:
+#        cube.finalize_solve_phase(2,)
 
+    cube.finalize_solve_phase(2, )
     return cube
 
 def deface_unsolved_faced_corner(cube, facetosolve, ccolor):

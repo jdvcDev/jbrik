@@ -8,8 +8,7 @@ import jbrik_solver_phase7
 import jbrik_cube
 import jbrik_solver_move_lib
 
-cubeStateStr = "wwwwwwwwwooooooooygybyyyoyyyrrrrrrrrggggggggrbbbbbbybb"
-
+cubeStateStr = "wwwwwwwwwoooooyybygrggygbbbyoyyrrrrrgyoggrgoorbbybbrgb"
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
 
@@ -36,6 +35,7 @@ print
 Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
+'''
 
 Cube = jbrik_solver_phase5.solve_crossoppface_orbits(Cube)
 print
@@ -54,3 +54,4 @@ print
 Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
+'''

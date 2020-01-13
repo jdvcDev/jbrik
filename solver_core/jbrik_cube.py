@@ -84,6 +84,7 @@ oppfacecell_rface_corner_align_map = {
     "7.1 9.1 9.3": "4 9.1",
     "7.3 9.1 9.3": "5 9.3",
 }
+middle_rowccells = {"5.1","5.3", "13.2", "15.2", "11.1", "11.3", "16.2", "18.2"}
 
 fivesixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
 fivesixmidrowcrossrowcells_l = ["13.2", "18.2"]
@@ -251,12 +252,15 @@ class JbrikCube(object):
     def get_current_solve_move_list(self):
         return self.currentSolveList
 
-    def finalize_solve_phase(self, simplifylist=True):
-        currentphase = self.solveMap.__len__() + 1
+    def finalize_solve_phase(self, phasenum, simplifylist=True):
         if simplifylist:
-            self.solveMap[currentphase] = reducemovelist(self.currentSolveList)
+            self.solveMap[phasenum] = reducemovelist(self.currentSolveList)
         else:
-            self.solveMap[currentphase] = self.currentSolveList
+            self.solveMap[phasenum] = self.currentSolveList
+
+        for i in range(1, self.solveMap.__len__()):
+            if self.solveMap[i] is None:
+                self.solveMap[i] = []
 
         self.currentSolveList = []
 
@@ -548,6 +552,26 @@ def get_crosscenter_oppface_trans(rowcell):
         rotdir = "4CW1"
     elif rowcell == "18.2":
         rotdir = "2CC1"
+
+    return rotdir
+
+def get_centerrow_orbit_trans_dir(rowcell):
+    if rowcell == "5.1":
+        rotdir = "L"
+    elif rowcell == "5.3":
+        rotdir = "R"
+    elif rowcell == "13.2":
+        rotdir = "L"
+    elif rowcell == "15.2":
+        rotdir = "R"
+    elif rowcell == "11.1":
+        rotdir = "L"
+    elif rowcell == "11.3":
+        rotdir = "R"
+    elif rowcell == "16.2":
+        rotdir = "R"
+    elif rowcell == "18.2":
+        rotdir = "L"
 
     return rotdir
 

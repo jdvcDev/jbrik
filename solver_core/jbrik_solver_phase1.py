@@ -35,7 +35,7 @@ def solvecross(cube):
     while not are_all_cross_rowcells_solved(cube, ccolor, facetosolve):
         cube = solvecross(cube)
 
-    cube.finalize_solve_phase()
+    cube.finalize_solve_phase(1,)
     log_utils.log("Cross is solved")
     return cube
 
