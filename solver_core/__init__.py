@@ -35,7 +35,6 @@ print
 Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
-'''
 
 Cube = jbrik_solver_phase5.solve_crossoppface_orbits(Cube)
 print
@@ -54,4 +53,3 @@ print
 Cube.print_cube("", True)
 Cube.print_solvemap()
 #raw_input("\nPress Enter to continue...\n")
-'''
