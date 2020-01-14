@@ -8,7 +8,7 @@ import jbrik_solver_phase7
 import jbrik_cube
 import jbrik_solver_move_lib
 
-cubeStateStr = "grrowgwywgbbrorogygoobyggwyrbborwrwwborygwogbyywrbbyyo" # 13/16/24/6
+cubeStateStr = "wwwwwwwwwoooooyybygrggygbbbyoyyrrrrrgyoggrgoorbbybbrgb"
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
 
