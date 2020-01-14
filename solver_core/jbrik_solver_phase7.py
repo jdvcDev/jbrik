@@ -19,7 +19,6 @@ def solve_oppface_corners(cube):
             unsolvedcornerlist.sort()
             if unsolvedcornerlist.__len__() == 4:
                 unsolvedcorners = unsolvedcornerlist[0] + " " + unsolvedcornerlist[1] + " " + unsolvedcornerlist[2] + " " + unsolvedcornerlist[3]
-    #            unsolvedcorners = unsolvedcornerlist[0] + " " + unsolvedcornerlist[1]
             elif unsolvedcornerlist.__len__() == 3:
                 unsolvedcorners = unsolvedcornerlist[0] + " " + unsolvedcornerlist[1] + " " + unsolvedcornerlist[2]
             elif unsolvedcornerlist.__len__() == 2:
@@ -48,7 +47,7 @@ def solve_oppface_corners(cube):
             for i in range(0, unsolvedcornerlist.__len__()):
                 # after 2 check for solve,
                 attemptcount = 0
-
+                '''
                 while attemptcount < 2:
                     cube = attempt_corner_solve(movelist, cube)
                     attemptcount += 1
@@ -62,11 +61,10 @@ def solve_oppface_corners(cube):
                 while not is_corner_solved(cornertosolve, ccolor, cube) and attemptcount < 2:
                     cube = attempt_corner_solve(movelist, cube)
                     attemptcount += 1
-                '''
+
 
                 # final rotation
                 cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW1", cube)
-
 
                 # rotate until next unsolved is in top/front/right, never more than 2 turns
                 attemptcount = 0
@@ -74,15 +72,8 @@ def solve_oppface_corners(cube):
                     cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW2", cube)
                     attemptcount += 1
 
-
-#                # final rotation
-#                cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW1", cube)
-
         else:
             solved = True
-
-    #if are_all_corners_solved(cube, facetosolve):
-
 
     cube.finalize_solve_phase(7,)
     log_utils.log("Opposite face corners solved.")
