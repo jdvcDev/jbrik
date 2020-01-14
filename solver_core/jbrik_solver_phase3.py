@@ -7,17 +7,25 @@ def solve_middle(cube):
     log_utils.log("Starting middle row solve")
     facetosolve = 3
 
+    cyclecount = 1
     solved = are_all_middle_rowcells_solved(cube)
     while not solved:
-        cube = swap_backwards_oriented_mid_rowcells(facetosolve, "swap", cube)
+        log_utils.log("Starting solve cycle: " + cyclecount.__str__())
 
-        cube = swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
+        # hard to believe that we wont have a need for this kind of swap
+#        cube = swap_backwards_oriented_mid_rowcells(facetosolve, "swap", cube)
+
+#        cube = swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
 
         cube = align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube)
 
         cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
 
+        cube = swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
+
         solved = are_all_middle_rowcells_solved(cube)
+
+        cyclecount +=1
 
     cube.finalize_solve_phase(3,)
     log_utils.log("Middle row is solved")
@@ -27,7 +35,6 @@ def solve_middle(cube):
 
 def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
     # change this to get all mid row cells
-    #for rowcell in jbrik_cube.fivesixmidrowcrossrowcells:
     for rowcell in jbrik_cube.middle_rowccells:
         rowcellcolor = cube.get_cell_val_by_rowcell(rowcell)
         rowcellccolor = cube.get_center_color_for_rowcell(rowcell)
@@ -46,9 +53,11 @@ def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
             movedir = jbrik_cube.get_centerrow_orbit_trans_dir(rowcell)
             movestrlist = ""
             if movedir == "L":
-                movestrlist = get_leftcross_solution_list(facetosolve, adjrowcell, rowcell)
+                #movestrlist = get_leftcross_solution_list(facetosolve, adjrowcell, rowcell)
+                movestrlist = get_lrcross_solution_list(facetosolve, adjrowcell, rowcell, "L")
             else:
-                movestrlist = get_rightcross_solution_list(facetosolve, adjrowcell, rowcell)
+                #movestrlist = get_rightcross_solution_list(facetosolve, adjrowcell, rowcell)
+                movestrlist = get_lrcross_solution_list(facetosolve, adjrowcell, rowcell, "R")
 
             movestrlist.append(facetosolve.__str__() + "CW2")
 
@@ -99,27 +108,28 @@ def swap_backwards_oriented_mid_rowcell(facetosolve, rowcell, swaptype, cube):
         log_utils.log("Rowcell: " + rowcell + " is backwards oriented, swapping.")
         if jbrik_cube.fivesixmidrowcrossrowcells_l.__contains__(rowcell):
             # its a leftswap
-            movestrlist = get_leftcross_solution_list(facetosolve, adjrowcell, rowcell)
+            #movestrlist = get_leftcross_solution_list(facetosolve, adjrowcell, rowcell)
+            movestrlist = get_lrcross_solution_list(facetosolve, adjrowcell, rowcell, "L")
             log_utils.log("leftswap " + swaptype + " rowcell: " + rowcell + " of color: " + rowcellccolor + " and adjacent cell: "
                           + adjrowcell + " with color: " + adjrowcellcolor)
         else:
             # its a rightswap
-            movestrlist = get_rightcross_solution_list(facetosolve, adjrowcell, rowcell)
+            #movestrlist = get_rightcross_solution_list(facetosolve, adjrowcell, rowcell)
+            movestrlist = get_lrcross_solution_list(facetosolve, adjrowcell, rowcell, "R")
             log_utils.log("Rightswap " + swaptype + " rowcell: " + rowcell + " of color: " + rowcellccolor + " and adjacent cell: "
                           + adjrowcell + " with color: " + adjrowcellcolor)
 
         for rmove in movestrlist:
             cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
 
-        if swaptype != "back":
-            cube = jbrik_solver_move_lib.perform_rotation_str("3CW2", cube)
+        cube = jbrik_solver_move_lib.perform_rotation_str("3CW2", cube)
 
+        if swaptype != "back":
             for rmove in movestrlist:
                 cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
 
     return cube
 
-# TODO we're looping when we align for an LR swap and the LR swap identifies another swap first, performs it and revert this alignment... thinking something like add priority move to cube state
 def align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube):
     oppfacecrossrowcells = jbrik_cube.get_cross_rowcell_for_face(facetosolve)
 
@@ -128,7 +138,6 @@ def align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube):
             log_utils.log("Rowcell: " + crossrowcell + " is already solved.")
             continue
 
-        crossrowcellcolor = cube.get_cell_val_by_rowcell(crossrowcell)
         ccolor = cube.get_center_color_for_facenum(facetosolve)
         adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(crossrowcell)
         adjrowcellcolor = cube.get_cell_val_by_rowcell(adjrowcell)
@@ -186,7 +195,8 @@ def perform_lr_solve_on_cross_rowcells(facetosolve, cube):
 
             if crossrowcellcolor == lcrossccolor:
                 log_utils.log("Perform an L cross solve on: " + crossrowcell)
-                solutionlist = get_leftcross_solution_list(facetosolve, lcrossrowcell, adjrowcell)
+                #solutionlist = get_leftcross_solution_list(facetosolve, lcrossrowcell, adjrowcell)
+                solutionlist = get_lrcross_solution_list(facetosolve, lcrossrowcell, adjrowcell, "L")
 
                 for lmove in solutionlist:
                     cube = jbrik_solver_move_lib.perform_rotation_str(lmove, cube)
@@ -197,7 +207,8 @@ def perform_lr_solve_on_cross_rowcells(facetosolve, cube):
 
             elif crossrowcellcolor == rcrossccolor:
                 log_utils.log("Perform a R cross solve on: " + crossrowcell)
-                solutionlist = get_rightcross_solution_list(facetosolve, rcrossrowcell, adjrowcell)
+                #solutionlist = get_rightcross_solution_list(facetosolve, rcrossrowcell, adjrowcell)
+                solutionlist = get_lrcross_solution_list(facetosolve, rcrossrowcell, adjrowcell, "R")
 
                 for rmove in solutionlist:
                     cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
@@ -208,8 +219,7 @@ def perform_lr_solve_on_cross_rowcells(facetosolve, cube):
                 #return cube
 
     return cube
-
-# TODO I think we can consolidate these
+'''
 def get_leftcross_solution_list(facetosolve, leftfacerowcell, frontfacerowcell):
     tface = facetosolve.__str__()
     lface = jbrik_cube.get_face_for_rowcell(leftfacerowcell).__str__()
@@ -224,5 +234,17 @@ def get_rightcross_solution_list(facetosolve, rightfacerowcell, frontfacerowcell
     rface = jbrik_cube.get_face_for_rowcell(rightfacerowcell).__str__()
     fface = jbrik_cube.get_face_for_rowcell(frontfacerowcell).__str__()
     solutionlist = [tface + "CW1", rface + "CW1", tface + "CC1", rface + "CC1", tface + "CC1", fface + "CC1", tface + "CW1", fface + "CW1"]
+
+    return solutionlist
+'''
+def get_lrcross_solution_list(facetosolve, rotfacerowcell, frontfacerowcell, dir):
+    tface = facetosolve.__str__()
+    rotface = jbrik_cube.get_face_for_rowcell(rotfacerowcell).__str__()
+    fface = jbrik_cube.get_face_for_rowcell(frontfacerowcell).__str__()
+
+    if dir == "R":
+        solutionlist = [tface + "CW1", rotface + "CW1", tface + "CC1", rotface + "CC1", tface + "CC1", fface + "CC1", tface + "CW1", fface + "CW1"]
+    else:
+        solutionlist = [tface + "CC1", rotface + "CC1", tface + "CW1", rotface + "CW1", tface + "CW1", fface + "CW1", tface + "CC1", fface + "CC1"]
 
     return solutionlist
