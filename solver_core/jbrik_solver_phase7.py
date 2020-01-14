@@ -62,7 +62,6 @@ def solve_oppface_corners(cube):
                     cube = attempt_corner_solve(movelist, cube)
                     attemptcount += 1
 
-
                 # final rotation
                 cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW1", cube)
 
