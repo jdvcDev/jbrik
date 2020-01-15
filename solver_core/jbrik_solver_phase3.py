@@ -33,6 +33,7 @@ def solve_middle(cube):
     return cube
 
 
+#put a case in here for
 def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
     # change this to get all mid row cells
     for rowcell in jbrik_cube.middle_rowccells:
@@ -43,12 +44,13 @@ def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
         adjrowcellccolor = cube.get_center_color_for_rowcell(adjrowcell)
         ccolor = cube.get_center_color_for_facenum(facetosolve)
 
-        if (rowcellcolor != rowcellccolor and adjrowcellcolor != adjrowcellccolor and \
-                rowcellcolor != ccolor and adjrowcellcolor != ccolor) \
-                or (rowcellcolor == rowcellccolor and adjrowcellcolor == ccolor):
+        if (rowcellcolor != rowcellccolor and adjrowcellcolor != adjrowcellccolor and rowcellcolor != ccolor
+            and adjrowcellcolor != ccolor) \
+           or (rowcellcolor == rowcellccolor and adjrowcellcolor == ccolor):
+
             log_utils.log("Rowcell: " + rowcell + " is either a total missalign or solved by an LR swap, with "
-                                                  "cell color: " + rowcellcolor + " and adjacent color: "
-                          + adjrowcellcolor)
+                                          "cell color: " + rowcellcolor + " and adjacent color: "
+                  + adjrowcellcolor)
 
             movedir = jbrik_cube.get_centerrow_orbit_trans_dir(rowcell)
             movestrlist = ""
@@ -134,17 +136,19 @@ def align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube):
     oppfacecrossrowcells = jbrik_cube.get_cross_rowcell_for_face(facetosolve)
 
     for crossrowcell in oppfacecrossrowcells:
-        if is_middle_rowcell_solved(crossrowcell, cube):
-            log_utils.log("Rowcell: " + crossrowcell + " is already solved.")
-            continue
+        # this is checkg for a solution that we're not concerned with
+#        if is_middle_rowcell_solved(crossrowcell, cube):
+#            log_utils.log("Rowcell: " + crossrowcell + " is already solved.")
+#            continue
 
         ccolor = cube.get_center_color_for_facenum(facetosolve)
+        rowcellcolor = cube.get_cell_val_by_rowcell(crossrowcell)
         adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(crossrowcell)
         adjrowcellcolor = cube.get_cell_val_by_rowcell(adjrowcell)
         adjrowcellccolor = cube.get_center_color_for_rowcell(adjrowcell)
 
         # will be an issue here if all adjcell have ccolor
-        if adjrowcellcolor == ccolor:
+        if adjrowcellcolor == ccolor or rowcellcolor == ccolor:
             continue
 
         # if crossrowcellcolor is not facetosolve ccolor then it must be one of the adj ccolors
@@ -168,8 +172,11 @@ def align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube):
             log_utils.log("Perform transition: " + rotstr)
             cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
-            log_utils.log("Solveface orbit rowcell: " + testrowcell + " of color: " + adjrowcellcolor
+            adjtestrowcell = jbrik_cube.get_adjrowccell_for_rowcell(testrowcell)
+            log_utils.log("Solveface orbit rowcell: " + adjtestrowcell + " of color: " + adjrowcellcolor
                           + " is aligned for LR check.")
+
+            cube = perform_lr_solve_on_cross_rowcell(facetosolve, adjtestrowcell, cube)
             return cube
 
     return cube
@@ -178,65 +185,51 @@ def perform_lr_solve_on_cross_rowcells(facetosolve, cube):
     oppfacecrossrowcells = jbrik_cube.get_cross_rowcell_for_face(facetosolve)
 
     for crossrowcell in oppfacecrossrowcells:
-        crossrowcellcolor = cube.get_cell_val_by_rowcell(crossrowcell)
-        adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(crossrowcell)
-        adjrowcellcolor = cube.get_cell_val_by_rowcell(adjrowcell)
-        adjrowcellcolorccolor = cube.get_center_color_for_rowcell(adjrowcell)
-
-        # if this rowcell is already aligned with adjacent color same as center color
-        if adjrowcellcolor == adjrowcellcolorccolor:
-            adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(crossrowcell)
-            lrrowcells = jbrik_cube.get_oppface_centerrowcell_lr_middle_destcells(crossrowcell)
-            lcrossrowcell = lrrowcells.split(" ")[0]
-            rcrossrowcell = lrrowcells.split(" ")[1]
-
-            lcrossccolor = cube.get_center_color_for_rowcell(lcrossrowcell)
-            rcrossccolor = cube.get_center_color_for_rowcell(rcrossrowcell)
-
-            if crossrowcellcolor == lcrossccolor:
-                log_utils.log("Perform an L cross solve on: " + crossrowcell)
-                #solutionlist = get_leftcross_solution_list(facetosolve, lcrossrowcell, adjrowcell)
-                solutionlist = get_lrcross_solution_list(facetosolve, lcrossrowcell, adjrowcell, "L")
-
-                for lmove in solutionlist:
-                    cube = jbrik_solver_move_lib.perform_rotation_str(lmove, cube)
-
-                    if not is_middle_rowcell_solved(crossrowcell, cube):
-                        cube = swap_backwards_oriented_mid_rowcell(facetosolve, crossrowcell, "swap", cube)
-                #return cube
-
-            elif crossrowcellcolor == rcrossccolor:
-                log_utils.log("Perform a R cross solve on: " + crossrowcell)
-                #solutionlist = get_rightcross_solution_list(facetosolve, rcrossrowcell, adjrowcell)
-                solutionlist = get_lrcross_solution_list(facetosolve, rcrossrowcell, adjrowcell, "R")
-
-                for rmove in solutionlist:
-                    cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
-
-                if not is_middle_rowcell_solved(crossrowcell, cube):
-                    cube = swap_backwards_oriented_mid_rowcell(facetosolve, crossrowcell, "swap", cube)
-
-                #return cube
+        cube = perform_lr_solve_on_cross_rowcell(facetosolve, crossrowcell, cube)
 
     return cube
-'''
-def get_leftcross_solution_list(facetosolve, leftfacerowcell, frontfacerowcell):
-    tface = facetosolve.__str__()
-    lface = jbrik_cube.get_face_for_rowcell(leftfacerowcell).__str__()
-    fface = jbrik_cube.get_face_for_rowcell(frontfacerowcell).__str__()
-    solutionlist = [tface + "CC1", lface + "CC1", tface + "CW1", lface + "CW1", tface + "CW1", fface + "CW1", tface
-                    + "CC1", fface + "CC1"]
 
-    return solutionlist
 
-def get_rightcross_solution_list(facetosolve, rightfacerowcell, frontfacerowcell):
-    tface = facetosolve.__str__()
-    rface = jbrik_cube.get_face_for_rowcell(rightfacerowcell).__str__()
-    fface = jbrik_cube.get_face_for_rowcell(frontfacerowcell).__str__()
-    solutionlist = [tface + "CW1", rface + "CW1", tface + "CC1", rface + "CC1", tface + "CC1", fface + "CC1", tface + "CW1", fface + "CW1"]
+def perform_lr_solve_on_cross_rowcell(facetosolve, crossrowcell, cube):
+    crossrowcellcolor = cube.get_cell_val_by_rowcell(crossrowcell)
+    adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(crossrowcell)
+    adjrowcellcolor = cube.get_cell_val_by_rowcell(adjrowcell)
+    adjrowcellcolorccolor = cube.get_center_color_for_rowcell(adjrowcell)
 
-    return solutionlist
-'''
+    # if this rowcell is already aligned with adjacent color same as center color
+    if adjrowcellcolor == adjrowcellcolorccolor:
+        adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(crossrowcell)
+        lrrowcells = jbrik_cube.get_oppface_centerrowcell_lr_middle_destcells(crossrowcell)
+        lcrossrowcell = lrrowcells.split(" ")[0]
+        rcrossrowcell = lrrowcells.split(" ")[1]
+
+        lcrossccolor = cube.get_center_color_for_rowcell(lcrossrowcell)
+        rcrossccolor = cube.get_center_color_for_rowcell(rcrossrowcell)
+
+        if crossrowcellcolor == lcrossccolor:
+            log_utils.log("Perform an L cross solve on: " + crossrowcell)
+            # solutionlist = get_leftcross_solution_list(facetosolve, lcrossrowcell, adjrowcell)
+            solutionlist = get_lrcross_solution_list(facetosolve, lcrossrowcell, adjrowcell, "L")
+
+            for lmove in solutionlist:
+                cube = jbrik_solver_move_lib.perform_rotation_str(lmove, cube)
+
+            if not is_middle_rowcell_solved(lcrossrowcell, cube):
+                cube = swap_backwards_oriented_mid_rowcell(facetosolve, lcrossrowcell, "swap", cube)
+
+        elif crossrowcellcolor == rcrossccolor:
+            log_utils.log("Perform a R cross solve on: " + crossrowcell)
+            # solutionlist = get_rightcross_solution_list(facetosolve, rcrossrowcell, adjrowcell)
+            solutionlist = get_lrcross_solution_list(facetosolve, rcrossrowcell, adjrowcell, "R")
+
+            for rmove in solutionlist:
+                cube = jbrik_solver_move_lib.perform_rotation_str(rmove, cube)
+
+            if not is_middle_rowcell_solved(rcrossrowcell, cube):
+                cube = swap_backwards_oriented_mid_rowcell(facetosolve, rcrossrowcell, "swap", cube)
+
+    return cube
+
 def get_lrcross_solution_list(facetosolve, rotfacerowcell, frontfacerowcell, dir):
     tface = facetosolve.__str__()
     rotface = jbrik_cube.get_face_for_rowcell(rotfacerowcell).__str__()
