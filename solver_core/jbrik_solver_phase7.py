@@ -47,28 +47,19 @@ def solve_oppface_corners(cube):
             for i in range(0, unsolvedcornerlist.__len__()):
                 # after 2 check for solve,
                 attemptcount = 0
-                '''
-                while attemptcount < 2:
-                    cube = attempt_corner_solve(movelist, cube)
-                    attemptcount += 1
-                if not is_corner_solved(cornertosolve, ccolor, cube):
-                    attemptcount = 0
-                    while attemptcount < 2:
-                        cube = attempt_corner_solve(movelist, cube)
-                        attemptcount += 1
-
-                '''
                 while not is_corner_solved(cornertosolve, ccolor, cube) and attemptcount < 2:
                     cube = attempt_corner_solve(movelist, cube)
                     attemptcount += 1
 
-                # final rotation
-                cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW1", cube)
+                if are_all_corners_solved(cube, facetosolve):
+                    # final rotation
+                    cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW1", cube)
+                    break
 
                 # rotate until next unsolved is in top/front/right, never more than 2 turns
                 attemptcount = 0
                 while is_corner_solved(cornertosolve, ccolor, cube) and attemptcount < 2:
-                    cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW2", cube)
+                    cube = jbrik_solver_move_lib.perform_rotation_str(tface + "CW1", cube)
                     attemptcount += 1
 
         else:
@@ -92,7 +83,7 @@ def is_corner_solved(rowcell, ccolor, cube):
     return False
 
 def are_all_corners_solved(cube, facetosolve):
-    ccolor = cube.et_center_color_for_facenum(facetosolve)
+    ccolor = cube.get_center_color_for_facenum(facetosolve)
 
     for cornerrowcell in jbrik_cube.get_cornercell_rowcells_for_face(facetosolve):
         if not is_corner_solved(cornerrowcell, ccolor, cube):
