@@ -8,10 +8,12 @@ import jbrik_solver_phase7
 import jbrik_cube
 import jbrik_solver_move_lib
 
-cubeStateStr = "wggywywrygybboobobrwywyrobbgyogrbgorywwgggrboywrrbowro" # 10/23/24/6/8/16/52
-#cubeStateStr = "woygwyybwoyrwobywoggwryryogbbrwrgoyrbowrggbwboogbbyrrg" # 10/26/56/6/16/16/27
-#cubeStateStr = "wwwwwwwwwooooogyyoggyyyobbroyyrrrrrrgbbggggrgyybobbrbb" # 0/0/46/6/16/8/0 solved
-#cubeStateStr = "worowrobbwwyyowrggworgybbyoyryrrbbbygygggrogwrwoybwbog" # 7/16/74/6/25/8/27 solved
+
+cubeStateStr = "grywwbbybworgorwrbbgygybrbrgwgbrgwyogwyygoywowrooboryo" # 9/14/32/6/17/8/0 solved
+#cubeStateStr = "wggywywrygybboobobrwywyrobbgyogrbgorywwgggrboywrrbowro" # 10/23/24/6/8/16/52 solved
+#cubeStateStr = "woygwyybwoyrwobywoggwryryogbbrwrgoyrbowrggbwboogbbyrrg" # 10/26/54/6/16/16/27 solved
+#cubeStateStr = "wwwwwwwwwooooogyyoggyyyobbroyyrrrrrrgbbggggrgyybobbrbb" # 0/0/24/6/17/8/0 solved
+#cubeStateStr = "worowrobbwwyyowrggworgybbyoyryrrbbbygygggrogwrwoybwbog" # 7/16/62/6/25/8/27 solved
 #cubeStateStr = "wwwwwwwwwoooooyybygrggygbbbyoyyrrrrrgyoggrgoorbbybbrgb" # 0/0/53/6/41/16/26 SOLVED!!
 
 Cube = jbrik_cube.JbrikCube(cubeStateStr)
