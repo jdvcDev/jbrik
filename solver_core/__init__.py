@@ -9,7 +9,8 @@ import jbrik_cube
 import jbrik_solver_move_lib
 
 
-cubeStateStr = "grywwbbybworgorwrbbgygybrbrgwgbrgwyogwyygoywowrooboryo" # 9/14/32/6/17/8/0 solved
+cubeStateStr = "woyywggobybywowygwrorgyrrbbgwoyrroygrbwyggorbwrgwbbboo" # 7/17/55/0/41/16/27 solved
+#cubeStateStr = "grywwbbybworgorwrbbgygybrbrgwgbrgwyogwyygoywowrooboryo" # 9/14/32/6/17/8/0 solved
 #cubeStateStr = "wggywywrygybboobobrwywyrobbgyogrbgorywwgggrboywrrbowro" # 10/23/24/6/8/16/52 solved
 #cubeStateStr = "woygwyybwoyrwobywoggwryryogbbrwrgoyrbowrggbwboogbbyrrg" # 10/26/54/6/16/16/27 solved
 #cubeStateStr = "wwwwwwwwwooooogyyoggyyyobbroyyrrrrrrgbbggggrgyybobbrbb" # 0/0/24/6/17/8/0 solved
