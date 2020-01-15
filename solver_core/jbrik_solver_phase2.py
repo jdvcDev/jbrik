@@ -9,22 +9,25 @@ def solvecrosscorners(cube):
     facetosolve = 1
     oppface = jbrik_cube.oppositefaces[facetosolve]
 
-    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
+    solved = False
+    while not solved:
+        cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
 
-    cube = move_solveface_orbitcells_to_oppface(cube, facetosolve, ccolor)
-    cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
-    cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
+        cube = move_solveface_orbitcells_to_oppface(cube, facetosolve, ccolor)
+        cube = move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor)
+        cube = move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor)
 
-    cube = deface_unsolved_faced_corner(cube, facetosolve, ccolor)
+        cube = deface_unsolved_faced_corner(cube, facetosolve, ccolor)
 
-    while not are_all_crosscorners_solved(cube, facetosolve):
-        cube = solvecrosscorners(cube)
+#        while not are_all_crosscorners_solved(cube, facetosolve):
+#            cube = solvecrosscorners(cube)
+        if are_all_crosscorners_solved(cube, facetosolve):
+            solved = True
 
-    log_utils.log("All cross corners solved.")
-#    if cube.get_current_solve_move_list().__len__() > 0:
-#        cube.finalize_solve_phase(2,)
 
-    cube.finalize_solve_phase(2, )
+        log_utils.log("All cross corners solved.")
+
+    cube.finalize_solve_phase(2,)
     return cube
 
 def deface_unsolved_faced_corner(cube, facetosolve, ccolor):
