@@ -1,5 +1,5 @@
 from inspect import currentframe, getframeinfo
-import resource.jbrik_config as cfg
+import utils.jbrik_config as cfg
 
 def log(arg):
     truncpath = cfg.log["truncpath"]
