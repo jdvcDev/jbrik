@@ -6,6 +6,8 @@ import colorsys
 
 from math import ceil, sqrt
 
+#https://www.speedsolving.com/threads/rubiks-color-resolver-convert-rgb-values-of-each-square-to-u-l-f-r-b-or-d.64053/
+#https://github.com/cs0x7f/min2phase/issues/7
 knowncolors = {
     "Red": [255,0,0],
     "Orange": [255,165,0],
@@ -16,6 +18,7 @@ knowncolors = {
     "White": [255,255,255]
 }
 testcolors = {
+    (246, 253, 228): "yellow",
     (193, 12, 26): "red",
     (253, 198, 186): "orange",
     (44, 253, 225): "green",
