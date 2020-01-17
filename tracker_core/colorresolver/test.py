@@ -1,5 +1,9 @@
 import webcolors
+import numpy as np
 import math
+import cv2
+import colorsys
+
 from math import ceil, sqrt
 
 def closest_colour(requested_colour):
@@ -25,10 +29,10 @@ def get_colour_name(requested_colour):
 #{"1": [193, 12, 26], "2": [253, 198, 186], "3": [44, 253, 225], "4": [252, 171, 163], "5": [19, 151, 253], "6": [46, 254, 231], "7": [20, 136, 252], "8": [207, 15, 39], "9": [246, 252, 249]}
 
 
-requested_colour = [44, 253, 225]
-actual_name, closest_name = get_colour_name(requested_colour)
+#requested_colour = [44, 253, 225]
+#actual_name, closest_name = get_colour_name(requested_colour)
 
-print "Actual colour name:", actual_name, ", closest colour name:", closest_name
+#print "Actual colour name:", actual_name, ", closest colour name:", closest_name
 
 '''
 (r,g,b)
@@ -165,8 +169,8 @@ def rgb2lab(inputColor):
     L = (116 * var_Y) - 16
     a = 500 * (var_X - var_Y)
     b = 200 * (var_Y - var_Z)
-    # log.info("RGB ({}, {}, {}), L {}, a {}, b {}".format(red, green, blue, L, a, b))
-
+    #log.info("RGB ({}, {}, {}), L {}, a {}, b {}".format(red, green, blue, L, a, b))
+    print("RGB ({}, {}, {}), L {}, a {}, b {}".format(red, green, blue, L, a, b))
     return LabColor(L, a, b, red, green, blue)
 '''
 knowncolors = {
@@ -185,18 +189,109 @@ for color in knowncolors:
         least = rgbDistance
         cubecolor = color
     print(color + " = " + rgbDistance.__str__())
+
+
+
+
+
+import numpy as np
+import cv2
+
+green = np.uint8([[[0, 255, 0]]]) #here insert the bgr values which you want to convert to hsv
+hsvGreen = cv2.cvtColor(green, cv2.COLOR_BGR2HSV)
+print(hsvGreen)
+
+lowerLimit = hsvGreen[0][0][0] - 10, 100, 100
+upperLimit = hsvGreen[0][0][0] + 10, 255, 255
+
+print(upperLimit)
+print(lowerLimit)
 }
 '''
-
+'''
 #{"1": [193, 12, 26], "2": [253, 198, 186], "3": [44, 253, 225], "4": [252, 171, 163], "5": [19, 151, 253], "6": [46, 254, 231], "7": [20, 136, 252], "8": [207, 15, 39], "9": [246, 252, 249]}
-lab2 = rgb2lab((193, 12, 26))
-lab1 = rgb2lab((255,0,0))
-distance = get_lab_distance(lab1, lab2)
-print(distance)
+# Actual colour name: None , closest colour name: turquoise
+#lab2 = rgb2lab((193, 12, 26))
+#lab1 = rgb2lab([255,0,0])
+lab1 = rgb2lab([19, 151, 253])
+#distance = get_lab_distance(lab1, lab2)
+#print(distance)
 
 for color in knowncolors:
     lab2 = rgb2lab(knowncolors[color])
     distance = get_lab_distance(lab1, lab2)
-    print("Color: " + color + " " + distance.__str__())
+    print("lab1: "  + lab1.__str__())
+    print("lab2: " + lab2.__str__())
+    print("Color: " + color + " " + distance.__str__() + "\n")
+'''
+
+'''
+def rgb_hsv_converter(rgb):
+    (r,g,b) = rgb_normalizer(rgb)
+    hsv = colorsys.rgb_to_hsv(r,g,b)
+    (h,s,v) = hsv_normalizer(hsv)
+    upper_band = [h+10, s+40, v+40]
+    lower_band = [h-10, s-40, v-40]
+    return {
+        'upper_band': upper_band,
+        'lower_band': lower_band
+    }
+
+def rgb_normalizer(rgb):
+    (r,g,b) = rgb
+    return (r/255, g/255, b/255)
+
+def hsv_normalizer(hsv):
+    (h,s,v) = hsv
+    return (h*360, s*255, v*255)
 
 
+color = np.uint8([[[193, 12, 26]]]) #here insert the bgr values which you want to convert to hsv
+hsvcolor = cv2.cvtColor(color, cv2.COLOR_BGR2HSV)
+print(hsvcolor)
+
+
+#print(rgb_hsv_converter((255, 165, 0)))
+print(rgb_hsv_converter((255, 0, 0)))
+#print(rgb_hsv_converter((193, 12, 26)))
+#{'upper_band': [10.0, 295, 295], 'lower_band': [-10.0, 215, 215]}
+
+
+
+
+
+#{"1": [193, 12, 26], "2": [253, 198, 186], "3": [44, 253, 225], "4": [252, 171, 163], "5": [19, 151, 253], "6": [46, 254, 231], "7": [20, 136, 252], "8": [207, 15, 39], "9": [246, 252, 249]}
+
+requested_colour = [253, 198, 186]
+actual_name, closest_name = get_colour_name(requested_colour)
+print "Actual colour name:", actual_name, ", closest colour name:", closest_name
+print
+print
+
+for color in knowncolors:
+    rgbDistance = abs(requested_colour[0] - knowncolors[color][0]) + abs(requested_colour[1] - knowncolors[color][1]) + abs(requested_colour[2] - knowncolors[color][2])
+    #rgbDistance = abs(193 - knowncolors[color][0]) + abs(12 - knowncolors[color][1]) + abs(26 - knowncolors[color][2])
+    #rgbDistance = abs(knowncolors[color][0] - 44) + abs(knowncolors[color][1] - 253) + abs(knowncolors[color][2] - 225)
+    #rgbDistance = abs(knowncolors[color][0] - 193) + abs(knowncolors[color][1] - 12) + abs(knowncolors[color][2] - 26)
+#    if rgbDistance < least:
+#        least = rgbDistance
+#        cubecolor = color
+    print(color + " = " + rgbDistance.__str__())
+'''
+
+
+
+colours = ( (255, 255, 255, "white"),
+            (255, 0, 0, "red"),
+            #(128, 0, 0, "dark red"),
+            (0, 255, 0, "green") )
+
+
+def nearest_colour( subjects, query ):
+    return min( subjects, key = lambda subject: sum( (s - q) ** 2 for s, q in zip( subject, query ) ) )
+
+
+print( nearest_colour( colours, (64, 0, 0) ) ) # dark red
+print( nearest_colour( colours, (0, 192, 0) ) ) # green
+print( nearest_colour( colours, (255, 255, 64) ) ) # white
+print( nearest_colour( colours, (44, 253, 225) ) ) # green
