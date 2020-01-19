@@ -1,21 +1,22 @@
 
 #from rubikscolorresolver.profile import timed_function
 from math import ceil, sqrt
+from collections import OrderedDict
 import sys
-'''
-if sys.version_info < (3, 4):
-    raise SystemError("Must be using Python 3.4 or higher")
+
+#if sys.version_info < (3, 4):
+#    raise SystemError("Must be using Python 3.4 or higher")
 
 
-def is_micropython():
-    return sys.implementation.name == "micropython"
+#def is_micropython():
+#    return sys.implementation.name == "micropython"
 
 
-if is_micropython():
-    from ucollections import OrderedDict
-else:
-    from collections import OrderedDict
-'''
+#if is_micropython():
+#    from ucollections import OrderedDict
+#else:
+#    from collections import OrderedDict
+
 
 # @timed_function
 def get_lab_distance(lab1, lab2):
@@ -251,7 +252,7 @@ class Square(object):
     def __lt__(self, other):
         return self.position < other.position
 
-'''
+
 class Side(object):
 
     def __init__(self, cube, width, name):
@@ -368,8 +369,8 @@ class Side(object):
         except KeyError:
             #log.info("wing_partner\n%s\n".format(self.wing_partner))
             raise
-'''
-'''
+
+
 class RubiksColorSolverGenericBase(object):
 
     def __init__(self, width):
@@ -478,7 +479,17 @@ class RubiksColorSolverGenericBase(object):
                 self.pos2square[position] = square
 
     def enter_cube_state(self, input_state, order="URFDLB"):
+        """
+        If you already have the cube state this method allows you to enter it
+        so we can then validate the cube state via:
 
+            - sanity_check_edge_squares()
+            - validate_all_corners_found()
+            - validate_odd_cube_midge_vs_corner_parity()
+
+        The primary use case for this is a robot with a color sensor that can
+        return color names (red, green, etc) but not RGB values.
+        """
         input_state = list(input_state)
         state = []
 
@@ -533,56 +544,54 @@ class RubiksColorSolverGenericBase(object):
             side.set_square(position, red, green, blue, side_name, color_name)
 
         self.calculate_pos2square()
-'''
 
-# @timed_function
-def print_cube(self):
-    data = []
-    for x in range(3 * self.height):
-        data.append([])
+    # @timed_function
+    def print_cube(self):
+        data = []
+        for x in range(3 * self.height):
+            data.append([])
 
-    color_codes = {"OR": 90, "Rd": 91, "Gr": 92, "Ye": 93, "Bu": 94, "Wh": 97}
+        color_codes = {"OR": 90, "Rd": 91, "Gr": 92, "Ye": 93, "Bu": 94, "Wh": 97}
 
-    for side_name in self.side_order:
-        side = self.sides[side_name]
+        for side_name in self.side_order:
+            side = self.sides[side_name]
 
-        if side_name == "U":
-            line_number = 0
-            prefix = (" " * self.width * 3) + " "
-        elif side_name in ("L", "F", "R", "B"):
-            line_number = self.width
-            prefix = ""
-        else:
-            line_number = self.width * 2
-            prefix = (" " * self.width * 3) + " "
+            if side_name == "U":
+                line_number = 0
+                prefix = (" " * self.width * 3) + " "
+            elif side_name in ("L", "F", "R", "B"):
+                line_number = self.width
+                prefix = ""
+            else:
+                line_number = self.width * 2
+                prefix = (" " * self.width * 3) + " "
 
-        # rows
-        for y in range(self.width):
-            data[line_number].append(prefix)
+            # rows
+            for y in range(self.width):
+                data[line_number].append(prefix)
 
-            # cols
-            for x in range(self.width):
-                color_name = side.squares[
-                    side.min_pos + (y * self.width) + x
-                ].color_name
-                color_code = color_codes.get(color_name)
+                # cols
+                for x in range(self.width):
+                    color_name = side.squares[
+                        side.min_pos + (y * self.width) + x
+                    ].color_name
+                    color_code = color_codes.get(color_name)
 
-                if color_name is None:
-                    color_code = 97
-                    data[line_number].append("\033[%dmFo\033[0m" % color_code)
-                else:
-                    data[line_number].append(
-                        "\033[%dm%s\033[0m" % (color_code, color_name)
-                    )
-            line_number += 1
+                    if color_name is None:
+                        color_code = 97
+                        data[line_number].append("\033[%dmFo\033[0m" % color_code)
+                    else:
+                        data[line_number].append(
+                            "\033[%dm%s\033[0m" % (color_code, color_name)
+                        )
+                line_number += 1
 
-    output = []
-    for row in data:
-        output.append(" ".join(row))
+        output = []
+        for row in data:
+            output.append(" ".join(row))
 
-    sys.stderr.write("Cube\n\n%s\n" % "\n".join(output))
+        sys.stderr.write("Cube\n\n%s\n" % "\n".join(output))
 
-    '''
     # @timed_function
     def cube_for_kociemba_strict(self):
         #log.info("color_to_side_name:\n{}\n".format(self.color_to_side_name))
@@ -598,17 +607,17 @@ def print_cube(self):
     def validate_edge_orbit(self, orbit_id):
 
         if self.width == 2:
-            from rubikscolorresolver.cube_333 import edge_orbit_wing_pairs
+            from cube_333 import edge_orbit_wing_pairs
         elif self.width == 3:
-            from rubikscolorresolver.cube_333 import edge_orbit_wing_pairs
+            from cube_333 import edge_orbit_wing_pairs
         elif self.width == 4:
-            from rubikscolorresolver.cube_444 import edge_orbit_wing_pairs
+            from cube_444 import edge_orbit_wing_pairs
         elif self.width == 5:
-            from rubikscolorresolver.cube_555 import edge_orbit_wing_pairs
+            from cube_555 import edge_orbit_wing_pairs
         elif self.width == 6:
-            from rubikscolorresolver.cube_666 import edge_orbit_wing_pairs
+            from cube_666 import edge_orbit_wing_pairs
         elif self.width == 7:
-            from rubikscolorresolver.cube_777 import edge_orbit_wing_pairs
+            from cube_777 import edge_orbit_wing_pairs
 
         valid = True
 
@@ -652,17 +661,17 @@ def print_cube(self):
         blue_yellow_corners = []
 
         if self.width == 2:
-            from rubikscolorresolver.cube_222 import corner_tuples
+            from cube_222 import corner_tuples
         elif self.width == 3:
-            from rubikscolorresolver.cube_333 import corner_tuples
+            from cube_333 import corner_tuples
         elif self.width == 4:
-            from rubikscolorresolver.cube_444 import corner_tuples
+            from cube_444 import corner_tuples
         elif self.width == 5:
-            from rubikscolorresolver.cube_555 import corner_tuples
+            from cube_555 import corner_tuples
         elif self.width == 6:
-            from rubikscolorresolver.cube_666 import corner_tuples
+            from cube_666 import corner_tuples
         elif self.width == 7:
-            from rubikscolorresolver.cube_777 import corner_tuples
+            from cube_777 import corner_tuples
 
         for corner_tuple in corner_tuples:
             corner_colors = []
@@ -690,22 +699,22 @@ def print_cube(self):
             blue_white_corners,
             blue_yellow_corners,
         )
-    
+
     # @timed_function
     def find_edges_by_color(self, orbit_id):
 
         if self.width == 2:
-            from rubikscolorresolver.cube_333 import edge_orbit_wing_pairs
+            from cube_333 import edge_orbit_wing_pairs
         elif self.width == 3:
-            from rubikscolorresolver.cube_333 import edge_orbit_wing_pairs
+            from cube_333 import edge_orbit_wing_pairs
         elif self.width == 4:
-            from rubikscolorresolver.cube_444 import edge_orbit_wing_pairs
+            from cube_444 import edge_orbit_wing_pairs
         elif self.width == 5:
-            from rubikscolorresolver.cube_555 import edge_orbit_wing_pairs
+            from cube_555 import edge_orbit_wing_pairs
         elif self.width == 6:
-            from rubikscolorresolver.cube_666 import edge_orbit_wing_pairs
+            from cube_666 import edge_orbit_wing_pairs
         elif self.width == 7:
-            from rubikscolorresolver.cube_777 import edge_orbit_wing_pairs
+            from cube_777 import edge_orbit_wing_pairs
 
         green_red_orange_color_names = ("Gr", "Rd", "OR")
         blue_red_orange_color_names = ("Bu", "Rd", "OR")
@@ -832,14 +841,46 @@ def print_cube(self):
                 if min_distance is None or distance < min_distance:
                     min_distance = distance
                     min_distance_permutation = red_orange_permutation
+                    '''
+                    log.info(
+                        "target edge %s, red_orange_permutation %s, distance %s (NEW MIN)"
+                        % (target_color, ",".join(red_orange_permutation), distance)
+                    )
+                else:
+                    log.info(
+                        "target edge %s, red_orange_permutation %s, distance %s)"
+                        % (target_color, ",".join(red_orange_permutation), distance)
+                    )
+
+            log.info("min_distance_permutation %s" % ",".join(min_distance_permutation))
+                    '''
 
             for (index, (target_color_square, partner_square)) in enumerate(target_color_red_or_orange_edges):
                 if partner_square.color_name != min_distance_permutation[index]:
-
+                    '''
+                    log.warning(
+                        "change %s edge partner %s from %s to %s"
+                        % (
+                            target_color,
+                            partner_square,
+                            partner_square.color_name,
+                            min_distance_permutation[index],
+                        )
+                    )
+                    '''
                     partner_square.color_name = min_distance_permutation[index]
                     partner_square.side_name = self.color_to_side_name[
                         partner_square.color_name
                     ]
+                    '''
+                else:
+                    log.info(
+                        "%s edge partner %s is %s"
+                        % (target_color, partner_square, partner_square.color_name)
+                    )
+
+            log.info("\n\n")
+                    '''
 
         (
             green_red_or_orange_edges,
@@ -877,11 +918,11 @@ def print_cube(self):
     def get_high_low_per_edge_color(self, target_orbit_id):
 
         if self.width == 4:
-            from rubikscolorresolver.cube_444 import edge_orbit_wing_pairs, highlow_edge_values
+            from cube_444 import edge_orbit_wing_pairs, highlow_edge_values
         elif self.width == 5:
-            from rubikscolorresolver.cube_555 import edge_orbit_wing_pairs, highlow_edge_values
+            from cube_555 import edge_orbit_wing_pairs, highlow_edge_values
         elif self.width == 6:
-            from rubikscolorresolver.cube_666 import edge_orbit_wing_pairs, highlow_edge_values
+            from cube_666 import edge_orbit_wing_pairs, highlow_edge_values
         else:
             raise Exception("Add support for %sx%sx%s" % (self.width, self.width, self.width))
 
@@ -1403,6 +1444,17 @@ def print_cube(self):
 
     # @timed_function
     def validate_odd_cube_midge_vs_corner_parity(self):
+        """
+        http://www.ryanheise.com/cube/parity.html
+
+        When considering the permutation of all edges and corners together, the
+        overall parity must be even, as dictated by laws of the cube. However,
+        when considering only edges or corners alone, it is possible for their
+        parity to be either even or odd. To obey the laws of the cube, if the edge
+        parity is even then the corner parity must also be even, and if the edge
+        parity is odd then the corner parity must also be odd.
+        """
+
         if self.even:
             return
 
@@ -1486,11 +1538,31 @@ def print_cube(self):
         #log.info("distance_swap_blue_edge %s" % distance_swap_blue_edge)
 
         if distance_swap_green_edge < distance_swap_blue_edge:
+            '''
+            log.warning(
+                "edge parity correction: change %s from %s to Rd"
+                % (square_green_orange, square_green_orange.color_name)
+            )
+            log.warning(
+                "edge parity correction: change %s from %s to OR"
+                % (square_green_red, square_green_red.color_name)
+            )
+            '''
             square_green_orange.color_name = "Rd"
             square_green_red.color_name = "OR"
             square_green_orange.side_name = self.color_to_side_name[square_green_orange.color_name]
             square_green_red.side_name = self.color_to_side_name[square_green_red.color_name]
         else:
+            '''
+            log.warning(
+                "edge parity correction: change %s from %s to Rd"
+                % (square_blue_orange, square_blue_orange.color_name)
+            )
+            log.warning(
+                "edge parity correction: change %s from %s to OR"
+                % (square_blue_red, square_blue_red.color_name)
+            )
+            '''
             square_blue_orange.color_name = "Rd"
             square_blue_red.color_name = "OR"
             square_blue_orange.side_name = self.color_to_side_name[square_blue_orange.color_name]
@@ -1502,5 +1574,3 @@ def print_cube(self):
             "parity is still broken, edges_even %s, corners_even %s"
             % (edges_even, corners_even)
         )
-        '''
-
