@@ -10,8 +10,8 @@ import jbrik_solver_move_lib
 
 
 def solve_cube(cubeStateStr):
-#    cubeStateStr = "bybbwgobygoooogyorgywryryggrrwwrgwbwoyoogybwgbrrbbwrwy"
-#    cubeStateStr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
+    #cubeStateStr = "bybbwgobygoooogyorgywryryggrrwwrgwbwoyoogybwgbrrbbwrwy" # 7/22/31/6/25/16/52
+    #cubeStateStr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
 
     Cube = jbrik_cube.JbrikCube(cubeStateStr)
 
@@ -58,4 +58,4 @@ def solve_cube(cubeStateStr):
     #raw_input("\nPress Enter to continue...\n")
 
 
-#solve_cube("cubeStateStr")
+#solve_cube("")
