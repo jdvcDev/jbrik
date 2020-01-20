@@ -1,6 +1,7 @@
 import webcolors
 from math import ceil, sqrt
 import ciede2000
+import json
 
 knowncolors = {
     "Red": [185,0,0],
@@ -181,3 +182,47 @@ def find_closest_lab_color(rgbin):
             lowestcolorname = color
 
     return lowestcolorname
+
+# takes a map of multiple face color mapping (from adjusted rotation photos) and
+# returns the calculated color based on lowest Lab color average distance
+def map_to_lowest_average_lab_color_distance_for_rowcell(colorfacemap):
+    results = {}
+    # for each tile on the face
+    for i in range(1, 10):
+        averagecolormap = {}
+        for color in knowncolors:
+            averagecolormap[color] = []
+
+        # for each observation from rotation photo
+        for rotnum in colorfacemap:
+            #jsonstr = json.load(adjfacemap[rotnum])
+            facemap = colorfacemap[rotnum]
+            jsonstr = json.loads(facemap)
+            observedrgb = jsonstr[i.__str__()]
+#            print(observedrgb)
+
+            xyz = ciede2000.rgb2xyz(observedrgb)
+            lab1 = ciede2000.xyz2lab(xyz)
+
+            for color in knowncolors:
+                xyz2 = xyz = ciede2000.rgb2xyz(knowncolors[color])
+                lab2 = ciede2000.xyz2lab(xyz2)
+                distance = ciede2000.ciede2000(lab1, lab2)
+                averagecolormap[color].append(distance)
+#                print(observedrgb.__str__() + ": " + color + " " + distance.__str__())
+
+        lowest = -1.0
+        name = ""
+        for color in averagecolormap:
+            colorsum = sum(averagecolormap[color])
+            coloravg = colorsum/float(colorfacemap.__len__())
+
+            if lowest == -1.0 or coloravg <= lowest:
+                lowest = coloravg
+                name = color
+
+
+#        print(i.__str__() + " " + name)
+        results[i] = name
+
+    return results
