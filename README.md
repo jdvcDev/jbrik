@@ -1,5 +1,5 @@
 # JBRIK 
-My adaptaion of a Rubiks Cube solving robot. 
+My adaptation of a Rubiks Cube solving robot. 
 
 # Background/Components
 Rubiks cube solving robot built from Legos, Raspberry Pi 3, Dexter BrickPi3, solved and controlled using libraries written in Python 2.7
