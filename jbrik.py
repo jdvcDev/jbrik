@@ -2,7 +2,7 @@ from utils import log_utils
 from tracker_core import resolver
 import solver_core as solver
 import commands
-
+from motor_core import jbrik_motor
 
 picRotCount = 3
 picPath = "/tmp/jbrik/"
@@ -12,7 +12,7 @@ picCmd = "raspistill -v -w 400 -h 400  -e " + picType + " -t 1 -sh 100 -br 50 -m
 
 
 # take pictures
-def camera_photo_faces(facenum):
+def photo_face_rotations(facenum):
     # raspistill -q 100 -e png -t 1 -sh 100 -br 60 -o /tmp/rubiks-side-U.png
     # raspistill -v -w 400 -h 400  -e png -t 1 -sh 100 -br 50 -mm spot -o /tmp/jbrik/rubiks-side-10.png
 
@@ -22,8 +22,9 @@ def camera_photo_faces(facenum):
         log_utils.log("Cmd: " + picstr)
         commands.getstatusoutput(picstr)
         print("rotate 90 CW")
-        raw_input("\nPress Enter to continue...\n")
+        Cuber.rotate_face(1)
 
+    # spin 90 to return to starting state
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
 
 # load picture to map
@@ -48,19 +49,45 @@ def resolve_cubestate():
     return cubeStateStr
 
 
+# implement a flip to face num
+def photo_all_faces():
+    # Photo inline cube faces
+    for facenum in range(1, 5):
+        print("Flip to facenum: " + facenum.__str__())
+        photo_face_rotations(facenum)
+        Cuber.flip()
+
+    print("Fip to facenum: 5")
+    Cuber.rotate_face(1)
+    Cuber.flip()
+    Cuber.rotate_face(1, "CC")
+    photo_face_rotations(5)
+
+    print("Flip to facenum: 6")
+    Cuber.flip()
+    Cuber.flip()
+    Cuber.rotate_face(2)
+    photo_face_rotations(6)
+
+    print("Flip to facenum: 1")
+    Cuber.rotate_face(1)
+    Cuber.flip()
+    Cuber.rotate_face(1, "CW")
 
 
-# Photo cube faces
-for facenum in range(1, 7):
-    print("flip to facenum: " + facenum.__str__())
-    raw_input("\nPress Enter to continue...\n")
-    camera_photo_faces(facenum)
+# initialize the solver machine
+Cuber = jbrik_motor.JbrikMotorLib()
+
+# take photos of all faces
+photo_all_faces()
 
 # Load photos into color map and covert to cubeStateString
 cubeStateStr = resolve_cubestate()
 log_utils.log("\n\nInitial cube state: " + cubeStateStr)
 
 # Solve cube
-solver.solve_cube(cubeStateStr)
+#solver.solve_cube(cubeStateStr)
+
+Cuber.shutdown()
 
 exit(1)
