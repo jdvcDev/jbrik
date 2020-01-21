@@ -22,7 +22,7 @@ def photo_face_rotations(facenum):
         log_utils.log("Cmd: " + picstr)
         commands.getstatusoutput(picstr)
         print("rotate 90 CW")
-        Cuber.rotate_face(1)
+        Cuber.rotate_cube(1)
 
     # spin 90 to return to starting state
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
@@ -58,21 +58,21 @@ def photo_all_faces():
         Cuber.flip()
 
     print("Fip to facenum: 5")
-    Cuber.rotate_face(1)
+    Cuber.rotate_cube(1)
     Cuber.flip()
-    Cuber.rotate_face(1, "CC")
+    Cuber.rotate_cube(1, "CC")
     photo_face_rotations(5)
 
     print("Flip to facenum: 6")
     Cuber.flip()
     Cuber.flip()
-    Cuber.rotate_face(2)
+    Cuber.rotate_cube(2)
     photo_face_rotations(6)
 
     print("Flip to facenum: 1")
-    Cuber.rotate_face(1)
+    Cuber.rotate_cube(1)
     Cuber.flip()
-    Cuber.rotate_face(1, "CW")
+    Cuber.rotate_cube(1, "CW")
 
 
 # initialize the solver machine
