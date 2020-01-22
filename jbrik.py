@@ -33,7 +33,7 @@ def resolve_cubestate():
     cubeStateStr = ""
     for i in range(1, 7):
         facemap = {}
-        for j in range(0,4):
+        for j in range(0, 4):
             #imgfile = "./tracker_core/tracker/resource/jbrik_img/rubiks-side-" + i.__str__() + j.__str__() + ".png"
             imgfile = picPath + picName + i.__str__() + j.__str__() + "." + picType
             str = "python ./tracker_core/tracker/rubiks-cube-tracker.py -f " + imgfile
@@ -52,6 +52,12 @@ def resolve_cubestate():
 # implement a flip to face num
 def photo_all_faces():
     # Photo inline cube faces
+    for facenum in range(1, 7):
+        print("Flip to facenum: " + facenum.__str__())
+        Cuber.flip_to_facenumup(facenum)
+        photo_face_rotations(facenum)
+
+    '''
     for facenum in range(1, 5):
         print("Flip to facenum: " + facenum.__str__())
         photo_face_rotations(facenum)
@@ -73,6 +79,7 @@ def photo_all_faces():
     Cuber.rotate_cube(1)
     Cuber.flip()
     Cuber.rotate_cube(1, "CW")
+    '''
 
 
 # initialize the solver machine

@@ -7,8 +7,15 @@ class JbrikMotorLib(object):
     _FaceUp = 1
 
     def __init__(self):
+        self._Faceup = 1
         log_utils.log("Initializing jbrik")
         raw_input("\nPress Enter to continue...\n")
+
+    def get_face_up(self):
+        return self._FaceUp
+
+    def get_face_down(self):
+        return jbrik_cube.oppositefaces[self.get_face_up()]
 
     def rotate_cube(self, rotcount, dir="CW"):
         rotdeg = 90 * rotcount
@@ -30,7 +37,7 @@ class JbrikMotorLib(object):
             self._Cuber.flip(True)
             if self._FaceUp < 5:
                 if self._FaceUp == 4:
-                    self._Faceup = 1
+                    pass
                 else:
                     self._FaceUp += 1
             else:
@@ -39,24 +46,91 @@ class JbrikMotorLib(object):
 
         log_utils.log("End faceUp: " + self._FaceUp.__str__())
 
-    def get_face_up(self):
-        return self._FaceUp
+    # TODO complete and test
+    def _flip_1_5(self):
+        curfaceup = self._FaceUp
+        if curfaceup != 1:
+            print("flipping to face 1")
+            self.flip_to_facenumup(1)
 
-    def get_face_down(self):
-        return jbrik_cube.oppositefaces[self.get_face_up()]
+        self.rotate_cube(1)
+        self.flip()
+        self.rotate_cube(1, "CC")
+        # need to manually set faceup here because rotation screws that up
+        self._FaceUp = 5
 
+    # TODO complete and test
+    def _flip_5_1(self):
+        self.rotate_cube(1, "CC")
+        self.flip()
+        self.rotate_cube(1, "CW")
+        # need to manually set faceup here because rotation screws that up
+        self._FaceUp = 1
+
+    # TODO complete and test
+    def _flip_1_6(self):
+        curfaceup = self._FaceUp
+        if curfaceup != 1:
+            print("flipping to face 1")
+            self.flip_to_facenumup(1)
+
+        self.rotate_cube(1, "CC")
+        self.flip()
+        self.rotate_cube(1, "CW")
+        # need to manually set faceup here because rotation screws that up
+        self._FaceUp = 6
+
+    # TODO complete and test
+    def _flip_6_1(self):
+        self.rotate_cube(1, "CW")
+        self.flip()
+        self.rotate_cube(1, "CC")
+        # need to manually set faceup here because rotation screws that up
+        self._FaceUp = 1
+
+    # TODO complete and test
     def flip_to_facenumup(self, facenum):
-        # implement ops to put facenum up
-        # need current face up
-        print("stub")
+        print("flipping to face: " + facenum.__str__())
+        curfaceup = self._FaceUp
+        if curfaceup == facenum:
+            log_utils.log("Current FaceUp is already in position.")
+            return
 
+        # Going to 5 from 1-4
+        if facenum == 5 and curfaceup <= 4:
+            self._flip_1_5()
+        # Going to 1-4 from 5
+        elif facenum <= 4 and curfaceup == 5:
+            self._flip_5_1()
+            while curfaceup != facenum and curfaceup <= 4:
+                self.flip()
+        # Going to 6 from 1-4
+        elif facenum == 6 and curfaceup <= 4:
+            self._flip_1_5()
+        # Going to 1-4 from 6
+        elif facenum <= 4 and curfaceup == 6:
+            self._flip_6_1()
+            while curfaceup != facenum and curfaceup <= 4:
+                self.flip()
+        # Going 5-6 from 5-6
+        elif (facenum == 5 or facenum == 6) and curfaceup > 4:
+            for i in range(0, 2):
+                self.flip()
+            self.rotate_cube(2, "CW")
+            self._FaceUp = facenum
+        # Going to 1-4 from 1-4
+        else:
+            while curfaceup != facenum and curfaceup <= 4:
+                self.flip()
+
+    # TODO complete and test
     def perform_solver_op(self, solverop):
         motorop = self._convert_solver_op_to_motor_op(self, solverop)
         facenumup = motorop[0]
         self.flip_to_facenumup(self, facenumup)
         print("perform motor op")
 
-    # converts a movement from the solver engine to a moter movement
+    # converts a movement from the solver engine to a motor movement
     def _convert_solver_op_to_motor_op(self, solverop):
         # 3CW1 = target face, direction, rotations
         # faceup = face opposite to target face
