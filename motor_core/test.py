@@ -35,7 +35,13 @@ class Test(object):
             rotdir = "CC"
 
         return faceup.__str__() + rotdir + rotcount
-
+'''
+    # Photo inline cube faces
+    for facenum in range(1, 7):
+        print("Flip to facenum: " + facenum.__str__())
+        Cuber.flip_to_facenumup(facenum)
+#        photo_face_rotations(facenum)
+'''
 
 test = Test()
 print(test._convert_solver_op_to_motor_op("1CW1"))

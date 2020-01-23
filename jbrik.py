@@ -1,7 +1,8 @@
+import time     # import the time library for the sleep function
+import commands
 from utils import log_utils
 from tracker_core import resolver
 import solver_core as solver
-import commands
 from motor_core import jbrik_motor
 
 picRotCount = 3
@@ -9,6 +10,17 @@ picPath = "/tmp/jbrik/"
 picName = "rubiks-side-"
 picType = "png"
 picCmd = "raspistill -v -w 400 -h 400  -e " + picType + " -t 1 -sh 100 -br 50 -mm spot -o "
+
+
+
+#from motor_core import brickuberlib
+# initialize the solver machine
+#Cuber = jbrik_motor.JbrikMotorLib()
+#Cuber = brickuberlib.BricKuberLib("EV3", True)
+#Cuber.spin(90)
+#Cuber.flip()
+
+
 
 
 # take pictures
@@ -24,7 +36,7 @@ def photo_face_rotations(facenum):
         print("rotate 90 CW")
         Cuber.rotate_cube(1)
 
-    # spin 90 to return to starting state
+    # spin 90 to return to starting stat
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
 
 # load picture to map
@@ -55,12 +67,14 @@ def photo_all_faces():
     for facenum in range(1, 7):
         print("Flip to facenum: " + facenum.__str__())
         Cuber.flip_to_facenumup(facenum)
+        # TODO implement release in flip to facenum
+        Cuber._Cuber.release()
         photo_face_rotations(facenum)
 
-    '''
-    for facenum in range(1, 5):
+    '''    
+    for facenum in range(1, 3):
         print("Flip to facenum: " + facenum.__str__())
-        photo_face_rotations(facenum)
+        #photo_face_rotations(facenum)
         Cuber.flip()
 
     print("Fip to facenum: 5")
@@ -82,19 +96,30 @@ def photo_all_faces():
     '''
 
 
+#from motor_core import brickuberlib
 # initialize the solver machine
 Cuber = jbrik_motor.JbrikMotorLib()
+#Cuber.flip_to_facenumup(3)
+#time.sleep(0.5)
+#Cuber.flip_to_facenumup(1)
+#Cuber.flip_to_facenumup(6)
+#time.sleep(0.5)
+#Cuber.flip_to_facenumup(1)
+
+
 
 # take photos of all faces
 photo_all_faces()
 
 # Load photos into color map and covert to cubeStateString
 cubeStateStr = resolve_cubestate()
-log_utils.log("\n\nInitial cube state: " + cubeStateStr)
+#log_utils.log("\n\nInitial cube state: " + cubeStateStr)
 
 # Solve cube
-#solver.solve_cube(cubeStateStr)
+solver.solve_cube(cubeStateStr)
 
+# TODO implement this method in jbrikmotorlib
+Cuber._Cuber.release()
 Cuber.shutdown()
+#Cuber.BP.reset_all()
 
-exit(1)

@@ -57,7 +57,7 @@ class BricKuberLib(object):
             self.MOTOR_GRAB_POSITION_FLIP      = -240
 
             # motor speed constants
-            self.MOTOR_GRAB_SPEED_GRAB = 400
+            self.MOTOR_GRAB_SPEED_GRAB = 300
             self.MOTOR_GRAB_SPEED_FLIP = 600
             self.MOTOR_GRAB_SPEED_REST = 400
         elif robot_style == "EV3":
@@ -117,8 +117,9 @@ class BricKuberLib(object):
             time.sleep(0.1)
             EncoderNow = self.BP.get_motor_encoder(self.MOTOR_PORTS[self.MOTOR_GRAB])
         self.BP.offset_motor_encoder(self.MOTOR_PORTS[self.MOTOR_GRAB], (EncoderNow - 25))
-        self.BP.set_motor_position(self.MOTOR_PORTS[self.MOTOR_GRAB], self.MOTOR_GRAB_POSITION_REST)
 
+        self.BP.set_motor_limits(self.MOTOR_PORTS[self.MOTOR_GRAB], 100, self.MOTOR_GRAB_SPEED_GRAB)
+        self.BP.set_motor_position(self.MOTOR_PORTS[self.MOTOR_GRAB], self.MOTOR_GRAB_POSITION_REST)
         self.BP.offset_motor_encoder(self.MOTOR_PORTS[self.MOTOR_TURN], self.BP.get_motor_encoder(self.MOTOR_PORTS[self.MOTOR_TURN]))
         self.TurnTableTarget = 0
         self.spin(0)

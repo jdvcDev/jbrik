@@ -3,12 +3,13 @@ from utils import log_utils
 from solver_core import jbrik_cube
 
 class JbrikMotorLib(object):
-    _Cuber = BricKuberLib("EV3", True)
+    _Cuber = None
     _FaceUp = 1
 
     def __init__(self):
-        self._Faceup = 1
         log_utils.log("Initializing jbrik")
+        self._Faceup = 1
+        self._Cuber = BricKuberLib("EV3", True)
         raw_input("\nPress Enter to continue...\n")
 
     def get_face_up(self):
@@ -18,6 +19,7 @@ class JbrikMotorLib(object):
         return jbrik_cube.oppositefaces[self.get_face_up()]
 
     def rotate_cube(self, rotcount, dir="CW"):
+        self._Cuber.release()
         rotdeg = 90 * rotcount
         if dir == "CC":
             rotdeg = rotdeg * -1
@@ -31,13 +33,14 @@ class JbrikMotorLib(object):
 
         # TODO and a release
 
-    def flip(self, dir="F"):
+    def flip(self, dir="F", release=False):
         log_utils.log("Start faceUp: " + self._FaceUp.__str__())
         if dir == "F":
-            self._Cuber.flip(True)
+            #self._Cuber.flip(True)
+            self._Cuber.flip(release)
             if self._FaceUp < 5:
                 if self._FaceUp == 4:
-                    pass
+                    self._FaceUp = 1
                 else:
                     self._FaceUp += 1
             else:
@@ -104,10 +107,10 @@ class JbrikMotorLib(object):
             self._flip_5_1()
             while curfaceup != facenum and curfaceup <= 4:
                 self.flip()
-        # Going to 6 from 1-4
-        elif facenum == 6 and curfaceup <= 4:
-            self._flip_1_5()
         # Going to 1-4 from 6
+        elif facenum == 6 and curfaceup <= 4:
+            self._flip_1_6()
+        # Going to 6 to 1-4
         elif facenum <= 4 and curfaceup == 6:
             self._flip_6_1()
             while curfaceup != facenum and curfaceup <= 4:
@@ -122,6 +125,7 @@ class JbrikMotorLib(object):
         else:
             while curfaceup != facenum and curfaceup <= 4:
                 self.flip()
+                curfaceup = self._FaceUp
 
     # TODO complete and test
     def perform_solver_op(self, solverop):
@@ -150,7 +154,9 @@ class JbrikMotorLib(object):
 
     def shutdown(self):
         # Unconfigure the sensors, disable the motors, and restore the LED to the control of the BrickPi3 firmware.
+#        self._Cuber.BP.set_motor_position(self._Cuber.MOTOR_PORTS[self._Cuber.MOTOR_GRAB], self._Cuber.MOTOR_GRAB_POSITION_REST)
         self._Cuber.BP.reset_all()
+
 
     #Cuber.grab()
     #Cuber.release()
