@@ -32,6 +32,8 @@ class JbrikMotorLib(object):
         self.rotate_cube(rotcount, dir)
 
         # TODO and a release
+    def release_cube(self):
+        self._Cuber.release()
 
     def flip(self, dir="F", release=False):
         log_utils.log("Start faceUp: " + self._FaceUp.__str__())
@@ -150,21 +152,13 @@ class JbrikMotorLib(object):
 
         return faceup.__str__() + rotdir + rotcount
 
+    def perform_solver_ops(self, solveroplist):
+        log_utils.log("Performing solver ops: " + solveroplist.__str__())
 
 
     def shutdown(self):
         # Unconfigure the sensors, disable the motors, and restore the LED to the control of the BrickPi3 firmware.
 #        self._Cuber.BP.set_motor_position(self._Cuber.MOTOR_PORTS[self._Cuber.MOTOR_GRAB], self._Cuber.MOTOR_GRAB_POSITION_REST)
         self._Cuber.BP.reset_all()
-
-
-    #Cuber.grab()
-    #Cuber.release()
-    #Cuber.spin(360)
-    #Cuber.home_all()
-    #Cuber.flip(True)
-    #Cuber.spin(-90)
-
-    #Cuber.home_all()
 
 
