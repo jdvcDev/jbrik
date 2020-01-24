@@ -1,12 +1,12 @@
 from utils import log_utils
 
 # for reverse transition read transition chain backwards
-facetransitions = {
+FACETRANSITIONS = {
     1: ["1.3", "2.3", "3.3"],
     2: ["1.2", "2.2", "3.2"],
     3: ["1.1", "2.1", "3.1"]
 }
-transitions = {
+TRANSITIONS = {
     1: ["4.1 16.3", "4.2. 17.3", "4.3 18.3", "16.3 12.3", "17.3 12.2", "18.3 12.1", "12.1 13.1", "12.2 14.1", "12.3 15.1", "13.1 4.3", "14.1 4.2", "15.1 4.1"],
     2: ["7.1 18.3", "7.2 18.2", "7.3 18.1", "18.1 3.1", "18.2 3.2", "18.3 3.3", "3.1 15.1", "3.2 15.2", "3.3 15.3", "15.1 7.3", "15.2 7.2", "15.3 7.1"],
     3: ["10.1 18.1", "10.2 17.1", "10.3 16.1", "16.1 6.1", "17.1 6.2", "18.1 6.3", "6.1 15.3", "6.2 14.3", "6.3 13.3", "13.3 10.1", "14.3 10.2", "15.3 10.3"],
@@ -14,7 +14,7 @@ transitions = {
     5: ["4.3 1.3", "5.3 2.3", "6.3 3.3", "1.3 10.3", "2.3 11.3", "3.3 12.3", "10.3 7.3", "11.3 8.3", "12.3 9.3", "7.3 4.3", "8.3 5.3", "9.3 6.3"],
     6: ["4.1 7.1", "5.1 8.1", "6.1 9.1", "7.1 10.1", "8.1 11.1", "9.1 12.1", "10.1 1.1", "11.1 2.1", "12.1 3.1", "1.1 4.1", "2.1 5.1", "3.1 6.1"]
 }
-celladjacencies = {
+CELLADJENCIES = {
     1: ["1.1 12.1 16.3", "1.2 12.2", "1.3 12.3 13.1" , "2.1 17.3", "2.2 X", "2.3 14.1", "3.1 4.1 18.3", "3.2 4.2", "3.3 4.3 15.1"],
     2: ["4.1 3.1 18.3", "4.2 3.2", "4.3 3.3 15.1", "5.1 18.2", "5.2 X", "5.3 15.2", "6.1 7.1 18.1", "6.2 7.2", "6.3 7.3 15.3"],
     3: ["7.1 6.1 18.1", "7.2 6.2", "7.3 6.3 15.3", "8.1 17.1", "8.2 X", "8.3 14.3", "9.1 10.1 16.1", "9.2 10.2", "9.3 10.3 13.3"],
@@ -22,7 +22,7 @@ celladjacencies = {
     5: ["13.1 1.2 12.3", "13.2 11.3", "13.3 9.3 10.3", "14.1 2.3", "14.2 X", "14.3 8.3", "15.1 3.3 4.3", "15.2 5.3", "15.3 6.3 7.3"],
     6: ["16.1 9.1 10.1", "16.2 11.1", "16.3 1.1 12.1", "17.1 8.1", "17.2 X", "17.3 2.1", "18.1 7.1 6.1", "18.2 5.1", "18.3 3.1 4.1"]
 }
-faceorbits = {
+FACEORBITS = {
     1: ["4.1", "4.2", "4.3", "12.1", "12.2", "12.3", "13.1", "14.1", "15.1", "16.3", "17.3", "18.3"],
     2: ["3.1", "3.2", "3.3", "7.1", "7.2", "7.3", "15.1", "15.2", "15.3", "18.1", "18.2", "18.3"],
     3: ["6.1", "6.2", "6.3", "10.1", "10.2", "10.3", "13.3", "14.3", "15.3", "16.1", "17.1", "18.1"],
@@ -31,7 +31,7 @@ faceorbits = {
     6: ["1.1", "2.1", "3.1", "4.1", "5.1", "6.1", "7.1", "8.1", "9.1", "10.1", "11.1", "12.1"]
 }
 # ordered by CW rotation
-centeradjacencies = {
+CENTERADJACENCIES = {
     1: ["4.2","14.1","12.2","17.3"],
     2: ["3.2", "18.2","7.2","15.2"],
     3: ["6.2","17.1","10.2","14.3"],
@@ -39,7 +39,7 @@ centeradjacencies = {
     5: ["2.3","5.3","8.3","11.3"],
     6: ["2.1", "11.1", "8.1", "5.1"]
 }
-oppositefaces = {
+OPPOSITEFACES = {
     1: 3,
     2: 4,
     3: 1,
@@ -47,7 +47,7 @@ oppositefaces = {
     5: 6,
     6: 5
 }
-oppfacecell_rface_center_align_map = {
+OPPFACECELL_RFACE_CENTER_ALIGN_MAP = {
     # V
     "7.2 8.1": "V 4 5",
     "7.2 8.3": "V 6 4",
@@ -59,14 +59,14 @@ oppfacecell_rface_center_align_map = {
     "8.1 8.3": "L 4 5"
 }
 # if 7.1 f=2, t=3, l=5, r=6
-oppface_cell_face_map = {
+OPPFACE_CELL_FACE_MAP = {
     "0.0": ["f", "t", "l", "r"],
     "7.1": [2, 3, 5, 6],
     "7.3": [5, 3, 4, 2],
     "9.1": [6, 3, 2, 4],
     "9.3": [4, 3, 6, 5],
 }
-oppfacecell_rface_corner_align_map = {
+OPPFACECELL_RFACE_CORNER_ALIGN_MAP = {
     # 2 side by side
     "7.1 7.3": "6 7.1",
     "7.1 9.1": "4 9.1",
@@ -86,15 +86,15 @@ oppfacecell_rface_corner_align_map = {
     # 4
     "7.1 7.3 9.1 9.3": "6 7.1",
 }
-oppface_centercell_facemap = {
+OPPFACE_CENTERCELL_FACEMAP = {
     "0.0": ["f", "l", "r"],
     "7.2": [2, 5, 6],
     "8.1": [6, 2, 4],
     "8.3": [5, 4, 2],
     "9.2": [4, 6, 5],
 }
-middle_rowccells = {"5.1","5.3", "13.2", "15.2", "11.1", "11.3", "16.2", "18.2"}
-middle_rowccells_lr_adj = {
+MIDDLE_ROWCCELLS = {"5.1", "5.3", "13.2", "15.2", "11.1", "11.3", "16.2", "18.2"}
+MIDDLE_ROWCCELLS_LR_ADJ = {
     "5.1": "16.2 5.3",
     "5.3": "5.1 13.2",
     "13.2": "15.2 11.1",
@@ -105,9 +105,9 @@ middle_rowccells_lr_adj = {
     "18.2": "16.2 5.3"
 }
 
-fivesixmidrowcrossrowcells = ["13.2", "15.2", "16.2", "18.2"]
-fivesixmidrowcrossrowcells_l = ["13.2", "18.2"]
-fivesixmidrowcrossrowcells_r = ["15.2", "16.2"]
+FIVESIXMIDROWCROSSROWCELLS = ["13.2", "15.2", "16.2", "18.2"]
+FIVESIXMIDROWCROSSROWCELLS_L = ["13.2", "18.2"]
+FIVESIXMIDROWCROSSROWCELLS_R = ["15.2", "16.2"]
 
 
 class JbrikCube(object):
@@ -250,7 +250,7 @@ class JbrikCube(object):
 
     def get_adjcell_color_for_center_rowcell(self, rowcell):
         face = get_face_for_row(int(rowcell.split(".")[0]))
-        faceadj = celladjacencies[face]
+        faceadj = CELLADJENCIES[face]
         adjcellcolor = ""
         for cell in faceadj:
             if cell.split(" ")[0] == rowcell:
@@ -285,13 +285,13 @@ class JbrikCube(object):
 
 # Static methods
 def get_adj_face_for_rowcell(rowcell):
-    for adjface in centeradjacencies:
-        if centeradjacencies[adjface].__contains__(rowcell):
+    for adjface in CENTERADJACENCIES:
+        if CENTERADJACENCIES[adjface].__contains__(rowcell):
             return adjface
 
 # ?? why is this only for 1
 def get_adjcell_for_rowcell(rowcell):
-    faceadj = celladjacencies[1]
+    faceadj = CELLADJENCIES[1]
     for cell in faceadj:
         if cell.split(" ")[0] == rowcell:
             adjcell = cell.split(" ")[1]
@@ -310,10 +310,10 @@ def get_face_for_rowcell(rowcell):
 
 def get_transitions_for_face(facenum, dir):
     if dir == "CW":
-        return transitions[facenum]
+        return TRANSITIONS[facenum]
     else:
         retlist = []
-        revlist = transitions[facenum][::-1]
+        revlist = TRANSITIONS[facenum][::-1]
         for elm in revlist:
             first = elm.split(" ")[0]
             sec = elm.split(" ")[1]
@@ -328,7 +328,7 @@ def get_transitions_for_frontface( facenum, dir):
 
     for i in range(1, 4):
         rownum = frowstart + i
-        ftransraw = facetransitions[i]
+        ftransraw = FACETRANSITIONS[i]
         for trans in ftransraw:
             sourcepos = rownum.__str__() + "." + trans.split(".")[0]
             targetrow = frowstart + int(trans.split(".")[0])
@@ -376,7 +376,7 @@ def get_next_pos_for_face_rotation(facenum, currentpos, dir="CW"):
     if facenum == get_face_for_rowcell(currentpos):
         return get_next_cornerpos_on_same_face_rotation(facenum, currentpos)
 
-    translist = transitions[facenum]
+    translist = TRANSITIONS[facenum]
 
     for trans in translist:
         if dir != "CW":
@@ -390,7 +390,7 @@ def get_next_centerpos_for_face_rotation(facenum, currentpos, dir="CW"):
     if facenum == get_face_for_rowcell(currentpos):
         return get_next_centerpos_on_same_face_rotation(facenum, currentpos)
 
-    translist = transitions[facenum]
+    translist = TRANSITIONS[facenum]
 
     if dir != "CW":
         translist.reverse()
@@ -455,7 +455,7 @@ def get_adjrowccell_for_rowcell(rowcell):
     returnlist = []
 
     facenum = get_face_for_rowcell(rowcell)
-    adjrowcellsforface = celladjacencies[facenum]
+    adjrowcellsforface = CELLADJENCIES[facenum]
 
     for adjrowcells in adjrowcellsforface:
         if adjrowcells.startswith(rowcell):
@@ -474,7 +474,7 @@ def get_non_oppface_adj_rowcell_for_corner(rowcell, oppface):
     rowcellface = get_face_for_rowcell(rowcell)
 
     log_utils.log(rowcell + " is on face: " + rowcellface.__str__())
-    rowcelladjs = celladjacencies[rowcellface]
+    rowcelladjs = CELLADJENCIES[rowcellface]
     for rowcelladj in rowcelladjs:
         if rowcelladj.startswith(rowcell):
             log_utils.log(rowcell + " is on the corner: " + rowcelladj)
@@ -629,8 +629,8 @@ def get_facetrans_to_resultin_rowcell(destrowcell):
     for i in range(1, 3):
 #        row = facetransitions(i)
         for j in range(0, 3):
-            cell = facetransitions[i][j]
-            if facetransitions[i][j] == face1rowcell:
+            cell = FACETRANSITIONS[i][j]
+            if FACETRANSITIONS[i][j] == face1rowcell:
                 rowcell = i.__str__() + "." + (j+1).__str__()
                 return convert_face1_rowcell_to_facenum_rowcell(rowcell, destrowcellface)
 

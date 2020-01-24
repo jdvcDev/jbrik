@@ -1,31 +1,17 @@
 import time     # import the time library for the sleep function
 import sys
-import commands
 from utils import log_utils
 from tracker_core import tracker
 from tracker_core import resolver
 from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
-picRotCount = 3
-picPath = "/tmp/jbrik/"
-picName = "rubiks-side-"
-picType = "png"
-picCmd = "raspistill -v -w 400 -h 400  -e " + picType + " -t 1 -sh 100 -br 50 -mm spot -o "
+PICROTCOUNT = 3
 
-
-
-# TODO move this method to the tracker
 # take pictures
 def photo_face_rotations(facenum, cuber):
-    # raspistill -q 100 -e png -t 1 -sh 100 -br 60 -o /tmp/rubiks-side-U.png
-    # raspistill -v -w 400 -h 400  -e png -t 1 -sh 100 -br 50 -mm spot -o /tmp/jbrik/rubiks-side-10.png
-
-    for i in range(0, picRotCount + 1):
-        log_utils.log("Taking rotation pic: " + i.__str__() + " of face: " + facenum.__str__())
-        picstr = picCmd + picPath + picName + facenum.__str__() + i.__str__() + "." + picType
-        log_utils.log("Cmd: " + picstr)
-        commands.getstatusoutput(picstr)
+    for rotnum in range(0, PICROTCOUNT + 1):
+        tracker.jbrick_tracker.photo_face(facenum, rotnum)
         log_utils.log("Rotate 90 CW")
         cuber.rotate_cube(1)
 
@@ -39,11 +25,10 @@ def resolve_cubestate():
 
     for facenum in range(1, 7):
         # Convert the photo of the face into a map of rgb values
-        facemap = tracker.jbrick_tracker.convert_face_pics_to_rgb_facemap(picRotCount, picPath,
-                                                                          picName, picType, facenum)
+        facemap = tracker.jbrick_tracker.convert_face_pics_to_rgb_facemap(facenum, PICROTCOUNT)
 
         # convert the map of face rgb values to cubeStateStr
-        cubestatestr += resolver.jbrik_resolver.resolve_colors(facemap, picRotCount)
+        cubestatestr += resolver.jbrik_resolver.resolve_colors(facemap, PICROTCOUNT)
 
     return cubestatestr
 
@@ -73,7 +58,7 @@ def convert_solve_movements_to_motor_movements(solveroplist):
     return motoroplist
 
 
-
+Cuber = None
 try:
     # initialize the solver machine
     Cuber = motor.JbrikMotorLib()
@@ -83,7 +68,7 @@ try:
 
     # Load photos into color map and covert to cubeStateString
     CubeStateStr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow"
-    #CubeStateStr = resolve_cubestate()
+#    CubeStateStr = resolve_cubestate()
     log_utils.log("\n\nInitial cube state: " + CubeStateStr)
 
     # Solve cube

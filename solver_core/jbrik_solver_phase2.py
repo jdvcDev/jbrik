@@ -7,7 +7,7 @@ def solvecrosscorners(cube):
     log_utils.log("Solving cross corners")
     ccolor = cube.get_cell_val_by_rowcell("2.2")
     facetosolve = 1
-    oppface = jbrik_cube.oppositefaces[facetosolve]
+    oppface = jbrik_cube.OPPOSITEFACES[facetosolve]
 
     solved = False
     while not solved:
@@ -19,8 +19,6 @@ def solvecrosscorners(cube):
 
         cube = deface_unsolved_faced_corner(cube, facetosolve, ccolor)
 
-#        while not are_all_crosscorners_solved(cube, facetosolve):
-#            cube = solvecrosscorners(cube)
         if are_all_crosscorners_solved(cube, facetosolve):
             solved = True
 
@@ -54,7 +52,7 @@ def deface_unsolved_faced_corner(cube, facetosolve, ccolor):
     return cube
 
 def move_solveface_orbitcells_to_oppface(cube, solveface, ccolor):
-    solvefaceorbits = jbrik_cube.faceorbits[solveface]
+    solvefaceorbits = jbrik_cube.FACEORBITS[solveface]
     for orbitrowcell in solvefaceorbits:
         log_utils.log("Checking solveface orbit rowcell: " + orbitrowcell + " for needed transitions.")
         if cube.get_cell_val_by_rowcell(orbitrowcell) == ccolor:
@@ -67,7 +65,7 @@ def move_solveface_orbitcells_to_oppface(cube, solveface, ccolor):
             log_utils.log("Rotate face: " + rotface.__str__() + " " + rotdir + " to move it to opposite solve face.")
             cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
 
-            oppface = jbrik_cube.oppositefaces[solveface]
+            oppface = jbrik_cube.OPPOSITEFACES[solveface]
             rotstr = oppface.__str__() + "CW1"
             log_utils.log("Rotate oppface: " + rotstr + " to move target cell<???> out of the way of unwind")
             cube = jbrik_solver_move_lib.perform_rotation_str(rotstr, cube)
@@ -80,7 +78,7 @@ def move_solveface_orbitcells_to_oppface(cube, solveface, ccolor):
 
 
 def move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor):
-    oppfaceorbit = jbrik_cube.faceorbits[oppface]
+    oppfaceorbit = jbrik_cube.FACEORBITS[oppface]
 
     # identify first, if any rowcells are solvable on oppface orbit
     log_utils.log("Looking for " + ccolor + " rowcell on opp face orbit")
@@ -114,7 +112,7 @@ def move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor):
     # we know solveface is one because we're solving the cross, could dynamically figure out though using oppface
     solveface = 1
 
-    oppfaceorbit = jbrik_cube.faceorbits[oppface]
+    oppfaceorbit = jbrik_cube.FACEORBITS[oppface]
     oppfacecornerrowcells = jbrik_cube.get_cornercell_rowcells_for_face(oppface)
     solvefacecornerrowcells = jbrik_cube.get_cornercell_rowcells_for_face(solveface)
 

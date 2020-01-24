@@ -32,7 +32,7 @@ def face_oppface_cross(cube):
             log_utils.log("Solved cells: " + facedcelllist.__str__())
             solvedcells = facedcelllist[0] + " " + facedcelllist[1]
 
-            facemap = jbrik_cube.oppfacecell_rface_center_align_map[solvedcells]
+            facemap = jbrik_cube.OPPFACECELL_RFACE_CENTER_ALIGN_MAP[solvedcells]
             alignmenttype = facemap.split(" ")[0]
             tface = facetosolve.__str__()
             fface = facemap.split(" ")[1].__str__()

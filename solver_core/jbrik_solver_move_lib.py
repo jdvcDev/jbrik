@@ -5,7 +5,7 @@ import jbrik_cube
 def ninetydswap(startrowcell, dir, cube):
     solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
     rotationface = jbrik_cube.get_adj_face_for_rowcell(startrowcell)
-    oppositeface = jbrik_cube.oppositefaces[solvingface]
+    oppositeface = jbrik_cube.OPPOSITEFACES[solvingface]
 
     targetcell = jbrik_cube.get_ninetydswap_targetcell(startrowcell, dir)
 
@@ -38,8 +38,8 @@ def ninetydswap(startrowcell, dir, cube):
 def oneeightydswap(startrowcell, cube):
     solvingface = jbrik_cube.get_face_for_row(int(startrowcell.split(".")[0]))
     rotationface = jbrik_cube.get_adj_face_for_rowcell(startrowcell)
-    oppositeface = jbrik_cube.oppositefaces[solvingface]
-    destface = jbrik_cube.oppositefaces[rotationface]
+    oppositeface = jbrik_cube.OPPOSITEFACES[solvingface]
+    destface = jbrik_cube.OPPOSITEFACES[rotationface]
 
     log_utils.log("Performing 180 degree swap with rowcell: " + startrowcell)
 

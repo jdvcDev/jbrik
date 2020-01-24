@@ -72,7 +72,7 @@ def facecross_o1(cube, ccolor, facetosolve, atomic=False):
 # rotate opposite face to align cell then _o1
 def facecross_o2(cube, ccolor, facetosolve):
     log_utils.log("Checking for 2nd order face transitions for face: " + facetosolve.__str__())
-    opptosolveface = jbrik_cube.oppositefaces[facetosolve]
+    opptosolveface = jbrik_cube.OPPOSITEFACES[facetosolve]
     log_utils.log("Face: " + opptosolveface.__str__() + " is opposite to the solving face.")
 
     o2inposition = False
@@ -129,7 +129,7 @@ def facecross_o3(cube, ccolor, facetosolve):
         return cube
 
     # identify the first rowcell we can move into resultpos
-    opptosolveface = jbrik_cube.oppositefaces[facetosolve]
+    opptosolveface = jbrik_cube.OPPOSITEFACES[facetosolve]
     rowcelltomove = ""
     for facenum in range(1, 7):
         log_utils.log("Checking face: " + facenum.__str__() + " for cross cells that can face: " + resultpos)
@@ -185,7 +185,7 @@ def facecross_o3(cube, ccolor, facetosolve):
 
 
         # we're in o2 position (solveface rotation) but a non midrow because we're on a 4/6 face
-        if jbrik_cube.fivesixmidrowcrossrowcells.__contains__(rowcelltomove):
+        if jbrik_cube.FIVESIXMIDROWCROSSROWCELLS.__contains__(rowcelltomove):
             log_utils.log(rowcelltomove + " is an o2 position but non mid row because it on a 4/6 face")
             nextposmovestr = jbrik_cube.get_crosscenter_solvface_trans(rowcelltomove)
             resultpos = jbrik_cube.get_dest_pos_for_face_rotation(rowcelltomove, nextposmovestr)
@@ -250,7 +250,7 @@ def get_facestr_for_cross_rowcell(rowcell, ccolor, cube):
     log_utils.log("Looking for 1st order facing solution for: " + rowcell)
     adjface = jbrik_cube.get_adj_face_for_rowcell(rowcell)
     log_utils.log(adjface.__str__() + " is the adjacent face for: " + rowcell)
-    adjflist = jbrik_cube.centeradjacencies[adjface]
+    adjflist = jbrik_cube.CENTERADJACENCIES[adjface]
 
     rotationcount = 0
     cellidx = adjflist.index(rowcell)

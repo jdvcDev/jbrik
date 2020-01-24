@@ -30,8 +30,8 @@ def solve_oppface_corners(cube):
             # find right hand face for solved rowcell combo
             tface = facetosolve.__str__()
             bface = "1"
-            rface = jbrik_cube.oppfacecell_rface_corner_align_map[unsolvedcorners].split(" ")[0].__str__()
-            cornertosolve = jbrik_cube.oppfacecell_rface_corner_align_map[unsolvedcorners].split(" ")[1]
+            rface = jbrik_cube.OPPFACECELL_RFACE_CORNER_ALIGN_MAP[unsolvedcorners].split(" ")[0].__str__()
+            cornertosolve = jbrik_cube.OPPFACECELL_RFACE_CORNER_ALIGN_MAP[unsolvedcorners].split(" ")[1]
 
             # special case where solved rows are opposites
             if unsolvedcorners == "7.1 9.3" or unsolvedcorners == "7.3 9.1":

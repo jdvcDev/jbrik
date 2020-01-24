@@ -8,12 +8,13 @@ import jbrik_solver_phase7
 import jbrik_cube
 
 
-def solve_cube(cubeStateStr):
-    #cubeStateStr = "oworwbbggowyroybbrwrwrygrobwbrbrygogygywgorogbywybgowy" #10/13/31/6/0/16/26
+def solve_cube(cubestatestr):
+    #cubestatestr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow" # 10/13/46/6/25/8/27
+    #cubeStateStr = "oworwbbggowyroybbrwrwrygrobwbrbrygogygywgorogbywybgowy" # 10/13/31/6/0/16/26
     #cubeStateStr = "bybbwgobygoooogyorgywryryggrrwwrgwbwoyoogybwgbrrbbwrwy" # 7/22/31/6/25/16/52
     #cubeStateStr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
 
-    Cube = jbrik_cube.JbrikCube(cubeStateStr)
+    Cube = jbrik_cube.JbrikCube(cubestatestr)
 
     Cube = jbrik_solver_phase1.solvecross(Cube)
     print

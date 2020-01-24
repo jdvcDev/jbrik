@@ -16,7 +16,7 @@ class JbrikMotorLib(object):
         return self._FaceUp
 
     def get_face_down(self):
-        return jbrik_cube.oppositefaces[self.get_face_up()]
+        return jbrik_cube.OPPOSITEFACES[self.get_face_up()]
 
     def rotate_cube(self, rotcount, dir="CW", release=True):
         if release:
@@ -165,7 +165,7 @@ def convert_solver_op_to_motor_op(solverop):
     # dir = opposite direction
     # 3CW1 = 1CC1
     targetface = solverop[0]
-    faceup = jbrik_cube.oppositefaces[int(targetface)]
+    faceup = jbrik_cube.OPPOSITEFACES[int(targetface)]
     dir = solverop[1:3]
     rotcount = solverop[3]
     rotdir = "CW"

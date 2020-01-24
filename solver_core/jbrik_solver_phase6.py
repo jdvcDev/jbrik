@@ -22,10 +22,10 @@ def position_oppface_corners(cube):
 
         # orient so that this corner is front top right, we can map this,
         # nothing is positioned do algo on any random corner
-        cornercelladjfacelist = jbrik_cube.oppface_cell_face_map.get("7.1")
+        cornercelladjfacelist = jbrik_cube.OPPFACE_CELL_FACE_MAP.get("7.1")
         if positionedrowcell != "":
             # otherwise do it the positioned corner
-            cornercelladjfacelist = jbrik_cube.oppface_cell_face_map[positionedrowcell]
+            cornercelladjfacelist = jbrik_cube.OPPFACE_CELL_FACE_MAP[positionedrowcell]
             log_utils.log("Adjacent faces for " + positionedrowcell + ": " + cornercelladjfacelist.__str__())
 
         # if 7.1 f=2, t=3, l=5, r=6
@@ -57,7 +57,7 @@ def is_corner_positioned(cornerrowcell, cube):
     cornerrowcellface = jbrik_cube.get_face_for_rowcell(cornerrowcell)
 
     # get adjrowcelllist for corner
-    rowcellfaceorbitscells = jbrik_cube.celladjacencies[cornerrowcellface]
+    rowcellfaceorbitscells = jbrik_cube.CELLADJENCIES[cornerrowcellface]
     for orbitcells in rowcellfaceorbitscells:
         celllist = orbitcells.split(" ")
         cornercellcolors = []

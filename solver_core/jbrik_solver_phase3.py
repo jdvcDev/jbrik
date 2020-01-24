@@ -43,7 +43,7 @@ def solve_middle(cube):
 #put a case in here for
 def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
     # change this to get all mid row cells
-    for rowcell in jbrik_cube.middle_rowccells:
+    for rowcell in jbrik_cube.MIDDLE_ROWCCELLS:
         rowcellcolor = cube.get_cell_val_by_rowcell(rowcell)
         rowcellccolor = cube.get_center_color_for_rowcell(rowcell)
         adjrowcell = jbrik_cube.get_adjrowccell_for_rowcell(rowcell)
@@ -62,7 +62,7 @@ def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
             movedir = jbrik_cube.get_centerrow_orbit_trans_dir(rowcell)
 
             # get middle cell in the direction of movement and if it's solved skip this transition
-            midlrs = jbrik_cube.middle_rowccells_lr_adj[rowcell]
+            midlrs = jbrik_cube.MIDDLE_ROWCCELLS_LR_ADJ[rowcell]
 
             movestrlist = ""
             if movedir == "L":
@@ -89,7 +89,7 @@ def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
 
 def get_solved_count(cube):
     count = 0
-    for rowcell in jbrik_cube.fivesixmidrowcrossrowcells:
+    for rowcell in jbrik_cube.FIVESIXMIDROWCROSSROWCELLS:
         if is_middle_rowcell_solved(rowcell, cube):
             count += 1
 
@@ -97,7 +97,7 @@ def get_solved_count(cube):
 
 def get_solved_rowcells(cube):
     solvedcells = []
-    for rowcell in jbrik_cube.fivesixmidrowcrossrowcells:
+    for rowcell in jbrik_cube.FIVESIXMIDROWCROSSROWCELLS:
         if is_middle_rowcell_solved(rowcell, cube):
             solvedcells.append(rowcell)
 
@@ -106,7 +106,7 @@ def get_solved_rowcells(cube):
 
 
 def are_all_middle_rowcells_solved(cube):
-    for rowcell in jbrik_cube.fivesixmidrowcrossrowcells:
+    for rowcell in jbrik_cube.FIVESIXMIDROWCROSSROWCELLS:
         if not is_middle_rowcell_solved(rowcell, cube):
             return False
 
@@ -125,7 +125,7 @@ def is_middle_rowcell_solved(rowcell, cube):
     return True
 
 def swap_backwards_oriented_mid_rowcells(facetosolve, swaptype, cube):
-    for rowcell in jbrik_cube.fivesixmidrowcrossrowcells:
+    for rowcell in jbrik_cube.FIVESIXMIDROWCROSSROWCELLS:
         cube = swap_backwards_oriented_mid_rowcell(facetosolve, rowcell, swaptype, cube)
 
     return cube
@@ -140,7 +140,7 @@ def swap_backwards_oriented_mid_rowcell(facetosolve, rowcell, swaptype, cube):
     # check orientation
     if rowcellcolor == adjrowcellccolor and adjrowcellcolor == rowcellccolor:
         log_utils.log("Rowcell: " + rowcell + " is backwards oriented, swapping.")
-        if jbrik_cube.fivesixmidrowcrossrowcells_l.__contains__(rowcell):
+        if jbrik_cube.FIVESIXMIDROWCROSSROWCELLS_L.__contains__(rowcell):
             # its a leftswap
             #movestrlist = get_leftcross_solution_list(facetosolve, adjrowcell, rowcell)
             movestrlist = get_lrcross_solution_list(facetosolve, adjrowcell, rowcell, "L")

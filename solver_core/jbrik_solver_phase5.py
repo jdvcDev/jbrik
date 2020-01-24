@@ -21,7 +21,7 @@ def solve_crossoppface_orbits(cube):
                     log_utils.log("A leftshift of rowcell: " + crosscell + " solves the next pos.")
 
                     # "0.0": ["f", "l", "r"],
-                    facemap = jbrik_cube.oppface_centercell_facemap[crosscell]
+                    facemap = jbrik_cube.OPPFACE_CENTERCELL_FACEMAP[crosscell]
                     rface = facemap[2].__str__()
 
                     # R U R' U R U2 R' U
@@ -36,7 +36,7 @@ def solve_crossoppface_orbits(cube):
 
                     #destrowcell = jbrik_cube.get_oneeightydswap_targetcell(crosscell)
                     destrowcell = jbrik_cube.get_ninetydswap_targetcell(crosscell, "CW")
-                    facemap = jbrik_cube.oppface_centercell_facemap[destrowcell]
+                    facemap = jbrik_cube.OPPFACE_CENTERCELL_FACEMAP[destrowcell]
                     rface = facemap[2].__str__()
 
                     # first a CW1 before calculating faces
@@ -49,7 +49,7 @@ def solve_crossoppface_orbits(cube):
                         cube = jbrik_solver_move_lib.perform_rotation_str(move, cube)
 
                     destrowcell = jbrik_cube.get_oneeightydswap_targetcell(destrowcell)
-                    facemap = jbrik_cube.oppface_centercell_facemap[destrowcell]
+                    facemap = jbrik_cube.OPPFACE_CENTERCELL_FACEMAP[destrowcell]
 
                     rface = facemap[2].__str__()
                     movelist = [rface + "CW1", tface + "CW1", rface + "CC1", tface + "CW1", rface + "CW1",
