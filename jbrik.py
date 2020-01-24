@@ -9,7 +9,7 @@ from motor_core import jbrik_motor as motor
 PICROTCOUNT = 3
 
 # take pictures
-def photo_face_rotations(facenum, cuber):
+def _photo_face_rotations(facenum, cuber):
     for rotnum in range(0, PICROTCOUNT + 1):
         tracker.jbrick_tracker.photo_face(facenum, rotnum)
         log_utils.log("Rotate 90 CW")
@@ -19,7 +19,7 @@ def photo_face_rotations(facenum, cuber):
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
 
 # load picture to map
-def resolve_cubestate():
+def _resolve_cubestate():
     # python rubiks-cube-tracker.py -f ./resource/jbrik_img/rubiks-side-62.png
     cubestatestr = ""
 
@@ -32,24 +32,24 @@ def resolve_cubestate():
 
     return cubestatestr
 
-def photo_all_faces(cuber):
+def _photo_all_faces(cuber):
     # Photo inline cube faces
     for facenum in range(1, 7):
         print("Flip to facenum: " + facenum.__str__())
         cuber.flip_to_facenumup(facenum, True)
-        photo_face_rotations(facenum, cuber)
+        _photo_face_rotations(facenum, cuber)
 
-def run_solve_movements(solvemap, cuber):
+def _run_solve_movements(solvemap, cuber):
     #for phase in solvemap:
     for phase in range(1,2):
         log_utils.log("Performing movement ops for phase: " + phase.__str__())
         solveoplist = solvemap[phase]
-        motoroplist = convert_solve_movements_to_motor_movements(solveoplist)
+        motoroplist = _convert_solve_movements_to_motor_movements(solveoplist)
         log_utils.log("Converted solve op list to motor op list:\nsolveoplist: " + solveoplist.__str__()
                       + "\nmotoroplist: " + motoroplist.__str__())
         cuber.perform_motor_ops_for_phase(motoroplist)
 
-def convert_solve_movements_to_motor_movements(solveroplist):
+def _convert_solve_movements_to_motor_movements(solveroplist):
     motoroplist = []
     for solveop in solveroplist:
         motorop = motor.convert_solver_op_to_motor_op(solveop)
@@ -64,18 +64,18 @@ try:
     Cuber = motor.JbrikMotorLib()
 
     # take photos of all faces
-#    photo_all_faces(Cuber)
+#    _photo_all_faces(Cuber)
 
     # Load photos into color map and covert to cubeStateString
     CubeStateStr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow"
-#    CubeStateStr = resolve_cubestate()
+#    CubeStateStr = _resolve_cubestate()
     log_utils.log("\n\nInitial cube state: " + CubeStateStr)
 
     # Solve cube
     SolveMap = solver.solve_cube(CubeStateStr)
 
     # Run movement commands on cube
-    run_solve_movements(SolveMap,  Cuber)
+    _run_solve_movements(SolveMap,  Cuber)
 
 finally:
     Cuber.release_cube()
