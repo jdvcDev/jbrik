@@ -81,9 +81,12 @@ def _adjust_facevals_for_rotation(jsonin, rotcount):
 
 def _adjust_facevals_for_all_rotations(facecolormap, rotcount):
     adjrotface = {}
-    adjrotface[0] = facecolormap[0]
+    if facecolormap[0] != "":
+        adjrotface[0] = facecolormap[0]
 
     for i in range(1, rotcount + 1):
+        if facecolormap[i] ==  "":
+            continue
         jsonin = json.loads(facecolormap[i])
         # convert to jcon here
         str = json.dumps(_adjust_facevals_for_rotation(jsonin, i))
@@ -91,7 +94,6 @@ def _adjust_facevals_for_all_rotations(facecolormap, rotcount):
     return adjrotface
 
 def resolve_colors(facerotcolormap, rotcount):
-    #rotcount = 3
     adjfacemap = _adjust_facevals_for_all_rotations(facerotcolormap, rotcount)
     #for res in adjfacemap:
         #print(res.__str__() + " " + adjfacemap[res].__str__())
