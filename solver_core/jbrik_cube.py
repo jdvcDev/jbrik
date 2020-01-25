@@ -162,9 +162,9 @@ class JbrikCube(object):
 
     def print_cube(self, cubename = "", printmovelist = False):
         linestr = "\n\nInitial State:\n"
-        linestr += "cubeStateStr = \"" + self.cubeStateStr + "\"\n\n"
+        linestr += "cubestatestr = \"" + self.cubeStateStr + "\"\n\n"
         linestr += "Final State: \n"
-        linestr += "cubeStateStr = \""
+        linestr += "cubestatestr = \""
         for i in range(0, 18):
             for j in range(0,3):
                 linestr += self.cubeHolder[i][j]

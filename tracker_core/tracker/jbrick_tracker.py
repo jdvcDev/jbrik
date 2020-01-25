@@ -30,7 +30,7 @@ def photo_face(facenum, rotnum):
     # raspistill -q 100 -e png -t 1 -sh 100 -br 60 -o /tmp/rubiks-side-U.png
     # raspistill -v -w 400 -h 400  -e png -t 1 -sh 100 -br 50 -mm spot -o /tmp/jbrik/rubiks-side-10.png
 
-    log_utils.log("Taking rotation pic: " + i.__str__() + " of face: " + facenum.__str__())
+    log_utils.log("Taking rotation pic: " + rotnum.__str__() + " of face: " + facenum.__str__())
     picstr = PICCMD + PICPATH + PICNAME + facenum.__str__() + rotnum.__str__() + "." + PICTYPE
     log_utils.log("Cmd: " + picstr)
     commands.getstatusoutput(picstr)

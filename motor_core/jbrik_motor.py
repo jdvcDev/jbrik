@@ -44,8 +44,9 @@ class JbrikMotorLib(object):
                 else:
                     self._FaceUp += 1
             else:
-                print("no - op")
-                SystemExit(1)
+                # dont set the face here because flips involving faces 5-6 are compound movements and will be
+                # set after complete
+                pass
 
         log_utils.log("End faceUp: " + self._FaceUp.__str__())
 
