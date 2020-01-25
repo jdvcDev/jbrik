@@ -9,11 +9,11 @@ import jbrik_cube
 
 
 def solve_cube(cubestatestr):
-    cubeStateStr = "yygrwgrrrbbbroowrbggoyywowbgbyyrbrbwroooggwwwyoggbwoyy"
+    #cubestatestr = "yygrwgrrrbbbroowrbggoyywowbgbyyrbrbwroooggwwwyoggbwoyy" # 10/20/27/6/25/16/26
     #cubestatestr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow" # 10/13/46/6/25/8/27
-    #cubeStateStr = "oworwbbggowyroybbrwrwrygrobwbrbrygogygywgorogbywybgowy" # 10/13/31/6/0/16/26
-    #cubeStateStr = "bybbwgobygoooogyorgywryryggrrwwrgwbwoyoogybwgbrrbbwrwy" # 7/22/31/6/25/16/52
-    #cubeStateStr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
+    #cubestatestr = "oworwbbggowyroybbrwrwrygrobwbrbrygogygywgorogbywybgowy" # 10/13/31/6/0/16/26
+    #cubestatestr = "bybbwgobygoooogyorgywryryggrrwwrgwbwoyoogybwgbrrbbwrwy" # 7/22/31/6/25/16/52
+    #cubestatestr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
 
     Cube = jbrik_cube.JbrikCube(cubestatestr)
 

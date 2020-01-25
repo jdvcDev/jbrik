@@ -15,18 +15,27 @@ def solve_middle(cube):
     while not solved:
         log_utils.log("Starting solve cycle: " + cyclecount.__str__())
 
+        presolvedcount = get_solved_count(cube)
         cube = align_oppface_crossrowcell_to_adj_ccolor(facetosolve, cube)
         solvedcount = get_solved_count(cube)
         solvedcells = get_solved_rowcells(cube)
 
+        presolvedcount = get_solved_count(cube)
         cube = perform_lr_solve_on_cross_rowcells(facetosolve, cube)
         solvedcount = get_solved_count(cube)
         solvedcells = get_solved_rowcells(cube)
 
+        # Exhaust all non "destructive" solve algos before munging with existing middle row state
+        if presolvedcount != solvedcount:
+            cyclecount += 1
+            continue
+
+        presolvedcount = get_solved_count(cube)
         cube = swap_backwards_oriented_mid_rowcells(facetosolve, "swap", cube)
         solvedcount = get_solved_count(cube)
         solvedcells = get_solved_rowcells(cube)
 
+        presolvedcount = get_solved_count(cube)
         cube = swap_non_oriented_mid_rowcells_to_top(facetosolve, cube)
         solvedcount = get_solved_count(cube)
         solvedcells = get_solved_rowcells(cube)
