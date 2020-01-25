@@ -56,7 +56,7 @@ class JbrikMotorLib(object):
     def _flip_1_5(self):
         curfaceup = self._FaceUp
         if curfaceup != 1:
-            print("flipping to face 1")
+            log_utils.log("flipping to face 1")
             self.flip_to_facenumup(1)
 
         self.rotate_cube(1)
@@ -75,7 +75,7 @@ class JbrikMotorLib(object):
     def _flip_1_6(self):
         curfaceup = self._FaceUp
         if curfaceup != 1:
-            print("flipping to face 1")
+            log_utils.log("flipping to face 1")
             self.flip_to_facenumup(1)
 
         self.rotate_cube(1, "CC")
