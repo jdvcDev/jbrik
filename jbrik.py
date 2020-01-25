@@ -12,6 +12,8 @@ DEBUG_STEPS = True
 # take pictures
 def _photo_face_rotations(facenum, cuber):
     for rotnum in range(0, PICROTCOUNT + 1):
+        cuber.grab_cube()
+        cuber.release_cube()
         tracker.jbrick_tracker.photo_face(facenum, rotnum)
         log_utils.log("Rotate 90 CW")
         cuber.rotate_cube(1)
@@ -36,13 +38,13 @@ def _resolve_cubestate():
 def _photo_all_faces(cuber):
     # Photo inline cube faces
     for facenum in range(1, 7):
-        print("Flip to facenum: " + facenum.__str__())
+        log_utils.log("Flip to facenum: " + facenum.__str__())
         cuber.flip_to_facenumup(facenum, True)
         _photo_face_rotations(facenum, cuber)
 
 def _run_solve_movements(solvemap, cuber):
     #for phase in solvemap:
-    for phase in range(3, 4):
+    for phase in range(1, 8):
         log_utils.log("Performing movement ops for phase: " + phase.__str__())
         solveoplist = solvemap[phase]
         motoroplist = _convert_solve_movements_to_motor_movements(solveoplist)
@@ -50,7 +52,7 @@ def _run_solve_movements(solvemap, cuber):
                       + "\nmotoroplist: " + motoroplist.__str__())
         cuber.perform_motor_ops_for_phase(motoroplist)
         if DEBUG_STEPS:
-            raw_input("\nPress Enter to continue...\n")
+            raw_input("\nPhase: " + phase.__str__() + " complete, Press Enter to continue...\n")
 
 def _convert_solve_movements_to_motor_movements(solveroplist):
     motoroplist = []
@@ -66,20 +68,17 @@ try:
     # initialize the solver machine
     Cuber = motor.JbrikMotorLib()
 
-#    Cuber.flip_to_facenumup(5, True)
-
     # take photos of all faces
     _photo_all_faces(Cuber)
 
     # Load photos into color map and covert to cubeStateString
-    #CubeStateStr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow"
     CubeStateStr = _resolve_cubestate()
     log_utils.log("\n\nInitial cube state: " + CubeStateStr)
 
     # Solve cube
     SolveMap = solver.solve_cube(CubeStateStr)
     if DEBUG_STEPS:
-        raw_input("\nPress Enter to continue...\n")
+        raw_input("\nSolution determined, Press Enter to continue...\n")
 
     # Run movement commands on cube
     _run_solve_movements(SolveMap,  Cuber)

@@ -5,7 +5,8 @@ import json
 
 knowncolors = {
     #"Red": [185, 0, 0],
-    "Red": [133, 0, 0],
+    #"Red": [133, 0, 0],
+    "Red": [107, 0, 0],
     #"Orange": [255, 89, 0],
     "Orange": [255, 102, 0],
     "Yellow": [255, 255, 0],

@@ -10,7 +10,7 @@ class JbrikMotorLib(object):
         log_utils.log("Initializing jbrik")
         self._FaceUp = 1
         self._Cuber = BricKuberLib("EV3", True)
-        raw_input("\nPress Enter to continue...\n")
+        raw_input("\nInitialization complete, Press Enter to continue...\n")
 
     def get_face_up(self):
         return self._FaceUp
@@ -33,6 +33,9 @@ class JbrikMotorLib(object):
 
     def release_cube(self):
         self._Cuber.release()
+
+    def grab_cube(self):
+        self._Cuber.grab()
 
     def flip(self, dir="F", release=False):
         log_utils.log("Start faceUp: " + self._FaceUp.__str__())
