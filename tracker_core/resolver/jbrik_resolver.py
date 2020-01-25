@@ -71,11 +71,9 @@ def _get_destpos_for_rotcount(startpos, rotcount):
 
 def _adjust_facevals_for_rotation(jsonin, rotcount):
     result = {}
-    #jsonin = json.loads(facevals[1])
     for start in jsonin:
         endpos = _get_destpos_for_rotcount(int(start), rotcount)
         result[int(start)] = jsonin[endpos.__str__()]
-        #result[endpos] = jsonin[start.__str__()]
 
     return result
 
@@ -88,6 +86,8 @@ def _adjust_facevals_for_all_rotations(facecolormap, rotcount):
         if facecolormap[i] ==  "":
             continue
         jsonin = json.loads(facecolormap[i])
+        if jsonin.__len__ != 9:
+            continue
         # convert to jcon here
         str = json.dumps(_adjust_facevals_for_rotation(jsonin, i))
         adjrotface[i] = str
