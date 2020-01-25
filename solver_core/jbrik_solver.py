@@ -62,4 +62,4 @@ def solve_cube(cubestatestr):
 
     return Cube.solveMap
 
-solve_cube("")
+#solve_cube("")
