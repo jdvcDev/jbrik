@@ -87,6 +87,7 @@ def _adjust_facevals_for_all_rotations(facecolormap, rotcount):
             continue
         jsonin = json.loads(facecolormap[i])
         if jsonin.__len__ != 9:
+            adjrotface[i] = ""
             continue
         # convert to jcon here
         str = json.dumps(_adjust_facevals_for_rotation(jsonin, i))
