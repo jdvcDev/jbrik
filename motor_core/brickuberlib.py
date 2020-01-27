@@ -76,8 +76,7 @@ class BricKuberLib(object):
             self.MOTOR_GRAB_POSITION_FLIP      = -120
 
             # motor speed constants
-            #self.MOTOR_GRAB_SPEED_GRAB = 400
-            self.MOTOR_GRAB_SPEED_GRAB = 375
+            self.MOTOR_GRAB_SPEED_GRAB = 400
             self.MOTOR_GRAB_SPEED_FLIP = 600
             self.MOTOR_GRAB_SPEED_REST = 400
         else:
@@ -162,7 +161,6 @@ class BricKuberLib(object):
 
         self.BP.set_motor_limits(self.MOTOR_PORTS[self.MOTOR_GRAB], 0, self.MOTOR_GRAB_SPEED_FLIP)
         self.run_to_position(self.MOTOR_GRAB, self.MOTOR_GRAB_POSITION_FLIP)
-
         self.run_to_position(self.MOTOR_GRAB, self.MOTOR_GRAB_POSITION_FLIP_PUSH)
 
         if release:

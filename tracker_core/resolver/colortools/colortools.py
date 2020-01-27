@@ -4,11 +4,8 @@ import ciede2000
 import json
 
 knowncolors = {
-    #"Red": [185, 0, 0],
-    #"Red": [133, 0, 0],
-    "Red": [107, 0, 0],
-    #"Orange": [255, 89, 0],
-    "Orange": [255, 102, 0],
+    "Red": [97, 0, 0],
+    "Orange": [255, 75, 0],
     "Yellow": [255, 255, 0],
     "Green": [0, 155, 72],
     "Blue": [0, 69, 173],

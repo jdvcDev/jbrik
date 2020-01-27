@@ -1,15 +1,19 @@
 from brickuberlib import BricKuberLib
 from utils import log_utils
 from solver_core import jbrik_cube
+import time
 
 class JbrikMotorLib(object):
     _Cuber = None
     _FaceUp = 1
+    _TruingGrab = True
+    _OverRotation = 20
 
-    def __init__(self):
+    def __init__(self, truinggrab=True):
         log_utils.log("Initializing jbrik")
         self._FaceUp = 1
         self._Cuber = BricKuberLib("EV3", True)
+        self._TruingGrab = truinggrab
         raw_input("\nInitialization complete, Press Enter to continue...\n")
 
     def get_face_up(self):
@@ -25,7 +29,7 @@ class JbrikMotorLib(object):
         if dir == "CC":
             rotdeg = rotdeg * -1
 
-        self._Cuber.spin(rotdeg, 30)
+        self._Cuber.spin(rotdeg, self._OverRotation)
 
     def rotate_face(self, rotcount, dir="CW"):
         self._Cuber.grab()
@@ -52,6 +56,7 @@ class JbrikMotorLib(object):
                 pass
 
         log_utils.log("End faceUp: " + self._FaceUp.__str__())
+        time.sleep(0.2)
 
     def _flip_1_5(self):
         curfaceup = self._FaceUp

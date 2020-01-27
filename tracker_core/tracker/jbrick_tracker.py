@@ -1,6 +1,8 @@
 import commands
 from utils import log_utils
 
+# jsonin
+
 PICPATH = "/tmp/jbrik/"
 PICNAME = "rubiks-side-"
 PICTYPE = "png"

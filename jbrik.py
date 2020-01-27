@@ -6,17 +6,21 @@ from tracker_core import resolver
 from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
-PICROTCOUNT = 3
-DEBUG_STEPS = True
+_PicRotCount = 0
+_DebugSteps = True
+_TruingCrab = True
+
 
 # take pictures
 def _photo_face_rotations(facenum, cuber):
-    for rotnum in range(0, PICROTCOUNT + 1):
-        cuber.grab_cube()
-        cuber.release_cube()
+    for rotnum in range(0, _PicRotCount + 1):
+        if cuber._TruingGrab:
+            cuber.grab_cube()
+            cuber.release_cube()
         tracker.jbrick_tracker.photo_face(facenum, rotnum)
-        log_utils.log("Rotate 90 CW")
-        cuber.rotate_cube(1)
+        if rotnum > 0:
+            log_utils.log("Rotate 90 CW")
+            cuber.rotate_cube(1)
 
     # spin 90 to return to starting stat
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
@@ -28,10 +32,10 @@ def _resolve_cubestate():
 
     for facenum in range(1, 7):
         # Convert the photo of the face into a map of rgb values
-        facemap = tracker.jbrick_tracker.convert_face_pics_to_rgb_facemap(facenum, PICROTCOUNT)
+        facemap = tracker.jbrick_tracker.convert_face_pics_to_rgb_facemap(facenum, _PicRotCount)
 
         # convert the map of face rgb values to cubeStateStr
-        cubestatestr += resolver.jbrik_resolver.resolve_colors(facemap, PICROTCOUNT)
+        cubestatestr += resolver.jbrik_resolver.resolve_colors(facemap, _PicRotCount)
 
     return cubestatestr
 
@@ -40,6 +44,10 @@ def _photo_all_faces(cuber):
     for facenum in range(1, 7):
         log_utils.log("Flip to facenum: " + facenum.__str__())
         cuber.flip_to_facenumup(facenum, True)
+#        if cuber._TruingGrab:
+#            cuber.grab_cube()
+#            cuber.release_cube()
+
         _photo_face_rotations(facenum, cuber)
 
 def _run_solve_movements(solvemap, cuber):
@@ -51,7 +59,7 @@ def _run_solve_movements(solvemap, cuber):
         log_utils.log("Converted solve op list to motor op list:\nsolveoplist: " + solveoplist.__str__()
                       + "\nmotoroplist: " + motoroplist.__str__())
         cuber.perform_motor_ops_for_phase(motoroplist)
-        if DEBUG_STEPS:
+        if _DebugSteps:
             raw_input("\nPhase: " + phase.__str__() + " complete, Press Enter to continue...\n")
 
 def _convert_solve_movements_to_motor_movements(solveroplist):
@@ -66,7 +74,9 @@ def _convert_solve_movements_to_motor_movements(solveroplist):
 Cuber = None
 try:
     # initialize the solver machine
-    Cuber = motor.JbrikMotorLib()
+    Cuber = motor.JbrikMotorLib(_TruingCrab)
+
+    Cuber.flip()
 
     # take photos of all faces
     _photo_all_faces(Cuber)
@@ -77,7 +87,7 @@ try:
 
     # Solve cube
     SolveMap = solver.solve_cube(CubeStateStr)
-    if DEBUG_STEPS:
+    if _DebugSteps:
         raw_input("\nSolution determined, Press Enter to continue...\n")
 
     # Run movement commands on cube
