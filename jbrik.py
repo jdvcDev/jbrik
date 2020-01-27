@@ -6,19 +6,19 @@ from tracker_core import resolver
 from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
-_PicRotCount = 0
+_PicRotCount = 3
 _DebugSteps = True
-_TruingCrab = True
+_TruingGrab = True
 
 
 # take pictures
 def _photo_face_rotations(facenum, cuber):
     for rotnum in range(0, _PicRotCount + 1):
-        if cuber._TruingGrab:
+        if _TruingGrab:
             cuber.grab_cube()
             cuber.release_cube()
         tracker.jbrick_tracker.photo_face(facenum, rotnum)
-        if rotnum > 0:
+        if rotnum > -1:
             log_utils.log("Rotate 90 CW")
             cuber.rotate_cube(1)
 
@@ -74,9 +74,7 @@ def _convert_solve_movements_to_motor_movements(solveroplist):
 Cuber = None
 try:
     # initialize the solver machine
-    Cuber = motor.JbrikMotorLib(_TruingCrab)
-
-    Cuber.flip()
+    Cuber = motor.JbrikMotorLib(_TruingGrab)
 
     # take photos of all faces
     _photo_all_faces(Cuber)
