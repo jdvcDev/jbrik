@@ -1,8 +1,7 @@
 import commands
 from utils import log_utils
 
-#PICPATH = "/tmp/jbrik/"
-PICPATH = "./tracker_core/tracker/resource/jbrik_img/"
+PICPATH = "/tmp/jbrik/"
 PICNAME = "rubiks-side-"
 PICTYPE = "png"
 PICCMD = "raspistill -v -w 400 -h 400  -e " + PICTYPE + " -t 1 -sh 100 -br 50 -mm spot -o "

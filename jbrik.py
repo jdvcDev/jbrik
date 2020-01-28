@@ -19,10 +19,11 @@ def _photo_face_rotations(facenum, cuber):
             cuber.release_cube()
         tracker.jbrick_tracker.photo_face(facenum, rotnum)
         if rotnum > -1:
-            log_utils.log("Rotate 90 CW")
             if _PicRotCount == 1:
+                log_utils.log("Rotate 180 CW")
                 cuber.rotate_cube(2)
             else:
+                log_utils.log("Rotate 90 CW")
                 cuber.rotate_cube(1)
 
     # spin 90 to return to starting stat
