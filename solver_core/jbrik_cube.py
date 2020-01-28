@@ -576,9 +576,9 @@ def get_crosscenter_oppface_trans(rowcell):
 
 def get_centerrow_orbit_trans_dir(rowcell):
     if rowcell == "5.1":
-        rotdir = "L"
-    elif rowcell == "5.3":
         rotdir = "R"
+    elif rowcell == "5.3":
+        rotdir = "L"
     elif rowcell == "13.2":
         rotdir = "L"
     elif rowcell == "15.2":

@@ -9,6 +9,7 @@ import jbrik_cube
 
 
 def solve_cube(cubestatestr):
+    #cubestatestr = "wrrowbwrorywgoobgbowrwyoyywogrbryogygbbwgybwygrgrbbyog" # 11/22/78/6/16/24/27
     #cubestatestr = "yygrwgrrrbbbroowrbggoyywowbgbyyrbrbwroooggwwwyoggbwoyy" # 10/20/27/6/25/16/26
     #cubestatestr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow" # 10/13/46/6/25/8/27
     #cubestatestr = "oworwbbggowyroybbrwrwrygrobwbrbrygogygywgorogbywybgowy" # 10/13/31/6/0/16/26

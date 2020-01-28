@@ -7,7 +7,7 @@ from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
 _PicRotCount = 3
-_DebugSteps = False
+_DebugSteps = True
 _TruingGrab = True
 
 
@@ -20,7 +20,10 @@ def _photo_face_rotations(facenum, cuber):
         tracker.jbrick_tracker.photo_face(facenum, rotnum)
         if rotnum > -1:
             log_utils.log("Rotate 90 CW")
-            cuber.rotate_cube(1)
+            if _PicRotCount == 1:
+                cuber.rotate_cube(2)
+            else:
+                cuber.rotate_cube(1)
 
     # spin 90 to return to starting stat
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
@@ -44,9 +47,6 @@ def _photo_all_faces(cuber):
     for facenum in range(1, 7):
         log_utils.log("Flip to facenum: " + facenum.__str__())
         cuber.flip_to_facenumup(facenum, True)
-#        if cuber._TruingGrab:
-#            cuber.grab_cube()
-#            cuber.release_cube()
 
         _photo_face_rotations(facenum, cuber)
 
