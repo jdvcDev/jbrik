@@ -1526,6 +1526,7 @@ class RubiksOpenCV(object):
         # log.warning("%d x %d" % (self.img_height, self.img_width))
 
         # crop the image to the part that we know contains the cube
+#TODO may need to correct resize here
         if not webcam and self.img_height == 1080 and self.img_width == 1920:
             x = 450
             y = 160
