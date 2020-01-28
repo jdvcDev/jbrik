@@ -1,5 +1,8 @@
 import commands
 from utils import log_utils
+from trackerlib import RubiksImage, merge_two_dicts
+import logging
+import json
 
 #BASEPATH = "./tracker_core/tracker/"
 #PICPATH = "/tmp/jbrik/"
@@ -10,13 +13,33 @@ PICNAME = "rubiks-side-"
 PICTYPE = "png"
 PICCMD = "raspistill -v -w 400 -h 400  -e " + PICTYPE + " -t 1 -sh 100 -br 50 -mm spot -o "
 
+
+
+
+# Logging
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s %(filename)22s %(levelname)8s: %(message)s"
+)
+log = logging.getLogger(__name__)
+
+# Color the errors and warnings in red
+logging.addLevelName(
+    logging.ERROR, "\033[91m   %s\033[0m" % logging.getLevelName(logging.ERROR)
+)
+logging.addLevelName(
+    logging.WARNING, "\033[91m %s\033[0m" % logging.getLevelName(logging.WARNING)
+)
+
+
 def convert_face_pics_to_rgb_facemap(facenum, picrotcount):
     facemap = {}
     for j in range(0, picrotcount + 1):
-        imgfile = PICPATH + PICNAME + facenum.__str__() + j.__str__() + "." + PICTYPE
+        #imgfile = PICPATH + PICNAME + facenum.__str__() + j.__str__() + "." + PICTYPE
+        imgfile = "./resource/jbrik_img/rubiks-side-12.png"
         str = "python " + CMDPATH + imgfile
         log_utils.log("Converting image file: " + imgfile + " to rgb values.")
-        raw_result = commands.getstatusoutput(str)[1]
+        #raw_result = commands.getstatusoutput(str)[1]
+        raw_result = track_direct(imgfile)
 
         raw_result = raw_result.split("\n")
         raw_result = raw_result[-1]
@@ -29,6 +52,16 @@ def convert_face_pics_to_rgb_facemap(facenum, picrotcount):
         facemap[j] = raw_result
 
     return facemap
+
+def track_direct(imgfile):
+    log.setLevel(logging.DEBUG)
+    #rimg = RubiksImage(args.index, args.name, args.debug)
+    rimg = RubiksImage(0, "name", True)
+    rimg.analyze_file(imgfile)
+    #print(json.dumps(rimg.data, sort_keys=True))
+
+    return json.dumps(rimg.data, sort_keys=True)
+
 
 # TODO raise an exception here based on command output
 def photo_face(facenum, rotnum):
