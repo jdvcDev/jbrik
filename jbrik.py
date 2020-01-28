@@ -7,7 +7,7 @@ from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
 _PicRotCount = 3
-_DebugSteps = True
+_DebugSteps = False
 _TruingGrab = True
 
 
