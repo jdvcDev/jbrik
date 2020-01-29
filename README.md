@@ -23,6 +23,13 @@ The project is closely based on the original [BricKuber](https://www.dexterindus
 Alogorithms used to solve the cube: https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/
 
 # Setup/Installation
+My prefered mehtod of installation is using virtualenv.  you need only make sure that you have the dependencies listed in setup.py installed in order to run jbrik.
+
+- git clone https://github.com/jdvcDev/jbrik.git
+- virtualenv --python=/Users/jasocook/AppData/Local/Programs/Python/Python27/python.exe ./env
+- source venv/Scripts/activate
+- pip install .
+
 
 # Running/Example
 
