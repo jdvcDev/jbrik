@@ -23,7 +23,7 @@ The project is closely based on the original [BricKuber](https://www.dexterindus
 Alogorithms used to solve the cube: https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/
 
 # Setup/Installation
-My prefered method of installation is using virtualenv.  you need only make sure that you have the dependencies listed in setup.py installed in order to run jbrik.
+My prefered method of installation is using virtualenv.  You need only make sure that you have the dependencies listed in setup.py installed in order to run jbrik.  It's assumed that you're running on a RaspberryPi with Raspian for Robots with a BrickPi attached as well so there's an implied dependency on you having the BrickPi drivers to run the LEGO servos.
 
 - git clone https://github.com/jdvcDev/jbrik.git
 - cd jbrik
