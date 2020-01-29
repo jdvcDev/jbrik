@@ -5,18 +5,16 @@ import logging
 import json
 
 BASEPATH = "./tracker_core/tracker/"
-PICPATH = "/tmp/jbrik/"
 #BASEPATH = "./"
-#PICPATH = BASEPATH + "resource/jbrik_img/"
+PICPATH = "/tmp/jbrik/"
+PICPATH = BASEPATH + "resource/jbrik_img/"
 CMDPATH = BASEPATH + "rubiks-cube-tracker.py -f "
 PICNAME = "rubiks-side-"
 PICTYPE = "png"
 PICCMD = "raspistill -v -w 400 -h 400  -e " + PICTYPE + " -t 1 -sh 100 -br 40 -mm spot -o "
 
 
-
-
-# Logging
+# Logging direct tracker
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s %(filename)22s %(levelname)8s: %(message)s"
 )
@@ -30,12 +28,10 @@ logging.addLevelName(
     logging.WARNING, "\033[91m %s\033[0m" % logging.getLevelName(logging.WARNING)
 )
 
-
 def convert_face_pics_to_rgb_facemap(facenum, picrotcount):
     facemap = {}
     for j in range(0, picrotcount + 1):
         imgfile = PICPATH + PICNAME + facenum.__str__() + j.__str__() + "." + PICTYPE
-        #imgfile = "/tmp/jbrik/rubiks-side-10.png"
         str = "python " + CMDPATH + imgfile
         log_utils.log("Converting image file: " + imgfile + " to rgb values.")
         raw_result = commands.getstatusoutput(str)[1]
@@ -55,10 +51,8 @@ def convert_face_pics_to_rgb_facemap(facenum, picrotcount):
 
 def track_direct(imgfile):
     log.setLevel(logging.DEBUG)
-    #rimg = RubiksImage(args.index, args.name, args.debug)
     rimg = RubiksImage(0, "name", True)
     rimg.analyze_file(imgfile)
-    #print(json.dumps(rimg.data, sort_keys=True))
 
     return json.dumps(rimg.data, sort_keys=True)
 
@@ -73,7 +67,3 @@ def photo_face(facenum, rotnum):
     log_utils.log("Cmd: " + picstr)
     commands.getstatusoutput(picstr)
     log_utils.log("Rotate 90 CW")
-
-
-
-#convert_face_pics_to_rgb_facemap(1, 0)

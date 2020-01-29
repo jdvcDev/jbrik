@@ -6,7 +6,7 @@ from tracker_core import resolver
 from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
-_PicRotCount = 3 # 0 for no rotation, 1 for 2 pics - 180 rotation, 3 for one pic from all 4 directions
+_PicRotCount = 0 # 0 for no rotation, 1 for 2 pics - 180 rotation, 3 for one pic from all 4 directions
 _DebugSteps = True
 _TruingGrab = True
 
@@ -33,7 +33,6 @@ def _photo_face_rotations(facenum, cuber):
 
 # load picture to map
 def _resolve_cubestate():
-    # python rubiks-cube-tracker.py -f ./resource/jbrik_img/rubiks-side-62.png
     cubestatestr = ""
 
     for facenum in range(1, 7):
@@ -83,16 +82,16 @@ try:
     _photo_all_faces(Cuber)
 
     # Load photos into color map and covert to cubeStateString
-    #CubeStateStr = _resolve_cubestate()
-    #log_utils.log("\n\nInitial cube state: " + CubeStateStr)
+    CubeStateStr = _resolve_cubestate()
+    log_utils.log("\n\nInitial cube state: " + CubeStateStr)
 
     # Solve cube
-    #SolveMap = solver.solve_cube(CubeStateStr)
-    #if _DebugSteps:
-    #    raw_input("\nSolution determined, Press Enter to continue...\n")
+    SolveMap = solver.solve_cube(CubeStateStr)
+    if _DebugSteps:
+        raw_input("\nSolution determined, Press Enter to continue...\n")
 
     # Run movement commands on cube
-#    _run_solve_movements(SolveMap,  Cuber)
+    _run_solve_movements(SolveMap,  Cuber)
 
 finally:
     Cuber.release_cube()
