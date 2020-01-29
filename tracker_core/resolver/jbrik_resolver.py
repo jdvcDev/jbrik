@@ -110,9 +110,9 @@ def confirm_json_element_length(jsonin):
     return count == 9
 
 def resolve_colors(facerotcolormap, rotcount):
-    adjfacemap = _adjust_facevals_for_all_rotations(facerotcolormap, rotcount)
-    #for res in adjfacemap:
-        #print(res.__str__() + " " + adjfacemap[res].__str__())
+    adjfacemap = facerotcolormap
+    if rotcount != 0:
+        adjfacemap = _adjust_facevals_for_all_rotations(facerotcolormap, rotcount)
 
     bestapproxcolor = colortools.map_to_lowest_average_lab_color_distance_for_rowcell(adjfacemap)
     cstr = ""

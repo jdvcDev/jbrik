@@ -4,10 +4,10 @@ from trackerlib import RubiksImage, merge_two_dicts
 import logging
 import json
 
-#BASEPATH = "./tracker_core/tracker/"
-#PICPATH = "/tmp/jbrik/"
-BASEPATH = "./"
-PICPATH = BASEPATH + "resource/jbrik_img/"
+BASEPATH = "./tracker_core/tracker/"
+PICPATH = "/tmp/jbrik/"
+#BASEPATH = "./"
+#PICPATH = BASEPATH + "resource/jbrik_img/"
 CMDPATH = BASEPATH + "rubiks-cube-tracker.py -f "
 PICNAME = "rubiks-side-"
 PICTYPE = "png"
@@ -34,12 +34,12 @@ logging.addLevelName(
 def convert_face_pics_to_rgb_facemap(facenum, picrotcount):
     facemap = {}
     for j in range(0, picrotcount + 1):
-        #imgfile = PICPATH + PICNAME + facenum.__str__() + j.__str__() + "." + PICTYPE
-        imgfile = "./resource/jbrik_img/rubiks-side-12.png"
+        imgfile = PICPATH + PICNAME + facenum.__str__() + j.__str__() + "." + PICTYPE
+        #imgfile = "/tmp/jbrik/rubiks-side-10.png"
         str = "python " + CMDPATH + imgfile
         log_utils.log("Converting image file: " + imgfile + " to rgb values.")
-        #raw_result = commands.getstatusoutput(str)[1]
-        raw_result = track_direct(imgfile)
+        raw_result = commands.getstatusoutput(str)[1]
+        #raw_result = track_direct(imgfile)
 
         raw_result = raw_result.split("\n")
         raw_result = raw_result[-1]
@@ -76,4 +76,4 @@ def photo_face(facenum, rotnum):
 
 
 
-convert_face_pics_to_rgb_facemap(1, 0)
+#convert_face_pics_to_rgb_facemap(1, 0)

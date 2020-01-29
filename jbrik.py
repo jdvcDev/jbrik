@@ -6,27 +6,29 @@ from tracker_core import resolver
 from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
-_PicRotCount = 3
+_PicRotCount = 3 # 0 for no rotation, 1 for 2 pics - 180 rotation, 3 for one pic from all 4 directions
 _DebugSteps = True
 _TruingGrab = True
 
 
 # take pictures
 def _photo_face_rotations(facenum, cuber):
-    for rotnum in range(0, _PicRotCount + 1):
-        if _TruingGrab:
-            cuber.grab_cube()
-            cuber.release_cube()
-        tracker.jbrick_tracker.photo_face(facenum, rotnum)
-        if rotnum > -1:
-            if _PicRotCount == 1:
-                log_utils.log("Rotate 180 CW")
-                cuber.rotate_cube(2)
-            else:
-                log_utils.log("Rotate 90 CW")
-                cuber.rotate_cube(1)
+    if _PicRotCount == 0:
+        tracker.jbrick_tracker.photo_face(facenum, 0)
+    else:
+        for rotnum in range(0, _PicRotCount + 1):
+            if _TruingGrab:
+                cuber.grab_cube()
+                cuber.release_cube()
+            tracker.jbrick_tracker.photo_face(facenum, rotnum)
+            if rotnum > -1:
+                if _PicRotCount == 1:
+                    log_utils.log("Rotate 180 CW")
+                    cuber.rotate_cube(2)
+                else:
+                    log_utils.log("Rotate 90 CW")
+                    cuber.rotate_cube(1)
 
-    # spin 90 to return to starting stat
     log_utils.log("Rotation pics for face: " + facenum.__str__() + " complete.")
 
 # load picture to map
@@ -81,16 +83,16 @@ try:
     _photo_all_faces(Cuber)
 
     # Load photos into color map and covert to cubeStateString
-    CubeStateStr = _resolve_cubestate()
-    log_utils.log("\n\nInitial cube state: " + CubeStateStr)
+    #CubeStateStr = _resolve_cubestate()
+    #log_utils.log("\n\nInitial cube state: " + CubeStateStr)
 
     # Solve cube
-    SolveMap = solver.solve_cube(CubeStateStr)
-    if _DebugSteps:
-        raw_input("\nSolution determined, Press Enter to continue...\n")
+    #SolveMap = solver.solve_cube(CubeStateStr)
+    #if _DebugSteps:
+    #    raw_input("\nSolution determined, Press Enter to continue...\n")
 
     # Run movement commands on cube
-    _run_solve_movements(SolveMap,  Cuber)
+#    _run_solve_movements(SolveMap,  Cuber)
 
 finally:
     Cuber.release_cube()
