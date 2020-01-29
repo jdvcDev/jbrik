@@ -7,7 +7,7 @@ import json
 BASEPATH = "./tracker_core/tracker/"
 #BASEPATH = "./"
 PICPATH = "/tmp/jbrik/"
-PICPATH = BASEPATH + "resource/jbrik_img/"
+#PICPATH = BASEPATH + "resource/jbrik_img/"
 CMDPATH = BASEPATH + "rubiks-cube-tracker.py -f "
 PICNAME = "rubiks-side-"
 PICTYPE = "png"

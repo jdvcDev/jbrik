@@ -14,6 +14,9 @@ _TruingGrab = True
 # take pictures
 def _photo_face_rotations(facenum, cuber):
     if _PicRotCount == 0:
+        if _TruingGrab:
+            cuber.grab_cube()
+            cuber.release_cube()
         tracker.jbrick_tracker.photo_face(facenum, 0)
     else:
         for rotnum in range(0, _PicRotCount + 1):

@@ -2,13 +2,13 @@ from utils import log_utils
 from tracker_core import tracker
 from tracker_core import resolver
 
-_PicRotCount = 3
+_PicRotCount = 0
 
 def _resolve_cubestate():
     # python rubiks-cube-tracker.py -f ./resource/jbrik_img/rubiks-side-62.png
     cubestatestr = ""
 
-    for facenum in range(1, 7):
+    for facenum in range(6, 7):
         # Convert the photo of the face into a map of rgb values
         facemap = tracker.jbrick_tracker.convert_face_pics_to_rgb_facemap(facenum, _PicRotCount)
 
