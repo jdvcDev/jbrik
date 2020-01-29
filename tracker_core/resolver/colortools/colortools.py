@@ -3,6 +3,17 @@ from math import ceil, sqrt
 import ciede2000
 import json
 
+# Std Cube
+knowncolors = {
+    "Red": [155, 0, 0],
+    "Orange": [255, 114, 0],
+    "Yellow": [255, 255, 0],
+    "Green": [0, 155, 72],
+    "Blue": [0, 69, 173],
+    "White": [255, 255, 255]
+}
+'''
+# Speed Cube
 knowncolors = {
     "Red": [69, 0, 0],
     "Orange": [255, 55, 0],
@@ -11,7 +22,7 @@ knowncolors = {
     "Blue": [0, 69, 173],
     "White": [255, 255, 255]
 }
-
+'''
 def closest_colour(requested_colour):
     min_colours = {}
     for key, name in webcolors.css3_hex_to_names.items():
@@ -200,7 +211,7 @@ def map_to_lowest_average_lab_color_distance_for_rowcell(colorfacemap):
                 continue
             jsonstr = json.loads(facemap)
             observedrgb = jsonstr[i.__str__()]
-#            print(observedrgb)
+            #print(observedrgb)
 
             xyz = ciede2000.rgb2xyz(observedrgb)
             lab1 = ciede2000.xyz2lab(xyz)
@@ -210,7 +221,7 @@ def map_to_lowest_average_lab_color_distance_for_rowcell(colorfacemap):
                 lab2 = ciede2000.xyz2lab(xyz2)
                 distance = ciede2000.ciede2000(lab1, lab2)
                 averagecolormap[color].append(distance)
-#                print(observedrgb.__str__() + ": " + color + " " + distance.__str__())
+                #print(observedrgb.__str__() + ": " + color + " " + distance.__str__())
 
         lowest = -1.0
         name = ""
@@ -223,7 +234,7 @@ def map_to_lowest_average_lab_color_distance_for_rowcell(colorfacemap):
                 name = color
 
 
-#        print(i.__str__() + " " + name)
+        #print(i.__str__() + " " + name)
         results[i] = name
 
     return results

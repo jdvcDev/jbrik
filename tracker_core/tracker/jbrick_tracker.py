@@ -11,7 +11,7 @@ PICPATH = "/tmp/jbrik/"
 CMDPATH = BASEPATH + "rubiks-cube-tracker.py -f "
 PICNAME = "rubiks-side-"
 PICTYPE = "png"
-PICCMD = "raspistill -v -w 400 -h 400  -e " + PICTYPE + " -t 1 -sh 100 -br 40 -mm spot -o "
+PICCMD = "raspistill -v -w 400 -h 400  -e " + PICTYPE + " -t 1 -sh 100 -br 50 -mm spot -o "
 
 
 # Logging direct tracker
