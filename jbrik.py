@@ -7,7 +7,7 @@ from solver_core import jbrik_solver as solver
 from motor_core import jbrik_motor as motor
 
 _PicRotCount = 0 # 0 for no rotation, 1 for 2 pics - 180 rotation, 3 for one pic from all 4 directions
-_DebugSteps = True
+_DebugSteps = False
 _TruingGrab = True
 
 
