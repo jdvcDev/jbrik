@@ -1,4 +1,9 @@
-    cubeStateStr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
+    #cubestatestr = "yygrwgrrrbbbroowrbggoyywowbgbyyrbrbwroooggwwwyoggbwoyy" # 10/20/27/6/25/16/26
+    #cubestatestr = "wbbywrrbggoogogorbywwyyrrbbyrrorboywowyggyywrgwgobgbow" # 10/13/46/6/25/8/27
+    #cubestatestr = "oworwbbggowyroybbrwrwrygrobwbrbrygogygywgorogbywybgowy" # 10/13/31/6/0/16/26
+    #cubestatestr = "bybbwgobygoooogyorgywryryggrrwwrgwbwoyoogybwgbrrbbwrwy" # 7/22/31/6/25/16/52
+    #cubestatestr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
+    #cubeStateStr = "gywowobgyoyrrgbbgwrrboybrgrbwwobrobgoygyrwgroywygobwwy" # 13/22/24/6/25/16/52
     #cubeStateStr = "woyywggobybywowygwrorgyrrbbgwoyrroygrbwyggorbwrgwbbboo" # 7/17/55/0/41/16/27 solved
     #cubeStateStr = "grywwbbybworgorwrbbgygybrbrgwgbrgwyogwyygoywowrooboryo" # 9/14/32/6/17/8/0 solved
     #cubeStateStr = "wggywywrygybboobobrwywyrobbgyogrbgorywwgggrboywrrbowro" # 10/23/24/6/8/16/52 solved
@@ -6,9 +11,3 @@
     #cubeStateStr = "wwwwwwwwwooooogyyoggyyyobbroyyrrrrrrgbbggggrgyybobbrbb" # 0/0/24/6/17/8/0 solved
     #cubeStateStr = "worowrobbwwyyowrggworgybbyoyryrrbbbygygggrogwrwoybwbog" # 7/16/62/6/25/8/27 solved
     #cubeStateStr = "wwwwwwwwwoooooyybygrggygbbbyoyyrrrrrgyoggrgoorbbybbrgb" # 0/0/53/6/41/16/26 SOLVED!!
-
-
-https://www.grubiks.com/solvers/rubiks-cube-3x3x3/
-https://github.com/DexterInd/BrickPi/tree/master/Software/BrickPi_Python
-
-https://github.com/TCAllen07/raspi-device-mocks

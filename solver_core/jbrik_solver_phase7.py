@@ -90,4 +90,3 @@ def are_all_corners_solved(cube, facetosolve):
             return False
 
     return True
-

@@ -3,7 +3,7 @@ from math import ceil, sqrt
 import ciede2000
 import json
 
-# Std Cube
+# STD Cube
 knowncolors = {
     "Red": [155, 0, 0],
     "Orange": [255, 114, 0],
@@ -65,7 +65,6 @@ def find_closest_cube_color(inrgb, type):
     for kcolor in knowncolors:
         if type == "lab":
             klab = rgb2lab((knowncolors[kcolor][0], knowncolors[kcolor][1], knowncolors[kcolor][2]))
-            #labtuple = [lab1.L, lab1.a, lab1.b]
             distance = sqrt(((inrgb[0] - klab.L) ** 2)
                             + ((inrgb[1] - klab.a) ** 2)
                             + ((inrgb[2] - klab.b) ** 2))
@@ -77,8 +76,8 @@ def find_closest_cube_color(inrgb, type):
         if distance <= lowest or lowest == -1:
             lowest = distance
             name = kcolor
-#        print("Distance to color: " + kcolor + " - " + distance.__str__())
-#        print("lowest: " + lowest.__str__())
+        #print("Distance to color: " + kcolor + " - " + distance.__str__())
+        #print("lowest: " + lowest.__str__())
     #print("rgb [" + type + "]: " + inrgb.__str__() + " is color: " + name)
     return name
 

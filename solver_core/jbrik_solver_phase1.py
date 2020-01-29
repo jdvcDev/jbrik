@@ -177,10 +177,6 @@ def facecross_o3(cube, ccolor, facetosolve):
             o1move = jbrik_cube.get_crosscenter_solvface_trans(nextpos)
             cube = jbrik_solver_move_lib.perform_rotation_str(o1move, cube)
 
-            # unwind if we havent faced all the cross cells
-#            if not are_all_cross_rowcells_faced(cube, ccolor, facetosolve):
-#                log_utils.log("Unwinding moves: " + unwindlist.__str__())
-#                cube = move_lib.perform_unwind_list(unwindlist, cube)
             return cube
 
 

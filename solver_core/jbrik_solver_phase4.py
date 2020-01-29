@@ -56,5 +56,3 @@ def face_oppface_cross(cube):
     cube.finalize_solve_phase(4,)
     log_utils.log("Opposite face cross positioned")
     return cube
-
-#def is_crosscell_faced

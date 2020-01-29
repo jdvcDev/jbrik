@@ -6,10 +6,6 @@ from utils import log_utils
 # raspistill -q 100 -e png -t 1 -sh 100 -br 60 -o /tmp/rubiks-side-U.png
 # raspistill -v -w 400 -h 400  -e png -t 1 -sh 100 -br 50 -mm spot -o /tmp/jbrik/rubiks-side-R.png
 
-#https://www.speedsolving.com/threads/rubiks-color-resolver-convert-rgb-values-of-each-square-to-u-l-f-r-b-or-d.64053/
-#https://github.com/cs0x7f/min2phase/issues/7
-# https://python-colormath.readthedocs.io/en/latest/delta_e.html
-
 facerotpos = {
     1:3,
     2:6,

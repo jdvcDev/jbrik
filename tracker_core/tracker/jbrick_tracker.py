@@ -1,6 +1,6 @@
 import commands
 from utils import log_utils
-from trackerlib import RubiksImage, merge_two_dicts
+from trackerlib import RubiksImage
 import logging
 import json
 
@@ -14,7 +14,7 @@ PICTYPE = "png"
 PICCMD = "raspistill -v -w 400 -h 400  -e " + PICTYPE + " -t 1 -sh 100 -br 50 -mm spot -o "
 
 
-# Logging direct tracker
+# Logging for direct tracker
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s %(filename)22s %(levelname)8s: %(message)s"
 )
@@ -55,7 +55,6 @@ def track_direct(imgfile):
     rimg.analyze_file(imgfile)
 
     return json.dumps(rimg.data, sort_keys=True)
-
 
 # TODO raise an exception here based on command output
 def photo_face(facenum, rotnum):

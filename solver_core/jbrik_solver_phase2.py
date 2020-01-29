@@ -22,7 +22,6 @@ def solvecrosscorners(cube):
         if are_all_crosscorners_solved(cube, facetosolve):
             solved = True
 
-
         log_utils.log("All cross corners solved.")
 
     cube.finalize_solve_phase(2,)
@@ -75,7 +74,6 @@ def move_solveface_orbitcells_to_oppface(cube, solveface, ccolor):
             break
 
     return cube
-
 
 def move_oppfaceorbit_rowcells_into_o2_and_solve(cube, oppface, ccolor):
     oppfaceorbit = jbrik_cube.FACEORBITS[oppface]
@@ -185,7 +183,6 @@ def move_oppface_corner_into_oppfaceorbit(cube, oppface, ccolor):
             cube = jbrik_solver_move_lib.perform_rotation_str(unwindmove, cube)
 
     return cube
-
 
 def solvecrosscorner_o2(cube, solverowcell, oppface):
     log_utils.log("Performing 2nd order crosscorner solve for: " + solverowcell)

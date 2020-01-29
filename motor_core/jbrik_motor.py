@@ -161,9 +161,7 @@ class JbrikMotorLib(object):
 
 
     def shutdown(self):
-        log_utils.log("shutting down cube.")
-        # Unconfigure the sensors, disable the motors, and restore the LED to the control of the BrickPi3 firmware.
-        #self._Cuber.BP.set_motor_position(self._Cuber.MOTOR_PORTS[self._Cuber.MOTOR_GRAB], self._Cuber.MOTOR_GRAB_POSITION_REST)
+        log_utils.log("Shutting down cube.")
         self._Cuber.BP.reset_all()
 
 

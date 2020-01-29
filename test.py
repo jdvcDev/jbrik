@@ -4,6 +4,8 @@ from tracker_core import resolver
 
 _PicRotCount = 0
 
+# just a scratch pad for testing various libs and methods in isolation or other dependencies
+
 def _resolve_cubestate():
     # python rubiks-cube-tracker.py -f ./resource/jbrik_img/rubiks-side-62.png
     cubestatestr = ""

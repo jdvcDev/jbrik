@@ -48,7 +48,6 @@ def solve_middle(cube):
 
     return cube
 
-
 #put a case in here for
 def swap_non_oriented_mid_rowcells_to_top(facetosolve, cube):
     # change this to get all mid row cells
@@ -111,8 +110,6 @@ def get_solved_rowcells(cube):
             solvedcells.append(rowcell)
 
     return solvedcells
-
-
 
 def are_all_middle_rowcells_solved(cube):
     for rowcell in jbrik_cube.FIVESIXMIDROWCROSSROWCELLS:
@@ -238,7 +235,6 @@ def perform_lr_solve_on_cross_rowcells(facetosolve, cube):
             stop = True
 
     return cube
-
 
 def perform_lr_solve_on_cross_rowcell(facetosolve, crossrowcell, cube):
     crossrowcellcolor = cube.get_cell_val_by_rowcell(crossrowcell)

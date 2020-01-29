@@ -10,7 +10,6 @@ _PicRotCount = 0 # 0 for no rotation, 1 for 2 pics - 180 rotation, 3 for one pic
 _DebugSteps = False
 _TruingGrab = True
 
-
 # take pictures
 def _photo_face_rotations(facenum, cuber):
     if _PicRotCount == 0:
@@ -56,7 +55,6 @@ def _photo_all_faces(cuber):
         _photo_face_rotations(facenum, cuber)
 
 def _run_solve_movements(solvemap, cuber):
-    #for phase in solvemap:
     for phase in range(1, 8):
         log_utils.log("Performing movement ops for phase: " + phase.__str__())
         solveoplist = solvemap[phase]
@@ -74,7 +72,6 @@ def _convert_solve_movements_to_motor_movements(solveroplist):
         motoroplist.append(motorop)
 
     return motoroplist
-
 
 Cuber = None
 try:
@@ -99,5 +96,3 @@ try:
 finally:
     Cuber.release_cube()
     Cuber.shutdown()
-    pass
-
