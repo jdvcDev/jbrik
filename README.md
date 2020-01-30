@@ -56,7 +56,7 @@ The solver will perform the following sequence:
 
 `[3CW2],[1CC1],[4CW1]...`
 
-5. The list of solution movements are then sent to the motor routines which execucte the corresponding motor movements (flip, grab, rotate cube, rotate face) required to perform the movement.
+5. The list of solution movements are then sent to the motor routines which execute the corresponding motor movements (flip, grab, rotate cube, rotate face) required to perform the movement.
 
 The entire process takes roughly ten minutes depending on how many photos the solver is configured to take per face and how movement are required to solve the cube.
 
