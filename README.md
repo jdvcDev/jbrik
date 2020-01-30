@@ -38,6 +38,7 @@ My prefered method of installation is using virtualenv.  You need only make sure
 
 # Running/Example
 ![jbrk](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)
+[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)
 
 To run the solver:
 
@@ -61,7 +62,7 @@ The solver will perform the following sequence:
 The entire process takes roughly ten minutes depending on how many photos the solver is configured to take per face and how movement are required to solve the cube.
 
 #### Example Run 
-![jbrk](https://www.youtube.com/watch?v=4Z060QUFvyM)
+[![Watch the video](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)](https://www.youtube.com/watch?v=4Z060QUFvyM)
 
 
 # Challenges
