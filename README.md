@@ -58,7 +58,7 @@ The solver will perform the following sequence:
 
 5. The list of solution movements are then sent to the motor routines which execute the corresponding motor movements (flip, grab, rotate cube, rotate face) required to perform the movement.
 
-The entire process takes roughly ten minutes depending on how many photos the solver is configured to take per face and how movement are required to solve the cube.
+The entire process takes roughly ten minutes depending on how many photos the solver is configured to take per face and how many movements are required to solve the cube.
 
 #### Example Run 
 [![jbrik video](https://github.com/jdvcDev/jbrik/blob/dev/resource/solver_thumb.png)](https://www.youtube.com/watch?v=4Z060QUFvyM)
