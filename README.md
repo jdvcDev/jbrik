@@ -33,6 +33,10 @@ My prefered method of installation is using virtualenv.  You need only make sure
 
 
 # Running/Example
+To run the solver:
+
+python jbrik.py
+
 
 # Challenges
 #### Lighting 
