@@ -25,17 +25,44 @@ Alogorithms used to solve the cube: https://ruwix.com/the-rubiks-cube/how-to-sol
 # Setup/Installation
 My prefered method of installation is using virtualenv.  You need only make sure that you have the dependencies listed in setup.py installed in order to run jbrik.  It's assumed that you're running on a RaspberryPi with Raspian for Robots with a BrickPi attached as well so there's an implied dependency on you having the BrickPi drivers to run the LEGO servos.
 
-- git clone https://github.com/jdvcDev/jbrik.git
-- cd jbrik
-- virtualenv --python=<path to python version> ./venv
-- source venv/Scripts/activate
-- pip install .
+`git clone https://github.com/jdvcDev/jbrik.git`
+
+`cd jbrik`
+
+`virtualenv --python=<path to python version> ./venv`
+
+`source venv/Scripts/activate`
+
+`pip install .`
 
 
 # Running/Example
+![jbrk](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)
+[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)
+
 To run the solver:
 
-python jbrik.py
+`python jbrik.py`
+
+The solver will perform the following sequence:
+
+1. jbrik motor callibration.
+2. A photo is take of each face of the cube.
+3. The photos are interpreted by the tracker routines, each colored tile is extracted and converted to an RBG value.
+4. The RGB values are input into the rosolver routines, the final output is a string colored tiles values representing the state of the cube.  For example:
+
+`oogrwgwyrrgbwobyrygwbyyrwgwowowrobbyoggrgbwyrboyobyrbg`
+
+5. The cube state string is input to the solver routines that will progress through 7 stages of solving the cube with each stage's solution represented by a list of movements required to solve that phase of the cube, each movement described by a face, a direction and the number of 90 degree movements.  For example:
+
+`[3CW2],[1CC1],[4CW1]...`
+
+5. The list of solution movements are then sent to the motor routines which execucte the corresponding motor movements (flip, grab, rotate cube, rotate face) required to perform the movement.
+
+The entire process takes roughly ten minutes depending on how many photos the solver is configured to take per face and how movement are required to solve the cube.
+
+#### Example Run 
+[![Watch the video](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)](https://www.youtube.com/watch?v=4Z060QUFvyM)
 
 
 # Challenges
