@@ -38,7 +38,6 @@ My prefered method of installation is using virtualenv.  You need only make sure
 
 # Running/Example
 ![jbrk](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)
-[![Watch the video](https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg)](https://github.com/jdvcDev/jbrik/blob/dev/resource/_MG_6751.JPG)
 
 To run the solver:
 
